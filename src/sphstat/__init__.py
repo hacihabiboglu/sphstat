@@ -46,6 +46,7 @@ from .singlesample import *
 from .descriptives import *
 from .plotting import *
 
+__name__ = "sphstat"
 __version__ = "1.0"
 __date__ = "15 December 2022"
 __author__ = 'Huseyin Hacihabiboglu'
