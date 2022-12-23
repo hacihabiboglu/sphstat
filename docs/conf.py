@@ -11,9 +11,8 @@ import sys
 # sys.path.insert(0, os.path.abspath('..'))
 
 #Location of Sphinx files
-sys.path.insert(0, os.path.abspath("."))
-sys.path.insert(0, os.path.abspath("../"))
-sys.path.insert(1, os.path.dirname(os.path.abspath("../")) + os.sep + "src")
+sys.path.insert(0, os.path.abspath("../.."))
+
 
 project = 'sphstat'
 copyright = '2022, Huseyin Hacihabiboglu'
