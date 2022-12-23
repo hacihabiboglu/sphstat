@@ -63,9 +63,9 @@ def isuniform(sample: dict, alpha: float = 0.05) -> dict:
     :param sample: Sample to be tested in 'cart' format
     :param alpha: Type-I error level  (e.g. 0.05)
     :returns: Dictionary containing the keys
-        - teststat - Test statistic (float)
-        - crange - Critical range (float)
-        - testresult - Test result (bool)
+    - teststat: Test statistic (float)
+    - crange: Critical range (float)
+    - testresult: Test result (bool)
     :rtype: dict
 
     [1] Diggle, P. J., Fisher, N. I. & Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.
@@ -168,10 +168,10 @@ def rotationalsymmetry(samplecart: dict, mdir: list, alpha: float = 0.05) -> dic
     :type mdir: list
     :param alpha: Type-I error level (e.g. 0.05)
     :type: float
-    :return: Dictionary containing the following fields
-        - Test measure ('Vnstar', float),
-        - Critical value ('cval', float),
-        - Test result ('res', bool)
+    :return: Dictionary containing the following fields...
+    - Test measure: ('Vnstar', float)
+    - Critical value: ('cval', float)
+    - Test result: ('res', bool)
     :rtype: dict
     """
     n = samplecart['n']
@@ -215,9 +215,9 @@ def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the following fields
-        - Spherical mean direction (theta: float, phi: float)
-        - Spherical standard deviation (float)
-        - Semi-vertical angle (float)
+    - Spherical mean direction (theta: float, phi: float)
+    - Spherical standard deviation (float)
+    - Semi-vertical angle (float)
     :rtype: tuple
 
     [1] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
@@ -248,9 +248,9 @@ def testagainstmean(samplecart: dict, tmean: list, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the following fields
-        - Test measure ('hn', float)
-        - Critical value to test against ('cval', float)
-        - Test result ('testresult', bool)
+    - Test measure ('hn', float)
+    - Critical value to test against ('cval', float)
+    - Test result ('testresult', bool)
 
     [1] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
     """
@@ -274,10 +274,10 @@ def isaxisymmetric(samplecart: dict, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the keys:
-        - Pn: Test statistic (float)
-        - cval: Critical value to test against (float)
-        - pval: Actual p-value (float)
-        - testresult: Test result (bool)
+    - Pn: Test statistic (float)
+    - cval: Critical value to test against (float)
+    - pval: Actual p-value (float)
+    - testresult: Test result (bool)
     :rtype: dict
     """
     assert samplecart['type'] == 'cart'
@@ -316,17 +316,22 @@ def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> d
     :type plotflag: bool
     :return: Dictionary containing the results of three tests:
     - 'colatitute': Results of the colatitude test as a nested dictionary
+
         - 'stat': Test statistic (float)
         - 'crange': Critical range (float)
         - 'H0': Test result (bool)
+
     - 'longitude': Results of the longitude test as a nested dictionary
+
         - 'stat': Test statistic (float)
         - 'crange': Critical range (float)
         - 'H0': Test result (bool)
     - 'twovariable': Results of the two-variable test as a nested dictionary
+
         - 'stat': Test statistic (float)
         - 'crange': Critical range (float)
         - 'H0': Test result (bool)
+
     - 'H0': All three tests retain H0 then True, otherwise false
     - 'alpha': Type-I error level
 
@@ -465,8 +470,8 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: Type-I error level
     :type alpha: float
     :return:
-        - A new sample with outliers eliminated
-        - Index of the outliers in the original sample
+    - A new sample with outliers eliminated
+    - Index of the outliers in the original sample
     :rtype: tuple
 
     [1] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
@@ -510,6 +515,7 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     :param alpha: Calculate (1-alpha)% CI for kappa
     :type alpha: float
     :return: Dictionary with the keys...
+
     - mdir: Mean direction (theta, phi) (tuple)
     - kappa: Concentration parameter (float)
     - thetaalpha: Semivertical angle (float)
