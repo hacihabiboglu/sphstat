@@ -14,12 +14,12 @@ import sys
 sys.path.insert(0, os.path.abspath("../src"))
 sys.path.insert(0, os.path.abspath("../.."))
 
-autodoc_mock_imports = ["_numpy"]
+autodoc_mock_imports = ["_numpy, _matplotlib, _sympy"]
 
 project = 'sphstat'
 copyright = '2022, Huseyin Hacihabiboglu'
 author = 'Huseyin Hacihabiboglu'
-release = '0.1.0'
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
