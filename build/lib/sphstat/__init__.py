@@ -38,13 +38,13 @@ AUTHOR
 - E-mail: hhuseyin@metu.edu.tr
 """
 
-import sphstat.distributions
-import sphstat.twosample
-import sphstat.utils
-import sphstat.modelling
-import sphstat.singlesample
-import sphstat.descriptives
-import sphstat.plotting
+from sphstat.distributions import *
+from sphstat.twosample import *
+from sphstat.utils import *
+from sphstat.modelling import *
+from sphstat.singlesample import *
+from sphstat.descriptives import *
+from sphstat.plotting import *
 
 __version__ = "1.0"
 __date__ = "15 December 2022"
