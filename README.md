@@ -1,6 +1,6 @@
+[![Documentation Status](https://readthedocs.org/projects/sphstat/badge/?version=latest)](https://sphstat.readthedocs.io/en/latest/?badge=latest)
 
-# **sphstat:** A Python package for inferential statistics on vectorial data on the unit sphere
-
+# **sphstat:** A Python 3 package for spherical statistics
 ![](images/sphstatlogo.png)
 
 ## Description
@@ -21,7 +21,7 @@ methods for axial data have not yet been implemented as of version 1.0
 
 ### Option 1
 
-```sphstat``` can be installed from PyPI using ```pip```. In Terminal, type
+```sphstat``` can be installed from PyPI using ```pip3```. In Terminal, type
 
 ```bash
   pip3 install sphstat
@@ -36,7 +36,7 @@ git clone https://github.com/metu-sparg/sphstat
 cd PATH/TO/LOCAL/FOLDER
 pip3 install .
 ```
-
+Documentation is available at [https://sphstat.readthedocs.io/en/latest/](https://sphstat.readthedocs.io/en/latest/)
 
 ## Requirements
 
@@ -63,9 +63,9 @@ includes several modules whose names are pretty self-explanatory. These are:
 * ```utils```: Utility functions used by other modules
 
 It is important to note that the default coordinate system used by ```sphstat``` is the 
-polar coordinates. The colatitude angle ($$theta$$) is defined from the axis, $$0$$ (north 
-pole) to $$\pi/2$$ (south pole) and the latitude angle is defined from $$0$$ (front direction) 
-to $$2\pi$$. Figure shows the employed polar coordinate system.
+polar coordinates. The colatitude angle ($theta$) is defined from the axis, $0$ (north 
+pole) to $\pi/2$ (south pole) and the latitude angle is defined from $0$ (front direction) 
+to $2\pi$. Figure shows the employed polar coordinate system.
 
 ![](images/coord.png)
 
@@ -315,7 +315,7 @@ cval:  (-0.0661660798549282, -0.12290819705298231)
 ci:  (0.7855242490787221, 0.9170643001150208)
 testresult:  True
 ```
-indicates that two samples are correlated with a correlation coefficient of $$0.851$$ with the 95% confidence interval also given.
+indicates that two samples are correlated with a correlation coefficient of $0.851$ with the 95% confidence interval also given.
 
 In order to check if there is any serial association between time-ordered observations 
 in a sample:
@@ -330,7 +330,7 @@ Sstar:  2.504563022268227
 cval:  1.6448536269514722
 testresult:  False
 ```
-indicating that the observations are not serially associated at $$\alpha=0.05$$ level.
+indicating that the observations are not serially associated at $\alpha=0.05$ level.
 
 
 ## Limitations
