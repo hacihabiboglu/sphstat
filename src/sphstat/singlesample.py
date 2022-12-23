@@ -509,10 +509,10 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     :param alpha: Calculate (1-alpha)% CI for kappa
     :type alpha: float
     :return: Dictionary with the keys...
-        - mdir: Mean direction (theta, phi) (tuple)
-        - kappa: Concentration parameter (float)
-        - thetaalpha: Semivertical angle (float)
-        - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
+    - mdir: Mean direction (theta, phi) (tuple)
+    - kappa: Concentration parameter (float)
+    - thetaalpha: Semivertical angle (float)
+    - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
     :rtype: dict
 
     [1] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
