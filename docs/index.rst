@@ -38,6 +38,7 @@ The source code is available on Github: https://www.github.com/hacihabiboglu/sph
 
    installation
    examples
+   sphstat
    modules
 
 Indices and tables

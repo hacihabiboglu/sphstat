@@ -2,6 +2,6 @@ sphstat.descriptives module
 ===========================
 
 .. automodule:: sphstat.descriptives
-   :members: resultants
+   :members:
    :undoc-members:
    :show-inheritance:
