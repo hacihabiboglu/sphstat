@@ -66,6 +66,7 @@ def isuniform(sample: dict, alpha: float = 0.05) -> dict:
     - teststat: Test statistic (float)
     - crange: Critical range (float)
     - testresult: Test result (bool)
+
     :rtype: dict
 
     [1] Diggle, P. J., Fisher, N. I. & Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.
@@ -172,6 +173,7 @@ def rotationalsymmetry(samplecart: dict, mdir: list, alpha: float = 0.05) -> dic
     - Test measure: ('Vnstar', float)
     - Critical value: ('cval', float)
     - Test result: ('res', bool)
+
     :rtype: dict
     """
     n = samplecart['n']
@@ -218,6 +220,7 @@ def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
     - Spherical mean direction (theta: float, phi: float)
     - Spherical standard deviation (float)
     - Semi-vertical angle (float)
+
     :rtype: tuple
 
     [1] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
@@ -278,6 +281,7 @@ def isaxisymmetric(samplecart: dict, alpha: float = 0.05) -> dict:
     - cval: Critical value to test against (float)
     - pval: Actual p-value (float)
     - testresult: Test result (bool)
+
     :rtype: dict
     """
     assert samplecart['type'] == 'cart'
@@ -472,6 +476,7 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
     :return:
     - A new sample with outliers eliminated
     - Index of the outliers in the original sample
+
     :rtype: tuple
 
     [1] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
@@ -515,11 +520,11 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     :param alpha: Calculate (1-alpha)% CI for kappa
     :type alpha: float
     :return: Dictionary with the keys...
-
     - mdir: Mean direction (theta, phi) (tuple)
     - kappa: Concentration parameter (float)
     - thetaalpha: Semivertical angle (float)
     - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
+
     :rtype: dict
 
     [1] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
@@ -560,9 +565,10 @@ def meantest(samplecart: dict, mdir0: tuple | list, alpha: float =0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary including..
-        - R: Test statistic (float)
-        - Ralpha: Critical value (float)
-        - testresult: Test result (bool)
+    - R: Test statistic (float)
+    - Ralpha: Critical value (float)
+    - testresult: Test result (bool)
+
     :rtype: dict
     """
     ''' Test the null hypothesis that mu_Sample = mu_0'''
@@ -600,9 +606,10 @@ def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
     :type alpha: float
     :param testtype: Either on of !=, > or < indicating the sidedness of the test
     :return: Dictionary with the keys:
-        - 'R': Test statistics
-        - 'cvaltup': Critical value for the test
-        - 'testresult': Test result
+    - 'R': Test statistics
+    - 'cvaltup': Critical value for the test
+    - 'testresult': Test result
+
     """
 
     try:
@@ -641,9 +648,10 @@ def kentparams(samplecart):
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
     :return:
-        - 'axes': Axes of the distribution (axes[0] is the mean direction)
-        - 'kappahat': Concentration parameter of the distribution (float)
-        - 'betahat': Ovalness parameter (float)
+    - 'axes': Axes of the distribution (axes[0] is the mean direction)
+    - 'kappahat': Concentration parameter of the distribution (float)
+    - 'betahat': Ovalness parameter (float)
+
     :rtype:tuple
 
     [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
@@ -710,9 +718,10 @@ def kentmeanccone(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: (1-alpha)% CI is calculated
     :type alpha: float
     :return:
-        - cconept: 360 points on the (1-alpha)% cone of confidence (list)
-        - ths1: Major semi-axis (in radians)
-        - ths2: Minor semi-axis (in radians)
+    - cconept: 360 points on the (1-alpha)% cone of confidence (list)
+    - ths1: Major semi-axis (in radians)
+    - ths2: Minor semi-axis (in radians)
+
     :rtype: tuple
 
     [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
@@ -792,10 +801,11 @@ def isfishervskent(samplecart: dict, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the keys:
-        - K: Test statistic (float)
-        - cval: Critical value (float)
-        - p: p-value (float)
-        - testresult: Test result (bool)
+    - K: Test statistic (float)
+    - cval: Critical value (float)
+    - p: p-value (float)
+    - testresult: Test result (bool)
+
     :rtype: dict
     """
     '''Calculate the parameters of a Kent distribution modelling the sample'''
