@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+========================================================================
 Functions to generate random data from different spherical distributions
-==================================================================
+========================================================================
 
 - :func:`uniform` generates samples from uniform spherical distribution
 - :func:`bingham` generates samples from uniform Bingham distribution

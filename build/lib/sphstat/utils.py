@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+=================
 Utility functions
-==================================================================
+=================
 
 - :func:`degtorad` converts sample in 'deg' to a sample in 'rad'
 - :func:`readsample` reads one or more samples from an Excel file

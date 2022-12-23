@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+================================================================
 Functions to calculate descriptive statistics on spherical data
-==================================================================
+================================================================
 
 - :func:`resultants` calculates the descriptive statistics of a sample
 - :func:`rotationmatrix` calculates the rotation matrix for a given set of rotation angles
