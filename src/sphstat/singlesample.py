@@ -63,9 +63,9 @@ def isuniform(sample: dict, alpha: float = 0.05) -> dict:
     :param sample: Sample to be tested in 'cart' format
     :param alpha: Type-I error level  (e.g. 0.05)
     :returns: Dictionary containing the keys
-    - teststat: Test statistic (float)
-    - crange: Critical range (float)
-    - testresult: Test result (bool)
+        - teststat: Test statistic (float)
+        - crange: Critical range (float)
+        - testresult: Test result (bool)
 
     :rtype: dict
 
@@ -170,9 +170,9 @@ def rotationalsymmetry(samplecart: dict, mdir: list, alpha: float = 0.05) -> dic
     :param alpha: Type-I error level (e.g. 0.05)
     :type: float
     :return: Dictionary containing the following fields...
-    - Test measure: ('Vnstar', float)
-    - Critical value: ('cval', float)
-    - Test result: ('res', bool)
+        - Test measure: ('Vnstar', float)
+        - Critical value: ('cval', float)
+        - Test result: ('res', bool)
 
     :rtype: dict
     """
@@ -217,9 +217,9 @@ def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the following fields
-    - Spherical mean direction (theta: float, phi: float)
-    - Spherical standard deviation (float)
-    - Semi-vertical angle (float)
+        - Spherical mean direction (theta: float, phi: float)
+        - Spherical standard deviation (float)
+        - Semi-vertical angle (float)
 
     :rtype: tuple
 
@@ -251,9 +251,9 @@ def testagainstmean(samplecart: dict, tmean: list, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the following fields
-    - Test measure ('hn', float)
-    - Critical value to test against ('cval', float)
-    - Test result ('testresult', bool)
+        - Test measure ('hn', float)
+        - Critical value to test against ('cval', float)
+        - Test result ('testresult', bool)
 
     [1] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
     """
@@ -277,10 +277,10 @@ def isaxisymmetric(samplecart: dict, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the keys:
-    - Pn: Test statistic (float)
-    - cval: Critical value to test against (float)
-    - pval: Actual p-value (float)
-    - testresult: Test result (bool)
+        - Pn: Test statistic (float)
+        - cval: Critical value to test against (float)
+        - pval: Actual p-value (float)
+        - testresult: Test result (bool)
 
     :rtype: dict
     """
@@ -319,25 +319,25 @@ def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> d
     :param plotflag: Flag to plot the Q-Q plots
     :type plotflag: bool
     :return: Dictionary containing the results of three tests:
-    - 'colatitute': Results of the colatitude test as a nested dictionary
+        - 'colatitute': Results of the colatitude test as a nested dictionary
 
-        - 'stat': Test statistic (float)
-        - 'crange': Critical range (float)
-        - 'H0': Test result (bool)
+            - 'stat': Test statistic (float)
+            - 'crange': Critical range (float)
+            - 'H0': Test result (bool)
 
-    - 'longitude': Results of the longitude test as a nested dictionary
+        - 'longitude': Results of the longitude test as a nested dictionary
 
-        - 'stat': Test statistic (float)
-        - 'crange': Critical range (float)
-        - 'H0': Test result (bool)
-    - 'twovariable': Results of the two-variable test as a nested dictionary
+            - 'stat': Test statistic (float)
+            - 'crange': Critical range (float)
+            - 'H0': Test result (bool)
+        - 'twovariable': Results of the two-variable test as a nested dictionary
 
-        - 'stat': Test statistic (float)
-        - 'crange': Critical range (float)
-        - 'H0': Test result (bool)
+            - 'stat': Test statistic (float)
+            - 'crange': Critical range (float)
+            - 'H0': Test result (bool)
 
-    - 'H0': All three tests retain H0 then True, otherwise false
-    - 'alpha': Type-I error level
+        - 'H0': All three tests retain H0 then True, otherwise false
+        - 'alpha': Type-I error level
 
     [1] Fisher, N. I. & Best, D. J. (1984). Goodness-of-fit tests for Fisher's distribution on the sphere. Austral. J. Statist. 26, 142-150.
     """
@@ -474,8 +474,8 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: Type-I error level
     :type alpha: float
     :return:
-    - A new sample with outliers eliminated
-    - Index of the outliers in the original sample
+        - A new sample with outliers eliminated
+        - Index of the outliers in the original sample
 
     :rtype: tuple
 
@@ -520,10 +520,10 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     :param alpha: Calculate (1-alpha)% CI for kappa
     :type alpha: float
     :return: Dictionary with the keys...
-    - mdir: Mean direction (theta, phi) (tuple)
-    - kappa: Concentration parameter (float)
-    - thetaalpha: Semivertical angle (float)
-    - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
+        - mdir: Mean direction (theta, phi) (tuple)
+        - kappa: Concentration parameter (float)
+        - thetaalpha: Semivertical angle (float)
+        - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
 
     :rtype: dict
 
@@ -565,9 +565,9 @@ def meantest(samplecart: dict, mdir0: tuple | list, alpha: float =0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary including..
-    - R: Test statistic (float)
-    - Ralpha: Critical value (float)
-    - testresult: Test result (bool)
+        - R: Test statistic (float)
+        - Ralpha: Critical value (float)
+        - testresult: Test result (bool)
 
     :rtype: dict
     """
@@ -606,9 +606,9 @@ def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
     :type alpha: float
     :param testtype: Either on of !=, > or < indicating the sidedness of the test
     :return: Dictionary with the keys:
-    - 'R': Test statistics
-    - 'cvaltup': Critical value for the test
-    - 'testresult': Test result
+        - 'R': Test statistics
+        - 'cvaltup': Critical value for the test
+        - 'testresult': Test result
 
     """
 
@@ -648,9 +648,9 @@ def kentparams(samplecart):
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
     :return:
-    - 'axes': Axes of the distribution (axes[0] is the mean direction)
-    - 'kappahat': Concentration parameter of the distribution (float)
-    - 'betahat': Ovalness parameter (float)
+        - 'axes': Axes of the distribution (axes[0] is the mean direction)
+        - 'kappahat': Concentration parameter of the distribution (float)
+        - 'betahat': Ovalness parameter (float)
 
     :rtype:tuple
 
@@ -718,9 +718,9 @@ def kentmeanccone(samplecart: dict, alpha: float = 0.05) -> tuple:
     :param alpha: (1-alpha)% CI is calculated
     :type alpha: float
     :return:
-    - cconept: 360 points on the (1-alpha)% cone of confidence (list)
-    - ths1: Major semi-axis (in radians)
-    - ths2: Minor semi-axis (in radians)
+        - cconept: 360 points on the (1-alpha)% cone of confidence (list)
+        - ths1: Major semi-axis (in radians)
+        - ths2: Minor semi-axis (in radians)
 
     :rtype: tuple
 
@@ -801,10 +801,10 @@ def isfishervskent(samplecart: dict, alpha: float = 0.05) -> dict:
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary containing the keys:
-    - K: Test statistic (float)
-    - cval: Critical value (float)
-    - p: p-value (float)
-    - testresult: Test result (bool)
+        - K: Test statistic (float)
+        - cval: Critical value (float)
+        - p: p-value (float)
+        - testresult: Test result (bool)
 
     :rtype: dict
     """

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sphstat.modelling &mdash; sphstat 0.1.0 documentation</title>
+  <title>sphstat.modelling &mdash; sphstat 1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -93,9 +93,9 @@
 <span class="c1"># SOFTWARE.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">==================================================================</span>
+<span class="sd">===========================================================</span>
 <span class="sd">Functions for correlation, regression, temporal association</span>
-<span class="sd">==================================================================</span>
+<span class="sd">===========================================================</span>
 
 <span class="sd">- :func:`xcorrrandomsamples` calculates the cross-correlation between two samples</span>
 <span class="sd">- :func:`samplecorrelation` calculates the sample cross-correlation</span>
@@ -380,7 +380,7 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="regresscircular"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.regresscircular">[docs]</a><span class="k">def</span> <span class="nf">regresscircular</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">thetas</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<div class="viewcode-block" id="regresscircular"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.regresscircular">[docs]</a><span class="k">def</span> <span class="nf">regresscircular</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">thetas</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5707963267948966</span><span class="p">,</span> <span class="n">thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span> <span class="c1">#</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Regression of a random unit vector on a circular variable [1]_</span>
 

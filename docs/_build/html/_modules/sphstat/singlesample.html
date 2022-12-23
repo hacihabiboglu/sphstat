@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sphstat.singlesample &mdash; sphstat 0.1.0 documentation</title>
+  <title>sphstat.singlesample &mdash; sphstat 1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -93,9 +93,9 @@
 <span class="c1"># SOFTWARE.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">==================================================================</span>
+<span class="sd">=======================================================</span>
 <span class="sd">Functions for inferential statistics on a single sample</span>
-<span class="sd">==================================================================</span>
+<span class="sd">=======================================================</span>
 
 <span class="sd">- :func:`isuniform` tests the null-hypothesis that the sample is drawn from a uniform spherical distribution</span>
 <span class="sd">- :func:`testagainstmedian` tests the null-hypothesis that the sample has a given median direction</span>
@@ -133,9 +133,10 @@
 <span class="sd">    :param sample: Sample to be tested in &#39;cart&#39; format</span>
 <span class="sd">    :param alpha: Type-I error level  (e.g. 0.05)</span>
 <span class="sd">    :returns: Dictionary containing the keys</span>
-<span class="sd">        - teststat - Test statistic (float)</span>
-<span class="sd">        - crange - Critical range (float)</span>
-<span class="sd">        - testresult - Test result (bool)</span>
+<span class="sd">    - teststat: Test statistic (float)</span>
+<span class="sd">    - crange: Critical range (float)</span>
+<span class="sd">    - testresult: Test result (bool)</span>
+
 <span class="sd">    :rtype: dict</span>
 
 <span class="sd">    [1] Diggle, P. J., Fisher, N. I. &amp; Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.</span>
@@ -238,10 +239,11 @@
 <span class="sd">    :type mdir: list</span>
 <span class="sd">    :param alpha: Type-I error level (e.g. 0.05)</span>
 <span class="sd">    :type: float</span>
-<span class="sd">    :return: Dictionary containing the following fields</span>
-<span class="sd">        - Test measure (&#39;Vnstar&#39;, float),</span>
-<span class="sd">        - Critical value (&#39;cval&#39;, float),</span>
-<span class="sd">        - Test result (&#39;res&#39;, bool)</span>
+<span class="sd">    :return: Dictionary containing the following fields...</span>
+<span class="sd">    - Test measure: (&#39;Vnstar&#39;, float)</span>
+<span class="sd">    - Critical value: (&#39;cval&#39;, float)</span>
+<span class="sd">    - Test result: (&#39;res&#39;, bool)</span>
+
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
@@ -285,9 +287,10 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary containing the following fields</span>
-<span class="sd">        - Spherical mean direction (theta: float, phi: float)</span>
-<span class="sd">        - Spherical standard deviation (float)</span>
-<span class="sd">        - Semi-vertical angle (float)</span>
+<span class="sd">    - Spherical mean direction (theta: float, phi: float)</span>
+<span class="sd">    - Spherical standard deviation (float)</span>
+<span class="sd">    - Semi-vertical angle (float)</span>
+
 <span class="sd">    :rtype: tuple</span>
 
 <span class="sd">    [1] Fisher, N. I. &amp; Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.</span>
@@ -318,9 +321,9 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary containing the following fields</span>
-<span class="sd">        - Test measure (&#39;hn&#39;, float)</span>
-<span class="sd">        - Critical value to test against (&#39;cval&#39;, float)</span>
-<span class="sd">        - Test result (&#39;testresult&#39;, bool)</span>
+<span class="sd">    - Test measure (&#39;hn&#39;, float)</span>
+<span class="sd">    - Critical value to test against (&#39;cval&#39;, float)</span>
+<span class="sd">    - Test result (&#39;testresult&#39;, bool)</span>
 
 <span class="sd">    [1] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -344,10 +347,11 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary containing the keys:</span>
-<span class="sd">        - Pn: Test statistic (float)</span>
-<span class="sd">        - cval: Critical value to test against (float)</span>
-<span class="sd">        - pval: Actual p-value (float)</span>
-<span class="sd">        - testresult: Test result (bool)</span>
+<span class="sd">    - Pn: Test statistic (float)</span>
+<span class="sd">    - cval: Critical value to test against (float)</span>
+<span class="sd">    - pval: Actual p-value (float)</span>
+<span class="sd">    - testresult: Test result (bool)</span>
+
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
@@ -385,20 +389,25 @@
 <span class="sd">    :param plotflag: Flag to plot the Q-Q plots</span>
 <span class="sd">    :type plotflag: bool</span>
 <span class="sd">    :return: Dictionary containing the results of three tests:</span>
-<span class="sd">        - &#39;colatitute&#39;: Results of the colatitude test as a nested dictionary</span>
-<span class="sd">            - &#39;stat&#39;: Test statistic (float)</span>
-<span class="sd">            - &#39;crange&#39;: Critical range (float)</span>
-<span class="sd">            - &#39;H0&#39;: Test result (bool)</span>
-<span class="sd">        - &#39;longitude&#39;: Results of the longitude test as a nested dictionary</span>
-<span class="sd">            - &#39;stat&#39;: Test statistic (float)</span>
-<span class="sd">            - &#39;crange&#39;: Critical range (float)</span>
-<span class="sd">            - &#39;H0&#39;: Test result (bool)</span>
-<span class="sd">        - &#39;twovariable&#39;: Results of the two-variable test as a nested dictionary</span>
-<span class="sd">            - &#39;stat&#39;: Test statistic (float)</span>
-<span class="sd">            - &#39;crange&#39;: Critical range (float)</span>
-<span class="sd">            - &#39;H0&#39;: Test result (bool)</span>
-<span class="sd">        - &#39;H0&#39;: All three tests retain H0 then True, otherwise false</span>
-<span class="sd">        - &#39;alpha&#39;: Type-I error level</span>
+<span class="sd">    - &#39;colatitute&#39;: Results of the colatitude test as a nested dictionary</span>
+
+<span class="sd">        - &#39;stat&#39;: Test statistic (float)</span>
+<span class="sd">        - &#39;crange&#39;: Critical range (float)</span>
+<span class="sd">        - &#39;H0&#39;: Test result (bool)</span>
+
+<span class="sd">    - &#39;longitude&#39;: Results of the longitude test as a nested dictionary</span>
+
+<span class="sd">        - &#39;stat&#39;: Test statistic (float)</span>
+<span class="sd">        - &#39;crange&#39;: Critical range (float)</span>
+<span class="sd">        - &#39;H0&#39;: Test result (bool)</span>
+<span class="sd">    - &#39;twovariable&#39;: Results of the two-variable test as a nested dictionary</span>
+
+<span class="sd">        - &#39;stat&#39;: Test statistic (float)</span>
+<span class="sd">        - &#39;crange&#39;: Critical range (float)</span>
+<span class="sd">        - &#39;H0&#39;: Test result (bool)</span>
+
+<span class="sd">    - &#39;H0&#39;: All three tests retain H0 then True, otherwise false</span>
+<span class="sd">    - &#39;alpha&#39;: Type-I error level</span>
 
 <span class="sd">    [1] Fisher, N. I. &amp; Best, D. J. (1984). Goodness-of-fit tests for Fisher&#39;s distribution on the sphere. Austral. J. Statist. 26, 142-150.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -535,8 +544,9 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return:</span>
-<span class="sd">        - A new sample with outliers eliminated</span>
-<span class="sd">        - Index of the outliers in the original sample</span>
+<span class="sd">    - A new sample with outliers eliminated</span>
+<span class="sd">    - Index of the outliers in the original sample</span>
+
 <span class="sd">    :rtype: tuple</span>
 
 <span class="sd">    [1] Fisher, N. I., Lewis, T. &amp; Willcox, M. E. (1981). Tests of discordancy for samples from Fisher&#39;s distribution on the sphere. Appl. Statist. 30, 230-237.</span>
@@ -574,15 +584,17 @@
 <div class="viewcode-block" id="fisherparams"><a class="viewcode-back" href="../../sphstat.singlesample.html#sphstat.singlesample.fisherparams">[docs]</a><span class="k">def</span> <span class="nf">fisherparams</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameter estimation for the Fisher distribution [1]_</span>
+
 <span class="sd">    :param samplecart: Sample to be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecart: dict</span>
 <span class="sd">    :param alpha: Calculate (1-alpha)% CI for kappa</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary with the keys...</span>
-<span class="sd">        - mdir: Mean direction (theta, phi) (tuple)</span>
-<span class="sd">        - kappa: Concentration parameter (float)</span>
-<span class="sd">        - thetaalpha: Semivertical angle (float)</span>
-<span class="sd">        - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)</span>
+<span class="sd">    - mdir: Mean direction (theta, phi) (tuple)</span>
+<span class="sd">    - kappa: Concentration parameter (float)</span>
+<span class="sd">    - thetaalpha: Semivertical angle (float)</span>
+<span class="sd">    - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)</span>
+
 <span class="sd">    :rtype: dict</span>
 
 <span class="sd">    [1] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.</span>
@@ -623,9 +635,10 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary including..</span>
-<span class="sd">        - R: Test statistic (float)</span>
-<span class="sd">        - Ralpha: Critical value (float)</span>
-<span class="sd">        - testresult: Test result (bool)</span>
+<span class="sd">    - R: Test statistic (float)</span>
+<span class="sd">    - Ralpha: Critical value (float)</span>
+<span class="sd">    - testresult: Test result (bool)</span>
+
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="sd">&#39;&#39;&#39; Test the null hypothesis that mu_Sample = mu_0&#39;&#39;&#39;</span>
@@ -663,9 +676,10 @@
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :param testtype: Either on of !=, &gt; or &lt; indicating the sidedness of the test</span>
 <span class="sd">    :return: Dictionary with the keys:</span>
-<span class="sd">        - &#39;R&#39;: Test statistics</span>
-<span class="sd">        - &#39;cvaltup&#39;: Critical value for the test</span>
-<span class="sd">        - &#39;testresult&#39;: Test result</span>
+<span class="sd">    - &#39;R&#39;: Test statistics</span>
+<span class="sd">    - &#39;cvaltup&#39;: Critical value for the test</span>
+<span class="sd">    - &#39;testresult&#39;: Test result</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -704,9 +718,10 @@
 <span class="sd">    :param samplecart: Sample to be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecart: dict</span>
 <span class="sd">    :return:</span>
-<span class="sd">        - &#39;axes&#39;: Axes of the distribution (axes[0] is the mean direction)</span>
-<span class="sd">        - &#39;kappahat&#39;: Concentration parameter of the distribution (float)</span>
-<span class="sd">        - &#39;betahat&#39;: Ovalness parameter (float)</span>
+<span class="sd">    - &#39;axes&#39;: Axes of the distribution (axes[0] is the mean direction)</span>
+<span class="sd">    - &#39;kappahat&#39;: Concentration parameter of the distribution (float)</span>
+<span class="sd">    - &#39;betahat&#39;: Ovalness parameter (float)</span>
+
 <span class="sd">    :rtype:tuple</span>
 
 <span class="sd">    [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.</span>
@@ -773,9 +788,10 @@
 <span class="sd">    :param alpha: (1-alpha)% CI is calculated</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return:</span>
-<span class="sd">        - cconept: 360 points on the (1-alpha)% cone of confidence (list)</span>
-<span class="sd">        - ths1: Major semi-axis (in radians)</span>
-<span class="sd">        - ths2: Minor semi-axis (in radians)</span>
+<span class="sd">    - cconept: 360 points on the (1-alpha)% cone of confidence (list)</span>
+<span class="sd">    - ths1: Major semi-axis (in radians)</span>
+<span class="sd">    - ths2: Minor semi-axis (in radians)</span>
+
 <span class="sd">    :rtype: tuple</span>
 
 <span class="sd">    [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.</span>
@@ -855,10 +871,11 @@
 <span class="sd">    :param alpha: Type-I error level</span>
 <span class="sd">    :type alpha: float</span>
 <span class="sd">    :return: Dictionary containing the keys:</span>
-<span class="sd">        - K: Test statistic (float)</span>
-<span class="sd">        - cval: Critical value (float)</span>
-<span class="sd">        - p: p-value (float)</span>
-<span class="sd">        - testresult: Test result (bool)</span>
+<span class="sd">    - K: Test statistic (float)</span>
+<span class="sd">    - cval: Critical value (float)</span>
+<span class="sd">    - p: p-value (float)</span>
+<span class="sd">    - testresult: Test result (bool)</span>
+
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="sd">&#39;&#39;&#39;Calculate the parameters of a Kent distribution modelling the sample&#39;&#39;&#39;</span>
