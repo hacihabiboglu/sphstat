@@ -38,14 +38,15 @@ AUTHOR
 - E-mail: hhuseyin@metu.edu.tr
 """
 
-from sphstat.distributions import *
-from sphstat.twosample import *
-from sphstat.utils import *
-from sphstat.modelling import *
-from sphstat.singlesample import *
-from sphstat.descriptives import *
-from sphstat.plotting import *
+from .distributions import *
+from .twosample import *
+from .utils import *
+from .modelling import *
+from .singlesample import *
+from .descriptives import *
+from .plotting import *
 
+__name__ = "sphstat"
 __version__ = "1.0"
 __date__ = "15 December 2022"
 __author__ = 'Huseyin Hacihabiboglu'
