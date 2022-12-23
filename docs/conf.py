@@ -8,7 +8,10 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+# sys.path.insert(0, os.path.abspath('..'))
+
+#Location of Sphinx files
+sys.path.insert(0, os.path.abspath('./../..'))
 
 project = 'sphstat'
 copyright = '2022, Huseyin Hacihabiboglu'
