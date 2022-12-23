@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+===========================================================
 Functions for correlation, regression, temporal association
-==================================================================
+===========================================================
 
 - :func:`xcorrrandomsamples` calculates the cross-correlation between two samples
 - :func:`samplecorrelation` calculates the sample cross-correlation

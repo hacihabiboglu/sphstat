@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+===========================
 Functions for plotting data
-==================================================================
+===========================
 
 - :func:`plotmapping` maps the azimuth from [-pi,pi) to [0, 2 * pi]
 - :func:`plotdata` plots the data in a given projection

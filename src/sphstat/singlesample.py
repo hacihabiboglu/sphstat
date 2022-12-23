@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 """
-==================================================================
+=======================================================
 Functions for inferential statistics on a single sample
-==================================================================
+=======================================================
 
 - :func:`isuniform` tests the null-hypothesis that the sample is drawn from a uniform spherical distribution
 - :func:`testagainstmedian` tests the null-hypothesis that the sample has a given median direction
