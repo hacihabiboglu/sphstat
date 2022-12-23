@@ -389,12 +389,12 @@ def convert(sample: dict, fromformat: str) -> dict:
     return sample
 
 
-def maptofundamental(dirct: tuple | list) -> tuple:
+def maptofundamental(dirct: tuple) -> tuple:
     """
     Utility function to map a pair of angles to the fundamental polar range
 
     :param dirct: Inclination and azimuth angles
-    :type dirct: tuple | list
+    :type dirct: tuple
     :return: Remapped angles th and ph
     :rtype: tuple
     """
