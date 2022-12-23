@@ -426,7 +426,7 @@ def randompermutations(rangein: int, numpermute: int) -> list:
     return perms
 
 
-def jackknife(estfun: Callable, funargs: tuple | dict, sample: dict, dictkey: str = None, tupleind: int = None,
+def jackknife(estfun: Callable, funargs: tuple, sample: dict, dictkey: str = None, tupleind: int = None,
               alpha: float = 0.05, unbiasflag: bool = True) -> tuple:
     """
     Jackknife method for calculating an approximate confidence interval for an statistical parameter of a sample
