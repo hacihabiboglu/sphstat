@@ -315,20 +315,20 @@ def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> d
     :param plotflag: Flag to plot the Q-Q plots
     :type plotflag: bool
     :return: Dictionary containing the results of three tests:
-        - 'colatitute': Results of the colatitude test as a nested dictionary
-            - 'stat': Test statistic (float)
-            - 'crange': Critical range (float)
-            - 'H0': Test result (bool)
-        - 'longitude': Results of the longitude test as a nested dictionary
-            - 'stat': Test statistic (float)
-            - 'crange': Critical range (float)
-            - 'H0': Test result (bool)
-        - 'twovariable': Results of the two-variable test as a nested dictionary
-            - 'stat': Test statistic (float)
-            - 'crange': Critical range (float)
-            - 'H0': Test result (bool)
-        - 'H0': All three tests retain H0 then True, otherwise false
-        - 'alpha': Type-I error level
+    - 'colatitute': Results of the colatitude test as a nested dictionary
+        - 'stat': Test statistic (float)
+        - 'crange': Critical range (float)
+        - 'H0': Test result (bool)
+    - 'longitude': Results of the longitude test as a nested dictionary
+        - 'stat': Test statistic (float)
+        - 'crange': Critical range (float)
+        - 'H0': Test result (bool)
+    - 'twovariable': Results of the two-variable test as a nested dictionary
+        - 'stat': Test statistic (float)
+        - 'crange': Critical range (float)
+        - 'H0': Test result (bool)
+    - 'H0': All three tests retain H0 then True, otherwise false
+    - 'alpha': Type-I error level
 
     [1] Fisher, N. I. & Best, D. J. (1984). Goodness-of-fit tests for Fisher's distribution on the sphere. Austral. J. Statist. 26, 142-150.
     """
@@ -504,6 +504,7 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
 def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     """
     Parameter estimation for the Fisher distribution [1]_
+
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
     :param alpha: Calculate (1-alpha)% CI for kappa
