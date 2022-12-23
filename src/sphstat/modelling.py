@@ -310,7 +310,7 @@ def xcorrsamplevariable(samplecart: dict, variable: list, alpha: float = 0.05):
     return res
 
 
-def regresscircular(samplecart: dict, thetas: list, alpha0: float = np.pi/2, thr: float = 1e-2) -> tuple:
+def regresscircular(samplecart: dict, thetas: list, alpha0: float = np.pi / 2., thr: float = 1e-2) -> tuple:
     """
     Regression of a random unit vector on a circular variable [1]_
 
