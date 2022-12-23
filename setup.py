@@ -34,6 +34,6 @@ setup(
         'Programming Language :: Python :: 3.12',
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     include_package_data=True
 )

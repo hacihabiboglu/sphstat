@@ -19,7 +19,7 @@ Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering :: Information Analysis
-Requires-Python: >=3.6
+Requires-Python: >=3.8
 License-File: LICENSE
 
 UNKNOWN
