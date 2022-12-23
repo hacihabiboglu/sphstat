@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.utils &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sphstat package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sphstat.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sphstat.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of sphstat.</span>
+<span class="c1">#</span>
+<span class="c1"># sphstat is licensed under the MIT License.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2022 Huseyin Hacihabiboglu</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">==================================================================</span>
+<span class="sd">Utility functions</span>
+<span class="sd">==================================================================</span>
+
+<span class="sd">- :func:`degtorad` converts sample in &#39;deg&#39; to a sample in &#39;rad&#39;</span>
+<span class="sd">- :func:`readsample` reads one or more samples from an Excel file</span>
+<span class="sd">- :func:`polartocart` converts sample in &#39;rad&#39; format to a sample in &#39;cart&#39; format</span>
+<span class="sd">- :func:`carttopolar` converts sample in &#39;cart&#39; format to a sample in &#39;rad&#39; format</span>
+<span class="sd">- :func:`excludesample` removes an observation from a sample</span>
+<span class="sd">- :func:`deepcopy` generates a deep copy of a sample</span>
+<span class="sd">- :func:`poolsamples` combines multiple samples into a single sample</span>
+<span class="sd">- :func:`angle` calculates the angle between two vectors</span>
+<span class="sd">- :func:`cart2sph` converts a point from Cartesian to polar format</span>
+<span class="sd">- :func:`sph2cart` converts a point from polar to Cartesian format</span>
+<span class="sd">- :func:`negatesample` generates a sample with observations in the opposing direction of the observations in a sample</span>
+<span class="sd">- :func:`cot` calculates the cotangent of the input</span>
+<span class="sd">- :func:`poltoll` converts a pair of polar angles to langitude/latitude &#39;lonlat&#39; form</span>
+<span class="sd">- :func:`poltodi` converts a pair of polar angles to declination/inclination &#39;decinc&#39; form</span>
+<span class="sd">- :func:`convert` converts a sample in &#39;decinc&#39; or &#39;lonlat&#39; form to polar form</span>
+<span class="sd">- :func:`maptofundamental` maps the angles to the fundamental range, i.e. 0 &lt;= th &lt;= pi and 0 &lt;= phi &lt; 2 * pi</span>
+<span class="sd">- :func:`randompermutations` creates a number of random permutation indices</span>
+<span class="sd">- :func:`jackknife` is a generic jackknife function</span>
+<span class="sd">- :func:`prettyprintdict` prints a dictionary (e.g. results from a hypothesis test) in an easy to read format</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">openpyxl</span> <span class="k">as</span> <span class="nn">pyxlsx</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+
+<div class="viewcode-block" id="degtorad"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.degtorad">[docs]</a><span class="k">def</span> <span class="nf">degtorad</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility function to convert observations on the unit sphere given in degrees to radians and create a new &#39;sample&#39;</span>
+
+<span class="sd">    :param sample: Dictionary that contains the data (e.g. from readsample())</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :return: Converted dictionary containing data, number of data points, and type of data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sampleconverted</span> <span class="o">=</span> <span class="n">sample</span>
+    <span class="k">if</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;rad&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sample</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;deg&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The sample type should be deg&#39;</span><span class="p">)</span>
+    <span class="n">ln</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ln</span><span class="p">):</span>
+        <span class="n">sampleconverted</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampleconverted</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">/</span> <span class="mf">360.</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="n">sampleconverted</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampleconverted</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">/</span> <span class="mf">360.</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="n">sampleconverted</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="k">return</span> <span class="n">sampleconverted</span></div>
+
+
+<div class="viewcode-block" id="readsample"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.readsample">[docs]</a><span class="k">def</span> <span class="nf">readsample</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wsindex</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s1">&#39;deg&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads a number of observations comprising a sample. Data assumed to be polar and in degrees by default</span>
+
+<span class="sd">    :param path: String containing the PATH to the file containing data to be processed</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param wsindex: Index of the worksheet in which the data resides, Defaults to 0 which is the active worksheet</span>
+<span class="sd">    :type wsindex: int, optional</span>
+<span class="sd">    :param typ: &#39;deg&#39;, &#39;rad&#39;, &#39;cart&#39; Defaults to &#39;deg&#39;</span>
+<span class="sd">    :type typ: str</span>
+<span class="sd">    :return: Dictionary containing data, number of data points, and type of data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">wb</span> <span class="o">=</span> <span class="n">pyxlsx</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">wa</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheets</span><span class="p">[</span><span class="n">wsindex</span><span class="p">]</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">cella</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">cellb</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tetas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">phis</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">wa</span><span class="p">[</span><span class="n">cella</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataa</span> <span class="o">=</span> <span class="n">wa</span><span class="p">[</span><span class="n">cella</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">datab</span> <span class="o">=</span> <span class="n">wa</span><span class="p">[</span><span class="n">cellb</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">tetas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataa</span><span class="p">)</span>
+        <span class="n">phis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datab</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">cella</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+        <span class="n">cellb</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tetas</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phis</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tetas</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">phis</span><span class="p">)</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tetas</span><span class="p">)</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">typ</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">degtorad</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sample</span></div>
+
+
+<div class="viewcode-block" id="polartocart"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.polartocart">[docs]</a><span class="k">def</span> <span class="nf">polartocart</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the sample given in polar coordinates to Cartesian</span>
+
+<span class="sd">    :param sample: Dictionary that contains the data (e.g. from readsample())</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :return: Converted dictionary containing data, number of data points, and type of data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span>
+    <span class="n">samplecart</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">th</span><span class="p">)):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)))</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">return</span> <span class="n">samplecart</span></div>
+
+
+<div class="viewcode-block" id="carttopolar"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.carttopolar">[docs]</a><span class="k">def</span> <span class="nf">carttopolar</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the sample given in Cartesian coordinates to polar/spherical</span>
+
+<span class="sd">    :param sample: Dictionary that contains the data (e.g. from readsample()) in &#39;cart&#39; format</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :return: Converted dictionary containing data, number of data points, and type of data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplepol</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+        <span class="n">th</span><span class="p">,</span> <span class="n">ph</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">thi</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">maptofundamental</span><span class="p">((</span><span class="n">th</span><span class="p">,</span> <span class="n">ph</span><span class="p">))</span>
+        <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thi</span><span class="p">)</span>
+        <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+    <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">samplepol</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="k">return</span> <span class="n">samplepol</span></div>
+
+
+<div class="viewcode-block" id="excludesample"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.excludesample">[docs]</a><span class="k">def</span> <span class="nf">excludesample</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">excludeind</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exclude the datum with a given index from the data and generate new sample with the outlier eliminated</span>
+
+<span class="sd">    :param samplecart: Dictionary that contains the data (e.g. from readsample()) in &#39;cart&#39; format</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :param excludeind: Index of the datum to be excluded</span>
+<span class="sd">    :return: Dictionary with the datum removed</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">ssamp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">scpy</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+    <span class="n">scpy</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">excludeind</span><span class="p">)</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">scpy</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">return</span> <span class="n">ssamp</span></div>
+
+
+<div class="viewcode-block" id="deepcopy"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.deepcopy">[docs]</a><span class="k">def</span> <span class="nf">deepcopy</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a new data dictionary that is a (deep) copy of the original</span>
+
+<span class="sd">    :param samplecart: Dictionary that contains the data (e.g. from readsample()) in &#39;cart&#39; format</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :return: Dictionary with the datum removed</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ssamp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="n">ssamp</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">return</span> <span class="n">ssamp</span></div>
+
+
+<div class="viewcode-block" id="poolsamples"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.poolsamples">[docs]</a><span class="k">def</span> <span class="nf">poolsamples</span><span class="p">(</span><span class="n">samplelist</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s1">&#39;cart&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Combine multiple samples in a single data dictionary</span>
+
+<span class="sd">    :param samplelist: List of data dictionaries</span>
+<span class="sd">    :type samplelist: list</span>
+<span class="sd">    :param typ: &#39;deg&#39;, &#39;rad&#39;, &#39;cart&#39; Defaults to &#39;cart&#39;</span>
+<span class="sd">    :type typ: str</span>
+<span class="sd">    :return: Dictionary that contains all data in the input list of data dictionaries</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ntot</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samplelist</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">typ</span>  <span class="c1"># Make sure that the type of all data are the same</span>
+
+    <span class="n">pooledsample</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">pooledsample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">typ</span>
+    <span class="n">pooledsample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samplelist</span><span class="p">:</span>
+        <span class="n">ntot</span> <span class="o">+=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+            <span class="n">pooledsample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="n">pooledsample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ntot</span>
+
+    <span class="k">return</span> <span class="n">pooledsample</span></div>
+
+
+<div class="viewcode-block" id="angle"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.angle">[docs]</a><span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="n">pt1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pt2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the angle between two unit vectors</span>
+
+<span class="sd">    :param pt1: Vector with unit norm</span>
+<span class="sd">    :type pt1: numpy.array</span>
+<span class="sd">    :param pt2: Vector with unit norm</span>
+<span class="sd">    :type pt2: numpy.array</span>
+<span class="sd">    :return: Angle between the two vectors in radians</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">pt1</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">pt2</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pt1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pt2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="cart2sph"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.cart2sph">[docs]</a><span class="k">def</span> <span class="nf">cart2sph</span><span class="p">(</span><span class="n">pt</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert unit vector from Cartesian to polar (i.e. spherical) coordinates</span>
+
+<span class="sd">    :param pt: Unit norm vector in Cartesian coordinates</span>
+<span class="sd">    :return: Tuple containing inclination and azimuth angles: th, ph</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pt</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">th</span><span class="p">,</span> <span class="n">ph</span>
+    <span class="k">if</span> <span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">th</span><span class="p">,</span> <span class="n">ph</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">th</span><span class="p">,</span> <span class="n">ph</span></div>
+
+
+<div class="viewcode-block" id="sph2cart"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.sph2cart">[docs]</a><span class="k">def</span> <span class="nf">sph2cart</span><span class="p">(</span><span class="n">th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert unit vector from polar (i.e. spherical) tp Cartesian coordinates</span>
+
+<span class="sd">    :param th: Inclination angle of the vector 0 &lt;= th &lt;= pi</span>
+<span class="sd">    :type th: float</span>
+<span class="sd">    :param ph: Azimuth angle of the vector 0 &lt;= th &lt;= 2 * pi</span>
+<span class="sd">    :type ph: float</span>
+<span class="sd">    :return: Array containing x, y, z components of the vector</span>
+<span class="sd">    :rtype: np.array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="negatesample"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.negatesample">[docs]</a><span class="k">def</span> <span class="nf">negatesample</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Negate the vectors in a sample</span>
+
+<span class="sd">    :param samplecart: Dictionary that contains the data (e.g. from readsample())</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :return: Sample with observations containing negated directions</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">sampleneg</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+        <span class="n">sampleneg</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sampleneg</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">sampleneg</span></div>
+
+
+<div class="viewcode-block" id="cot"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.cot">[docs]</a><span class="k">def</span> <span class="nf">cot</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cotangent of the argument</span>
+
+<span class="sd">    :param x: Angle in radians</span>
+<span class="sd">    :type x: float | np.array</span>
+<span class="sd">    :return: Cotangent of the input</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="poltoll"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.poltoll">[docs]</a><span class="k">def</span> <span class="nf">poltoll</span><span class="p">(</span><span class="n">th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert polar form to longitude/latitude form</span>
+
+<span class="sd">    :param th: Colatitude angle (0 &lt;= th &lt;= np.pi)</span>
+<span class="sd">    :type th: float</span>
+<span class="sd">    :param ph: Longitude angle (0 &lt;= ph &lt; 2 * np.pi)</span>
+<span class="sd">    :type ph: float</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - lat: Latitude angle</span>
+<span class="sd">        - lon: Longitude angle</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">th</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ph</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Colatitude and longitude angles are not in fundamental range!&#39;</span><span class="p">)</span>
+
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">th</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">ph</span>
+    <span class="k">return</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span></div>
+
+
+<div class="viewcode-block" id="poltodi"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.poltodi">[docs]</a><span class="k">def</span> <span class="nf">poltodi</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="n">ph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert polar form to declination/inclination form</span>
+
+<span class="sd">    :param th: Colatitude angle (0 &lt;= th &lt;= np.pi)</span>
+<span class="sd">    :type th: float</span>
+<span class="sd">    :param ph: Longitude angle (0 &lt;= ph &lt; 2 * np.pi)</span>
+<span class="sd">    :type ph: float</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - lat: Inclination angle</span>
+<span class="sd">        - lon: Declination angle</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">th</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ph</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span>
+        <span class="n">th</span><span class="p">,</span> <span class="n">ph</span> <span class="o">=</span><span class="n">maptofundamental</span><span class="p">((</span><span class="n">th</span><span class="p">,</span> <span class="n">ph</span><span class="p">))</span>
+
+    <span class="n">inc</span> <span class="o">=</span> <span class="n">th</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">-</span> <span class="n">ph</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span></div>
+
+
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.convert">[docs]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">fromformat</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert sample to the polar coordinates used in sphstat package</span>
+<span class="sd">    :param sample: Sample in &#39;rad&#39; format</span>
+<span class="sd">    :param fromformat: One of &#39;latlon&#39;, &#39;decinc&#39;, &#39;plunge&#39;...</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="k">if</span> <span class="n">fromformat</span><span class="o">==</span><span class="s1">&#39;latlon&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">fromformat</span><span class="o">==</span><span class="s1">&#39;decinc&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">],</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sample</span></div>
+
+
+<div class="viewcode-block" id="maptofundamental"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.maptofundamental">[docs]</a><span class="k">def</span> <span class="nf">maptofundamental</span><span class="p">(</span><span class="n">dirct</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility function to map a pair of angles to the fundamental polar range</span>
+
+<span class="sd">    :param dirct: Inclination and azimuth angles</span>
+<span class="sd">    :type dirct: tuple | list</span>
+<span class="sd">    :return: Remapped angles th and ph</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">dirct</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">dirct</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">th</span><span class="p">,</span> <span class="n">ph</span></div>
+
+
+<div class="viewcode-block" id="randompermutations"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.randompermutations">[docs]</a><span class="k">def</span> <span class="nf">randompermutations</span><span class="p">(</span><span class="n">rangein</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numpermute</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate random permutations</span>
+
+<span class="sd">    :param rangein: Number of observations to be permuted (n)</span>
+<span class="sd">    :type rangein: int</span>
+<span class="sd">    :param numpermute: Number of unique permutations to use</span>
+<span class="sd">    :type numpermute: int</span>
+<span class="sd">    :return: List of lists of index permutations</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">numpermute</span> <span class="o">&lt;=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">rangein</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Number of permutations cannot be larger than n!&#39;</span><span class="p">)</span>
+    <span class="n">perms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">perms</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">numpermute</span><span class="p">:</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">rangein</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">v</span> <span class="o">!=</span> <span class="n">perm</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">perms</span><span class="p">):</span>
+            <span class="n">perms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">perms</span></div>
+
+
+<div class="viewcode-block" id="jackknife"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.jackknife">[docs]</a><span class="k">def</span> <span class="nf">jackknife</span><span class="p">(</span><span class="n">estfun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">funargs</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">dictkey</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tupleind</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">unbiasflag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jackknife method for calculating an approximate confidence interval for an statistical parameter of a sample</span>
+
+<span class="sd">    :param estfun: Function that outputs the desired statistical parameter</span>
+<span class="sd">    :type estfun: Callable</span>
+<span class="sd">    :param funargs: Arguments to be passed to estfun</span>
+<span class="sd">    :type funargs: tuple</span>
+<span class="sd">    :param sample: Sample to be used in the computations</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :param dictkey: If the function returns a dictionary use the value for this key</span>
+<span class="sd">    :param dictkey: &#39;str&#39;</span>
+<span class="sd">    :param tupleind: If the function returns a tuple use the value at this index</span>
+<span class="sd">    :param tupleind: int</span>
+<span class="sd">    :param alpha: (1-alpha)% CI is calculated</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :param unbiasflag: Flag indicating whether estfun gives an unbiased estimate</span>
+<span class="sd">    :type unbiasflag: bool</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - psijhat: Unbiased estimate using the jackknife method (float)</span>
+<span class="sd">        - ci: (1-alpha)% confidence interval</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">psilist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">estfun</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">funargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">psihat</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">dictkey</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">:</span>
+        <span class="n">psihat</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">tupleind</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="nb">int</span> <span class="ow">or</span> <span class="nb">float</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">psihat</span> <span class="o">=</span> <span class="n">res</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Output type of the estimator is not recognised!&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">samplered</span> <span class="o">=</span> <span class="n">excludesample</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">estfun</span><span class="p">(</span><span class="n">samplered</span><span class="p">,</span> <span class="o">*</span><span class="n">funargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">psii</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">dictkey</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">:</span>
+            <span class="n">psii</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">tupleind</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="nb">int</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="n">psii</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Output type of the estimator is not recognised!&#39;</span><span class="p">)</span>
+
+        <span class="n">psiihat</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">psihat</span> <span class="o">-</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">psii</span>
+        <span class="n">psilist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psiihat</span><span class="p">)</span>
+    <span class="n">psiihata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psilist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unbiasflag</span><span class="p">:</span>
+        <span class="n">psijhat</span> <span class="o">=</span> <span class="n">psihat</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">psijhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">psiihata</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">sj2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">psijhat</span> <span class="o">-</span> <span class="n">psiihata</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">za2</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="p">(</span><span class="n">psijhat</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sj2</span><span class="p">)</span> <span class="o">*</span> <span class="n">za2</span><span class="p">,</span> <span class="n">psijhat</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sj2</span><span class="p">)</span> <span class="o">*</span> <span class="n">za2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">psijhat</span><span class="p">,</span> <span class="n">ci</span></div>
+
+
+<div class="viewcode-block" id="prettyprintdict"><a class="viewcode-back" href="../../sphstat.utils.html#sphstat.utils.prettyprintdict">[docs]</a><span class="k">def</span> <span class="nf">prettyprintdict</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a dictionary contents in a user friendly way</span>
+
+<span class="sd">    :param data: A dictionary containing some data</span>
+<span class="sd">    :type data: dict</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    :rtype: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Data should be a dictionary&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

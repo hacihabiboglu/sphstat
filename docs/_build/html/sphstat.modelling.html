@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.modelling module &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sphstat.plotting module" href="sphstat.plotting.html" />
+    <link rel="prev" title="sphstat.distributions module" href="sphstat.distributions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sphstat package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.distributions.html">sphstat.distributions module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sphstat.modelling module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#functions-for-correlation-regression-temporal-association">Functions for correlation, regression, temporal association</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.isnotseriallyassociated"><code class="docutils literal notranslate"><span class="pre">isnotseriallyassociated()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.jackknife_corrci"><code class="docutils literal notranslate"><span class="pre">jackknife_corrci()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.regresscircular"><code class="docutils literal notranslate"><span class="pre">regresscircular()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.samplecorrelation"><code class="docutils literal notranslate"><span class="pre">samplecorrelation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.xcorrrandomsamples"><code class="docutils literal notranslate"><span class="pre">xcorrrandomsamples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.modelling.xcorrsamplevariable"><code class="docutils literal notranslate"><span class="pre">xcorrsamplevariable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.plotting.html">sphstat.plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sphstat package</a></li>
+      <li class="breadcrumb-item active">sphstat.modelling module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sphstat.modelling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sphstat.modelling">
+<span id="sphstat-modelling-module"></span><h1>sphstat.modelling module<a class="headerlink" href="#module-sphstat.modelling" title="Permalink to this heading"></a></h1>
+<section id="functions-for-correlation-regression-temporal-association">
+<h2>Functions for correlation, regression, temporal association<a class="headerlink" href="#functions-for-correlation-regression-temporal-association" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sphstat.modelling.xcorrrandomsamples" title="sphstat.modelling.xcorrrandomsamples"><code class="xref py py-func docutils literal notranslate"><span class="pre">xcorrrandomsamples()</span></code></a> calculates the cross-correlation between two samples</p></li>
+<li><p><a class="reference internal" href="#sphstat.modelling.samplecorrelation" title="sphstat.modelling.samplecorrelation"><code class="xref py py-func docutils literal notranslate"><span class="pre">samplecorrelation()</span></code></a> calculates the sample cross-correlation</p></li>
+<li><p><a class="reference internal" href="#sphstat.modelling.jackknife_corrci" title="sphstat.modelling.jackknife_corrci"><code class="xref py py-func docutils literal notranslate"><span class="pre">jackknife_corrci()</span></code></a> calculates a jeckknife estimate of the CI for the correlation coefficient</p></li>
+<li><p><a class="reference internal" href="#sphstat.modelling.xcorrsamplevariable" title="sphstat.modelling.xcorrsamplevariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">xcorrsamplevariable()</span></code></a> calculates the correlation of a sample with a variable</p></li>
+<li><p><a class="reference internal" href="#sphstat.modelling.regresscircular" title="sphstat.modelling.regresscircular"><code class="xref py py-func docutils literal notranslate"><span class="pre">regresscircular()</span></code></a> calculates a regression model for a circular variable</p></li>
+<li><p><a class="reference internal" href="#sphstat.modelling.isnotseriallyassociated" title="sphstat.modelling.isnotseriallyassociated"><code class="xref py py-func docutils literal notranslate"><span class="pre">isnotseriallyassociated()</span></code></a> tests the null hypothesis that the samples are independent as opposed to being temporally associated</p></li>
+</ul>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.isnotseriallyassociated">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">isnotseriallyassociated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/modelling.html#isnotseriallyassociated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.isnotseriallyassociated" title="Permalink to this definition"></a></dt>
+<dd><p>Test the null hypothesis that the observations are independent as opposed to having serial association <a href="#id5"><span class="problematic" id="id1">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level to be used in the test</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the keys:
+- Sstar: The test statistic (float)
+- cval: Critical value (float)
+- testresult: Test result (bool), False if the observations are serially associated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. &amp; Beran, R. J. (1967). Testing a sequence of unit vectors for randomness. J. Geophys. Res. 72, 5655-5659.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.jackknife_corrci">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">jackknife_corrci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samplecart2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/modelling.html#jackknife_corrci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.jackknife_corrci" title="Permalink to this definition"></a></dt>
+<dd><p>Jackknife method for calculating an approximate confidence interval for correlation coefficient</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart1</strong> (<em>dict</em>) – Sample 1 to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>samplecart2</strong> (<em>dict</em>) – Sample 2 to be used in the computations  in ‘cart’ form</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – (1-alpha)% CI is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>psijhat: Unbiased estimate using the jackknife method (float)</p></li>
+<li><p>ci: (1-alpha)% confidence interval (tuple)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.regresscircular">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">regresscircular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/modelling.html#regresscircular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.regresscircular" title="Permalink to this definition"></a></dt>
+<dd><p>Regression of a random unit vector on a circular variable <a href="#id6"><span class="problematic" id="id2">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>thetas</strong> (<em>list</em>) – List containing a circular variable</p></li>
+<li><p><strong>alpha0</strong> (<em>float</em>) – Initial angle for the iterations</p></li>
+<li><p><strong>thr</strong> (<em>float</em>) – Stopping condition for the iterations (Defaults to 1e-15)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Uhat: Regression matrix (np.array)</p></li>
+<li><p>w: np.array([0, 0, 1])</p></li>
+<li><p>alphahat: The angle to be used in the regression model</p></li>
+<li><p>fitmodel: Function to predict a value for a given variable [Callable]</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Jupp, P. E. &amp; Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.samplecorrelation">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">samplecorrelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samplecart2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/sphstat/modelling.html#samplecorrelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.samplecorrelation" title="Permalink to this definition"></a></dt>
+<dd><p>Correlation of two samples</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart1</strong> (<em>dict</em>) – Sample 1 to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>samplecart2</strong> (<em>dict</em>) – Sample 2 to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>indlist</strong> – Indices to use for the second sample (use only for the permutation test)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample cross correlation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.xcorrrandomsamples">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">xcorrrandomsamples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samplecart2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numperms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">htype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'='</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/modelling.html#xcorrrandomsamples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.xcorrrandomsamples" title="Permalink to this definition"></a></dt>
+<dd><p>Correlation coefficient of two random unit vectors and hypothesis test given two samples <a href="#id7"><span class="problematic" id="id3">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart1</strong> (<em>dict</em>) – Sample 1 to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>samplecart2</strong> (<em>dict</em>) – Sample 2 to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>numperms</strong> (<em>int</em>) – Number of permutations to be used in the permutation test</p></li>
+<li><p><strong>htype</strong> – Null hypothesis type, ‘!=’  for H0: rho!=0 (no correlation), ‘&gt;’ for H0: rho &gt; 0 (positive correlation), ‘&lt;’ for H0: rho &lt; 0 (negative correlation)</p></li>
+<li><p><strong>htype</strong> – str</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – (1-alpha)% CI is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing:
+- rhohat: Correlation coefficient estimate (float)
+- std: Standard deviation from jackknife estimate (float)
+- cval’: Critical values (tuple)
+- ci: (1-alpha)% CI for the correlation coefficient (tuple)
+- testresult: Hypothesis test result (bool)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I. &amp; Lee, A. J. (1986). Correlation coefficients for random variables on a unit sphere or hypersphere.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.modelling.xcorrsamplevariable">
+<span class="sig-prename descclassname"><span class="pre">sphstat.modelling.</span></span><span class="sig-name descname"><span class="pre">xcorrsamplevariable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/modelling.html#xcorrsamplevariable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.modelling.xcorrsamplevariable" title="Permalink to this definition"></a></dt>
+<dd><p>Correlation between a random unit vector or axis and another random variable
+Tests the null hypothesis (H0) that the spherical sample and the variable are
+uncorrelated <a href="#id8"><span class="problematic" id="id4">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be used in the computations in ‘cart’ form</p></li>
+<li><p><strong>variable</strong> (<em>list</em>) – List of floats or 1-D numpy arrays representing a variable associated with the points in the sample</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level to be used in the test</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing…
+- rhohatg: Correlation coefficient (float)
+- teststat: Test statistics (float)
+- cval: Critical value used in the test (float)
+- testresult: Result of the hypothesis test (bool)</p>
+</dd>
+</dl>
+<p>[1] Jupp, P. E. &amp; Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sphstat.distributions.html" class="btn btn-neutral float-left" title="sphstat.distributions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sphstat.plotting.html" class="btn btn-neutral float-right" title="sphstat.plotting module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.descriptives &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sphstat package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sphstat.descriptives</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sphstat.descriptives</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of sphstat.</span>
+<span class="c1">#</span>
+<span class="c1"># sphstat is licensed under the MIT License.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2022 Huseyin Hacihabiboglu</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">==================================================================</span>
+<span class="sd">Functions to calculate descriptive statistics on spherical data</span>
+<span class="sd">==================================================================</span>
+
+<span class="sd">- :func:`resultants` calculates the descriptive statistics of a sample</span>
+<span class="sd">- :func:`rotationmatrix` calculates the rotation matrix for a given set of rotation angles</span>
+<span class="sd">- :func:`rotationmatrix_withaxis` calculates the rotation matrix with respect to an axis</span>
+<span class="sd">- :func:`rotate` rotates a point with the given set of rotation angles</span>
+<span class="sd">- :func:`rotatesample` rotate all observations in a sample with the given set of rotation angles</span>
+<span class="sd">- :func:`movematrix` calculates the matrix which moves a vector to another vector</span>
+<span class="sd">- :func:`orientationmatrix` calculates the orientation matrix for a sample</span>
+<span class="sd">- :func:`momentofinertia` calculates the moment of intertia of a sample with respect to a point</span>
+<span class="sd">- :func:`pointsonanellipse` calculates a number of points on an ellipse</span>
+<span class="sd">- :func:`mediandir` calculates the median direction of a sample</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">cart2sph</span><span class="p">,</span> <span class="n">carttopolar</span><span class="p">,</span> <span class="n">cot</span><span class="p">,</span> <span class="n">maptofundamental</span>
+
+
+<div class="viewcode-block" id="resultants"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.resultants">[docs]</a><span class="k">def</span> <span class="nf">resultants</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Summary statistics of the data in sample. Data must be in cartesian coordinates (i.e. convert first using</span>
+<span class="sd">    polartocart() if data is in polar coordinates)</span>
+
+<span class="sd">    :param samplecart: Data in &#39;cart format&#39;</span>
+<span class="sd">    :return: A dictionary containing different summary statistics for the data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Sample type should be cart&#39;</span><span class="p">)</span>
+    <span class="n">resstat</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">resvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="n">resvec</span> <span class="o">+=</span> <span class="n">pt</span>
+    <span class="n">reslen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">resvec</span><span class="p">)</span>  <span class="c1"># R</span>
+    <span class="n">dircos</span> <span class="o">=</span> <span class="n">resvec</span> <span class="o">/</span> <span class="n">reslen</span>  <span class="c1"># xhat, yhat, zhat</span>
+    <span class="n">meandir</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">dircos</span><span class="p">)</span>  <span class="c1"># thetahat, phihat</span>
+    <span class="n">meanreslen</span> <span class="o">=</span> <span class="n">reslen</span> <span class="o">/</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>  <span class="c1"># Rbar</span>
+    <span class="n">resstat</span><span class="p">[</span><span class="s1">&#39;Directional Cosines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dircos</span>  <span class="c1"># xhat, yhat, zhat</span>
+    <span class="n">resstat</span><span class="p">[</span><span class="s1">&#39;Resultant Vector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resvec</span>  <span class="c1"># Sx, Sy, Sz</span>
+    <span class="n">resstat</span><span class="p">[</span><span class="s1">&#39;Resultant Length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reslen</span>  <span class="c1"># R</span>
+    <span class="n">resstat</span><span class="p">[</span><span class="s1">&#39;Mean Direction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meandir</span>   <span class="c1"># thetahat, phihat</span>
+    <span class="n">resstat</span><span class="p">[</span><span class="s1">&#39;Mean Resultant Length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meanreslen</span>  <span class="c1"># Rbar</span>
+    <span class="k">return</span> <span class="n">resstat</span></div>
+
+
+<div class="viewcode-block" id="rotationmatrix"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.rotationmatrix">[docs]</a><span class="k">def</span> <span class="nf">rotationmatrix</span><span class="p">(</span><span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotation matrix to rotate data in a given direction (th0, ph0)</span>
+
+<span class="sd">    :param th0: Inclination angle of the rotation</span>
+<span class="sd">    :param ph0: Azimuth angle of the rotation</span>
+<span class="sd">    :param psi0: Rotation angle about the polar axis (Default is 0)</span>
+<span class="sd">    :return: Rotation matrix</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+
+    <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+
+    <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A</span></div>
+
+
+<div class="viewcode-block" id="rotationmatrix_withaxis"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.rotationmatrix_withaxis">[docs]</a><span class="k">def</span> <span class="nf">rotationmatrix_withaxis</span><span class="p">(</span><span class="n">ua</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ub</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate a rotation matrix around an axis</span>
+
+<span class="sd">    :param ua: First unit vector</span>
+<span class="sd">    :type ua: np.array</span>
+<span class="sd">    :param ub: First unit vector</span>
+<span class="sd">    :type ub: np.array</span>
+<span class="sd">    :return: Rotation matrix</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ua</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ua</span><span class="p">)</span>
+        <span class="n">ub</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ub</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s1">&#39;Vectors have to be unit norm.&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ua</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ub</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The vectors are not of the correct shape.&#39;</span><span class="p">)</span>
+
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ua</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">ua</span> <span class="o">-</span> <span class="n">ub</span> <span class="o">*</span> <span class="n">ab</span>
+    <span class="n">ca</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ca</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">B</span> <span class="o">-=</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">ub</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">ub</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span> <span class="o">+</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<div class="viewcode-block" id="rotate"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.rotate">[docs]</a>                                                         <span class="o">@</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">A</span></div>
+
+
+<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">pt</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotate a single point by (th0, ph0, psi0)</span>
+
+<span class="sd">    :param pt: Point to be rotated</span>
+<span class="sd">    :type pt: np.ndarray</span>
+<span class="sd">    :param th0: Inclination rotation angle (in rad)</span>
+<span class="sd">    :type th0: float</span>
+<span class="sd">    :param ph0: Azimuth rotation angle (in rad)</span>
+<span class="sd">    :type ph0: float</span>
+<span class="sd">    :param psi0: Polar axis rotation angle (Defaults to 0.0)</span>
+<span class="sd">    :type psi0: float</span>
+<span class="sd">    :return: Rotated point</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Input point is not of the correct type/shape.&#39;</span><span class="p">)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">rotationmatrix</span><span class="p">(</span><span class="n">th0</span><span class="p">,</span> <span class="n">ph0</span><span class="p">,</span> <span class="n">psi0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">pt</span></div>
+
+
+<div class="viewcode-block" id="rotatesample"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.rotatesample">[docs]</a><span class="k">def</span> <span class="nf">rotatesample</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotate all observations in a sample by (th0, ph0, psi0)</span>
+
+<span class="sd">    :param sample: Sample to be rotated in cart format</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :param th0: Inclination rotation angle (in rad)</span>
+<span class="sd">    :type th0: float</span>
+<span class="sd">    :param ph0: Azimuth rotation angle (in rad)</span>
+<span class="sd">    :type ph0: float</span>
+<span class="sd">    :param psi0: Polar axis rotation angle (Defaults to 0.0)</span>
+<span class="sd">    :type psi0: float</span>
+<span class="sd">    :return: Sample with all points rotated by the given rotation parameters</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Sample should be of type cart.&#39;</span><span class="p">)</span>
+
+    <span class="n">samplerot</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplerot</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplerot</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">samplerot</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span>
+        <span class="n">samplerot</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotate</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,)),</span> <span class="n">th0</span><span class="p">,</span> <span class="n">ph0</span><span class="p">,</span> <span class="n">psi0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">samplerot</span></div>
+
+
+<div class="viewcode-block" id="movematrix"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.movematrix">[docs]</a><span class="k">def</span> <span class="nf">movematrix</span><span class="p">(</span><span class="n">pt1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pt2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Move a vector pt1 to pt2</span>
+
+<span class="sd">    :param pt1: Source point</span>
+<span class="sd">    :type pt1: np.ndarray</span>
+<span class="sd">    :param pt2: Destination point</span>
+<span class="sd">    :type pt2: np.ndarray</span>
+<span class="sd">    :return: Matrix that moves pt1 to pt2 such that pt2 = H @ pt1,</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pt1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pt2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Points should have unit norm.&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">pt1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">pt2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Points should have 3 components.&#39;</span><span class="p">)</span>
+
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">pt1</span> <span class="o">+</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">pt1</span> <span class="o">+</span> <span class="n">pt2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pt1</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">pt2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">H</span></div>
+
+
+<div class="viewcode-block" id="orientationmatrix"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.orientationmatrix">[docs]</a><span class="k">def</span> <span class="nf">orientationmatrix</span><span class="p">(</span><span class="n">samplecart</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the orientation matrix and its eigenvectors / eigenvalues for a given sample</span>
+
+<span class="sd">    :param samplecart: Sample in cart format</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :return: Orientation matrix</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Sample type should be cart.&#39;</span><span class="p">)</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">jnd</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">T</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="n">jnd</span><span class="p">]</span> <span class="o">+=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">n</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">*</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">n</span><span class="p">][</span><span class="n">jnd</span><span class="p">]</span>
+    <span class="n">tauhat</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">taubar</span> <span class="o">=</span> <span class="n">tauhat</span> <span class="o">/</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">Tmat</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span>
+    <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;tauhat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tauhat</span>
+    <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">taubar</span>
+    <span class="k">return</span> <span class="n">Tmat</span></div>
+
+
+<div class="viewcode-block" id="momentofinertia"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.momentofinertia">[docs]</a><span class="k">def</span> <span class="nf">momentofinertia</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">pt0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the moment of inertia for a point given a sample</span>
+
+<span class="sd">    :param samplecart: Sample in cart format</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :param pt0: Point</span>
+<span class="sd">    :type pt0: np.ndarray</span>
+<span class="sd">    :return: Moment of inertia</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Sample type should be cart.&#39;</span><span class="p">)</span>
+
+    <span class="n">Tmat</span> <span class="o">=</span> <span class="n">orientationmatrix</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+    <span class="n">inertia</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pt0</span><span class="p">,</span> <span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span> <span class="o">@</span> <span class="n">pt0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">inertia</span></div>
+
+
+<div class="viewcode-block" id="pointsonanellipse"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.pointsonanellipse">[docs]</a><span class="k">def</span> <span class="nf">pointsonanellipse</span><span class="p">(</span><span class="n">h1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h3</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ellipsecoeffs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">psinum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">360</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate a number of points on an ellipse on the sphere</span>
+
+<span class="sd">    :param h1: First axis</span>
+<span class="sd">    :type h1: np.ndarray</span>
+<span class="sd">    :param h2: Second axis</span>
+<span class="sd">    :type h2: np.ndarray</span>
+<span class="sd">    :param h3: Third axis</span>
+<span class="sd">    :type h3: np.ndarray</span>
+<span class="sd">    :param ellipsecoeffs: Parameters of the ellipse</span>
+<span class="sd">    :type ellipsecoeffs: tuple</span>
+<span class="sd">    :param psinum: Number of points to calculate</span>
+<span class="sd">    :type psinum: int</span>
+<span class="sd">    :return: Points on a sphere as a list</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">h1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">h2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">h3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">h2</span><span class="p">,</span> <span class="n">h3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The three axes should have unit norm and should be orthogonal&#39;</span><span class="p">)</span>
+
+    <span class="n">Hmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">Hmat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">h1</span>
+    <span class="n">Hmat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">h2</span>
+    <span class="n">Hmat</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">h3</span>
+
+    <span class="c1"># Step 1</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">ellipsecoeffs</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="p">[</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">]])</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Step 2</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">/</span><span class="n">t1</span><span class="p">)</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">/</span><span class="n">t2</span><span class="p">)</span>
+
+    <span class="c1"># Step 3</span>
+    <span class="n">psis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">psinum</span><span class="p">)</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">g1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">psis</span><span class="p">)</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">g2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">psis</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">v2</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">v2</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Step 4</span>
+    <span class="n">ptsonellipse</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">psinum</span><span class="p">):</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">ind</span><span class="p">]])</span>
+        <span class="n">ptsonellipse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Hmat</span> <span class="o">@</span> <span class="n">pt</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ptsonellipse</span></div>
+
+
+<div class="viewcode-block" id="shapestrength"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.shapestrength">[docs]</a><span class="k">def</span> <span class="nf">shapestrength</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exploratory summary metrics for assessing properties of the underlying distribution</span>
+
+<span class="sd">    :param sample: Sample in cart format</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - shape: Shape parameter</span>
+<span class="sd">        - strength: Strength parameter</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Sample type should be cart.&#39;</span><span class="p">)</span>
+
+    <span class="n">Tmat</span> <span class="o">=</span> <span class="n">orientationmatrix</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">strength</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">shape</span><span class="p">,</span> <span class="n">strength</span></div>
+
+
+<div class="viewcode-block" id="mediandir"><a class="viewcode-back" href="../../sphstat.descriptives.html#sphstat.descriptives.mediandir">[docs]</a><span class="k">def</span> <span class="nf">mediandir</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ciflag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the median direction and the confidence cone of the sample.</span>
+<span class="sd">    Before this, make sure that the sample comes from a unimodal distribution</span>
+
+<span class="sd">    :param sample: Sample to be tested in &#39;cart&#39; format</span>
+<span class="sd">    :type sample: dict</span>
+<span class="sd">    :param ciflag: (1-alpha)% confidence cone calculation</span>
+<span class="sd">    :type ciflag: bool</span>
+<span class="sd">    :param alpha: Type-I error level for the CI  (e.g. 0.05)</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :return: Tuple with:</span>
+<span class="sd">        - Median direction [theta, phi] (np.array)</span>
+<span class="sd">        - Optimisation successful? (bool)</span>
+<span class="sd">        - Confidence cone parameters (dict)</span>
+<span class="sd">        - W matrix (np.ndarray)</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Cross-checked with Appendix_B1 data</span>
+    <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">resultants</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;Mean Direction&#39;</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">errmin</span><span class="p">(</span><span class="n">thph</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">thph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="n">thph</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+        <span class="n">yp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+        <span class="n">zp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">xp</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">zp</span><span class="p">))</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">err</span>
+    <span class="c1"># We will use Nelder-Mead to minimise the arc lengths</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">errmin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ms</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Nelder-Mead&#39;</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+    <span class="n">medi</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">medi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">medi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">medi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">medi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">success</span>
+    <span class="n">ccone</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">ciflag</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">25</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The sample size cannot be less than 25 for CI calculation.&#39;</span><span class="p">)</span>
+        <span class="n">samprot</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">medi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">medi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.</span><span class="p">)</span>
+        <span class="n">samppol</span> <span class="o">=</span> <span class="n">carttopolar</span><span class="p">(</span><span class="n">samprot</span><span class="p">)</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">])</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">])</span>
+
+        <span class="n">C11</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cot</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">C22</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cot</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">C12</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cot</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">C11</span><span class="p">,</span> <span class="n">C12</span><span class="p">],[</span><span class="n">C12</span><span class="p">,</span> <span class="n">C22</span><span class="p">]])</span>
+
+        <span class="n">sigma11</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">))</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">sigma22</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">))</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">sigma12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ph</span><span class="p">))</span> <span class="o">/</span> <span class="n">samppol</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+
+        <span class="n">Sigma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">sigma11</span><span class="p">,</span> <span class="n">sigma12</span><span class="p">],[</span><span class="n">sigma12</span><span class="p">,</span> <span class="n">sigma22</span><span class="p">]])</span>
+
+        <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)),</span> <span class="n">C</span><span class="p">)</span>
+
+        <span class="n">A</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+
+        <span class="n">v</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">ccone</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">ccone</span><span class="p">[</span><span class="s1">&#39;coeffs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+        <span class="n">ccone</span><span class="p">[</span><span class="s1">&#39;eigv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">ccone</span><span class="p">[</span><span class="s1">&#39;eigu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
+
+    <span class="k">return</span> <span class="n">medi</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">ccone</span><span class="p">,</span> <span class="n">W</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

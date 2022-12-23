@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sphstat package" href="modules.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#coordinate-system">Coordinate system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#importing-sphstat">Importing <code class="docutils literal notranslate"><span class="pre">sphstat</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-and-converting-a-sample">Reading and converting a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#descriptive-statistics-of-spherical-data">Descriptive statistics of spherical data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-a-sample">Plotting a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-samples-from-spherical-distributions">Generating samples from spherical distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#statistics-on-a-single-sample">Statistics on a single sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#statistics-on-two-or-more-samples">Statistics on two or more samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#correlation-regression-temporal-association">Correlation, regression, temporal association</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sphstat package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">sphstat</span></code> implements includes several modules whose names are pretty
+self-explanatory. These are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">descriptives</span></code>: Functions for descriptive statistics on spherical
+data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distributions</span></code>: Functions for generating data from different
+spherical distributions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">singlesample</span></code>: Functions for single-sample tests on spherical data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">twosample</span></code>: Functions for inferential staticts on two or more
+samples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modelling</span></code>: Functions for cross-correlation, regression, and
+temporal analysis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">utils</span></code>: Utility functions used by other modules</p></li>
+</ul>
+<section id="coordinate-system">
+<h2>Coordinate system<a class="headerlink" href="#coordinate-system" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sphstat</span></code> uses the polar (Colatitude/Longitude) coortinates with
+<span class="math notranslate nohighlight">\(0&lt; \theta&lt; \pi\)</span> defined from the z-axis and <span class="math notranslate nohighlight">\(0&lt; \phi&lt; 2\pi\)</span> as shown
+in the figure below.</p>
+<p><a class="reference internal" href="_images/coord.png"><img alt="image0" src="_images/coord.png" style="width: 450px;" /></a></p>
+<p>The following examples demonstrate the usage of <code class="docutils literal notranslate"><span class="pre">sphstat</span></code>.</p>
+</section>
+<section id="importing-sphstat">
+<h2>Importing <code class="docutils literal notranslate"><span class="pre">sphstat</span></code><a class="headerlink" href="#importing-sphstat" title="Permalink to this heading"></a></h2>
+<p>After installation, <code class="docutils literal notranslate"><span class="pre">sphstat</span></code> is imported just like any other Python
+package by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sphstat</span>
+</pre></div>
+</div>
+</section>
+<section id="reading-and-converting-a-sample">
+<h2>Reading and converting a sample<a class="headerlink" href="#reading-and-converting-a-sample" title="Permalink to this heading"></a></h2>
+<p>Presently only Excel files are accepted as input. Each worksheet should
+contain a single sample. Data can either be in degrees or in radians.
+Data in three different spherical coordinate systems can be processed.
+The default system is polar, but longitude/latitute (i.e. ‘lonlat’)
+and declination/inclination (i.e.’decinc’) can also be handled.
+While some functions require data in polar coordinates, some others will
+require a Cartesian representation. Necessary conversions need to be
+made. The following example shows reading data in the second worksheet,
+represented in declination/inclination form (e.g. Dec. in first column
+and Inc. in the second) in radians and converted to first to polar
+coordinates and then to Cartesian form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.utils</span> <span class="kn">import</span> <span class="n">readsample</span><span class="p">,</span> <span class="n">convert</span><span class="p">,</span> <span class="n">polartocart</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">readsample</span><span class="p">(</span><span class="s1">&#39;/PATH/TO/DATA/mydata.xlsx&#39;</span><span class="p">,</span> <span class="n">wsindex</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s1">&#39;rad&#39;</span><span class="p">)</span>
+<span class="n">samplepol</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;decinc&#39;</span><span class="p">)</span>
+<span class="n">samplecart</span> <span class="o">=</span> <span class="n">polartocart</span><span class="p">(</span><span class="n">samplepol</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="descriptive-statistics-of-spherical-data">
+<h2>Descriptive statistics of spherical data<a class="headerlink" href="#descriptive-statistics-of-spherical-data" title="Permalink to this heading"></a></h2>
+<p>The descriptive statistics of spherical data is obtained by using the
+<code class="docutils literal notranslate"><span class="pre">resultants()</span></code> function from</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.descriptives</span> <span class="kn">import</span> <span class="n">resultants</span>
+<span class="kn">from</span> <span class="nn">sphstat.utils</span> <span class="kn">import</span> <span class="n">prettyprintdict</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">resultants</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+<span class="n">Directional</span> <span class="n">Cosines</span><span class="p">:</span>  <span class="p">[</span> <span class="mf">0.22649571</span> <span class="o">-</span><span class="mf">0.07068299</span>  <span class="mf">0.97144408</span><span class="p">]</span>
+<span class="n">Resultant</span> <span class="n">Vector</span><span class="p">:</span>  <span class="p">[</span> <span class="mf">8.0846443</span>  <span class="o">-</span><span class="mf">2.52299178</span> <span class="mf">34.67518128</span><span class="p">]</span>
+<span class="n">Resultant</span> <span class="n">Length</span><span class="p">:</span>  <span class="mf">35.694469568249374</span>
+<span class="n">Mean</span> <span class="n">Direction</span><span class="p">:</span>  <span class="p">(</span><span class="mf">0.23955319922943338</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.30249497353817606</span><span class="p">)</span>
+<span class="n">Mean</span> <span class="n">Resultant</span> <span class="n">Length</span><span class="p">:</span>  <span class="mf">0.9915130435624826</span>
+</pre></div>
+</div>
+<p>Another useful function is <code class="docutils literal notranslate"><span class="pre">mediandir()</span></code> which calculated the median
+direction as well as the parameters for (1-alpha)% confidence cone:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.descriptives</span> <span class="kn">import</span> <span class="n">mediandir</span>
+
+<span class="n">medi</span><span class="p">,</span> <span class="n">ccone</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">mediandir</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">ciflag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plotting-a-sample">
+<h2>Plotting a sample<a class="headerlink" href="#plotting-a-sample" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sphstat</span></code> uses either one of Mollweide or Lambert projections to
+display data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.plotting</span> <span class="kn">import</span> <span class="n">plotdata</span>
+
+<span class="n">plotdata</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span>  <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;lambert&#39;</span><span class="p">)</span>
+<span class="n">plotdata</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span>  <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;mollweide&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will produce the following scatterplots, respectively.</p>
+<p><strong>Lambert projection:</strong></p>
+<p><img alt="image1" src="_images/lambert.png" /></p>
+<p><strong>Mollweide projection:</strong></p>
+<p><img alt="image2" src="_images/mollweide.png" /></p>
+<p><strong>Multiple data plot</strong></p>
+<p>Two or more data can also be overlaid. <code class="docutils literal notranslate"><span class="pre">plotdatalist()</span></code> will produce
+the necessary legend for the scatterplot:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.plotting</span> <span class="kn">import</span> <span class="n">plotdatalist</span>
+
+<span class="n">samplelist</span> <span class="o">=</span> <span class="p">[</span><span class="n">sampleA</span><span class="p">,</span> <span class="n">sampleB</span><span class="p">]</span>
+<span class="n">plotdatalist</span><span class="p">(</span><span class="n">samplelist</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;mollweide&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="image3" src="_images/mollweide2.png" /></p>
+</section>
+<section id="generating-samples-from-spherical-distributions">
+<h2>Generating samples from spherical distributions<a class="headerlink" href="#generating-samples-from-spherical-distributions" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sphstat.distributions</span></code> provides functions that can generate vectors
+randomly drawn from uniform, Fisher, Kent and Watson distributions</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.distributions</span> <span class="kn">import</span> <span class="n">kent</span>
+
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">kent</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]),</span> <span class="n">mu0</span><span class="p">)</span>
+<span class="n">samplerad</span> <span class="o">=</span> <span class="n">carttopolar</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="n">plotdata</span><span class="p">(</span><span class="n">samplerad</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;mollweide&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="image4" src="_images/kent.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.distributions</span> <span class="kn">import</span> <span class="n">watson</span>
+
+<span class="n">samplewatson</span> <span class="o">=</span> <span class="n">watson</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">lamb</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">samplerad</span> <span class="o">=</span> <span class="n">carttopolar</span><span class="p">(</span><span class="n">samplewatson</span><span class="p">)</span>
+<span class="n">splt</span><span class="o">.</span><span class="n">plotdata</span><span class="p">(</span><span class="n">samplerad</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;mollweide&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="image5" src="_images/watson.png" /></p>
+</section>
+<section id="statistics-on-a-single-sample">
+<h2>Statistics on a single sample<a class="headerlink" href="#statistics-on-a-single-sample" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sphstat.singlesample</span></code> contains different tests and parameter
+estimators for a single sample. For example, testing whether a sample
+comes from a uniform distribution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.singlesample</span> <span class="kn">import</span> <span class="n">isuniform</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">isuniform</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">teststat</span><span class="p">:</span>  <span class="mf">86.04615038397233</span>
+<span class="n">crange</span><span class="p">:</span>  <span class="mf">7.814727903251179</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">False</span>
+</pre></div>
+</div>
+<p>…or Fisher distribution (which provides the results of three different
+tests for Fisherianness):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.singlesample</span> <span class="kn">import</span> <span class="n">isfisher</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">isfisher</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">colatitute</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;stat&#39;</span><span class="p">:</span> <span class="mf">0.9137353833832544</span><span class="p">,</span> <span class="s1">&#39;crange&#39;</span><span class="p">:</span> <span class="mf">1.094</span><span class="p">,</span> <span class="s1">&#39;H0&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="n">longitude</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;stat&#39;</span><span class="p">:</span> <span class="mf">1.5941243439349297</span><span class="p">,</span> <span class="s1">&#39;crange&#39;</span><span class="p">:</span> <span class="mf">1.207</span><span class="p">,</span> <span class="s1">&#39;H0&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="n">twovariable</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;stat&#39;</span><span class="p">:</span> <span class="mf">0.7669521350409133</span><span class="p">,</span> <span class="s1">&#39;crange&#39;</span><span class="p">:</span> <span class="mf">0.895</span><span class="p">,</span> <span class="s1">&#39;H0&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="n">H0</span><span class="p">:</span>  <span class="kc">False</span>
+<span class="n">alpha</span><span class="p">:</span>  <span class="mf">0.05</span>
+</pre></div>
+</div>
+<p>Parameter estimation functions output multiple values. For example,
+<code class="docutils literal notranslate"><span class="pre">fisherparams()</span></code> will output mean direction, concentration parameters,
+semi-vertical angle, and (1-alpha)% CI for the concentration parameter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.singlesample</span> <span class="kn">import</span> <span class="n">fisherparams</span>
+
+<span class="n">mdir</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">thetaalpha</span><span class="p">,</span> <span class="n">cikappa</span> <span class="o">=</span> <span class="n">fisherparams</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are also functions to test the sample statistics against
+hypothethical values. For example, whether the population concentration
+parameter is a given value can be tested:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.singlesample</span> <span class="kn">import</span> <span class="n">kappatest</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">kappatest</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">kappa0</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">R</span><span class="p">:</span>  <span class="mf">30.765364522847698</span>
+<span class="n">cvaltup</span><span class="p">:</span>  <span class="p">(</span><span class="mf">32.781120236887155</span><span class="p">,</span> <span class="mf">32.559979744967514</span><span class="p">)</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="statistics-on-two-or-more-samples">
+<h2>Statistics on two or more samples<a class="headerlink" href="#statistics-on-two-or-more-samples" title="Permalink to this heading"></a></h2>
+<p>The tests and methods in <code class="docutils literal notranslate"><span class="pre">sphstat.twosample</span></code> provides tests and
+methods for the analysis and comparison of multiple vectorial samples on
+the unit sphere. For example, in the following example, three samples
+are tested for a common mean direction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.twosample</span> <span class="kn">import</span> <span class="n">iscommonmean</span>
+<span class="kn">from</span> <span class="nn">sphstat.utils</span> <span class="kn">import</span> <span class="n">polartocart</span><span class="p">,</span> <span class="n">convert</span>
+
+<span class="n">sample1rad</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="s1">&#39;decinc&#39;</span><span class="p">)</span>
+<span class="n">sample2rad</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">sample2</span><span class="p">,</span> <span class="s1">&#39;decinc&#39;</span><span class="p">)</span>
+<span class="n">sample3rad</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">sample3</span><span class="p">,</span> <span class="s1">&#39;decinc&#39;</span><span class="p">)</span>
+<span class="n">slist</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample1rad</span><span class="p">,</span> <span class="n">sample2rad</span><span class="p">,</span> <span class="n">sample3rad</span><span class="p">]</span> <span class="c1">#, sample3, sample4]</span>
+<span class="n">slistcart</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slist</span><span class="p">:</span>
+    <span class="n">slistcart</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">polartocart</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">iscommonmean</span><span class="p">(</span><span class="n">slistcart</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">Gr</span><span class="p">:</span>  <span class="mf">9.543041349403211</span>
+<span class="n">cval</span><span class="p">:</span>  <span class="mf">9.487729036781154</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">False</span>
+</pre></div>
+</div>
+<p>There are also more specific tests if, for example, it is known that the
+underlying distributions are Fisher, a multiple comparison akin to
+running multiple t-tests on linear data is given by</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.twosample</span> <span class="kn">import</span> <span class="n">isfishercommonmean</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">isfishercommonmean</span><span class="p">(</span><span class="n">slistcart</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">Z</span><span class="p">:</span>  <span class="mf">0.9921425881206186</span>
+<span class="n">z0</span><span class="p">:</span>  <span class="mf">0.992171530518573</span>
+<span class="n">res</span><span class="p">:</span>  <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Similarly, a test similar to Levene’s test for testing whether multiple
+samples have the same concentration parameter is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.twosample</span> <span class="kn">import</span> <span class="n">isfishercommonkappa</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">isfishercommonkappa</span><span class="p">(</span><span class="n">slistcart</span><span class="p">)</span>
+<span class="n">prettyprintditc</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">Z</span><span class="p">:</span>  <span class="mf">4.853124235595307</span>
+<span class="n">cval</span><span class="p">:</span>  <span class="mf">5.991464547107979</span>
+<span class="n">df</span><span class="p">:</span>  <span class="mi">2</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="correlation-regression-temporal-association">
+<h2>Correlation, regression, temporal association<a class="headerlink" href="#correlation-regression-temporal-association" title="Permalink to this heading"></a></h2>
+<p>Functions in <code class="docutils literal notranslate"><span class="pre">sphstat.modelling</span></code> implement functionality to calculate
+correlations, regression and time-series analysis on spherical data. For
+example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.modelling</span> <span class="kn">import</span> <span class="n">xcorrrandomsamples</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">xcorrrandomsamples</span><span class="p">(</span><span class="n">sampcart1</span><span class="p">,</span> <span class="n">sampcart2</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">htype</span><span class="o">=</span><span class="s1">&#39;!=&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">rhohat</span><span class="p">:</span>  <span class="mf">0.8512942745968715</span>
+<span class="n">std</span><span class="p">:</span>  <span class="mf">0.03355675208163771</span>
+<span class="n">cval</span><span class="p">:</span>  <span class="p">(</span><span class="o">-</span><span class="mf">0.0661660798549282</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.12290819705298231</span><span class="p">)</span>
+<span class="n">ci</span><span class="p">:</span>  <span class="p">(</span><span class="mf">0.7855242490787221</span><span class="p">,</span> <span class="mf">0.9170643001150208</span><span class="p">)</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">True</span>
+</pre></div>
+</div>
+<p>indicates that two samples are correlated with a correlation coefficient
+of 0.851 with the 95% confidence interval also given.</p>
+<p>In order to check if there is any serial association between
+time-ordered observations in a sample:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphstat.modelling</span> <span class="kn">import</span> <span class="n">isn</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">isnotseriallyassociated</span><span class="p">(</span><span class="n">sampcart</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">prettyprintdict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">Sstar</span><span class="p">:</span>  <span class="mf">2.504563022268227</span>
+<span class="n">cval</span><span class="p">:</span>  <span class="mf">1.6448536269514722</span>
+<span class="n">testresult</span><span class="p">:</span>  <span class="kc">False</span>
+</pre></div>
+</div>
+<p>indicating that the observations are not serially associated at <span class="math notranslate nohighlight">\(\alpha=0.05\)</span></p>
+<p>level.</p>
+<section id="limitations">
+<h3>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading"></a></h3>
+<p>In its present version <code class="docutils literal notranslate"><span class="pre">sphstat</span></code>…</p>
+<ul class="simple">
+<li><p>…mostly works on larger (i.e. <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;=</span> <span class="pre">25</span></code>) sample sizes. While some
+bootstrapped methods (e.g. jackknife and permutation tests) are
+implemented not all are.</p></li>
+<li><p>…does not implement tests for axial and girdle data. A future version
+might include these tests</p></li>
+<li><p>…only implements the tests and methods given in Fisher, Lewis and
+Embleton [1] which is the most frequently used catalogue of tests and
+methods for spherical data. However, more recent methods exist, such
+as those in Ley and Verdebout [2]. These methods are planned to be
+incorporated into a future version.</p></li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h3>
+<p>[1] Fisher, N. I., Lewis, T., &amp; Embleton, B. J. (1993). Statistical
+analysis of spherical data. Cambridge University Press.</p>
+<p>[2] Ley, C., &amp; Verdebout, T. (2017). Modern directional statistics.
+Chapman and Hall/CRC.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="sphstat package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.modelling &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sphstat package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sphstat.modelling</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sphstat.modelling</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of sphstat.</span>
+<span class="c1">#</span>
+<span class="c1"># sphstat is licensed under the MIT License.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2022 Huseyin Hacihabiboglu</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">==================================================================</span>
+<span class="sd">Functions for correlation, regression, temporal association</span>
+<span class="sd">==================================================================</span>
+
+<span class="sd">- :func:`xcorrrandomsamples` calculates the cross-correlation between two samples</span>
+<span class="sd">- :func:`samplecorrelation` calculates the sample cross-correlation</span>
+<span class="sd">- :func:`jackknife_corrci` calculates a jeckknife estimate of the CI for the correlation coefficient</span>
+<span class="sd">- :func:`xcorrsamplevariable` calculates the correlation of a sample with a variable</span>
+<span class="sd">- :func:`regresscircular` calculates a regression model for a circular variable</span>
+<span class="sd">- :func:`isnotseriallyassociated` tests the null hypothesis that the samples are independent as opposed to being temporally associated</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">sqrtm</span>
+
+<span class="kn">from</span> <span class="nn">.descriptives</span> <span class="kn">import</span> <span class="n">resultants</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">randompermutations</span><span class="p">,</span> <span class="n">excludesample</span>
+<span class="kn">from</span> <span class="nn">.singlesample</span> <span class="kn">import</span> <span class="n">isfisher</span>
+
+
+<div class="viewcode-block" id="xcorrrandomsamples"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.xcorrrandomsamples">[docs]</a><span class="k">def</span> <span class="nf">xcorrrandomsamples</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">numperms</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">htype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Correlation coefficient of two random unit vectors and hypothesis test given two samples [1]_</span>
+
+<span class="sd">    :param samplecart1: Sample 1 to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart1: dict</span>
+<span class="sd">    :param samplecart2: Sample 2 to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart2: dict</span>
+<span class="sd">    :param numperms: Number of permutations to be used in the permutation test</span>
+<span class="sd">    :type numperms: int</span>
+<span class="sd">    :param htype: Null hypothesis type, &#39;!=&#39;  for H0: rho!=0 (no correlation), &#39;&gt;&#39; for H0: rho &gt; 0 (positive correlation), &#39;&lt;&#39; for H0: rho &lt; 0 (negative correlation)</span>
+<span class="sd">    :param htype: str</span>
+<span class="sd">    :param alpha: (1-alpha)% CI is calculated</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :return: Dictionary containing:</span>
+<span class="sd">        - rhohat: Correlation coefficient estimate (float)</span>
+<span class="sd">        - std: Standard deviation from jackknife estimate (float)</span>
+<span class="sd">        - cval&#39;: Critical values (tuple)</span>
+<span class="sd">        - ci: (1-alpha)% CI for the correlation coefficient (tuple)</span>
+<span class="sd">        - testresult: Hypothesis test result (bool)</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    [1] Fisher, N. I. &amp; Lee, A. J. (1986). Correlation coefficients for random variables on a unit sphere or hypersphere.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+        <span class="k">assert</span> <span class="n">samplecart2</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Type of both samples should be cart&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">samplecart2</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Samples should have the same size!&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">htype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Hypothesis type can be !=, &gt; or &lt; only!&#39;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+
+    <span class="n">perms</span> <span class="o">=</span> <span class="n">randompermutations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">numperms</span><span class="p">)</span>
+
+    <span class="n">rhovhat</span> <span class="o">=</span> <span class="n">samplecorrelation</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">)</span>
+    <span class="n">rholist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">perms</span><span class="p">:</span>
+        <span class="n">rhoi</span> <span class="o">=</span> <span class="n">samplecorrelation</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">,</span> <span class="n">perm</span><span class="p">)</span>
+        <span class="n">rholist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rhoi</span><span class="p">)</span>
+    <span class="n">rhoia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rholist</span><span class="p">)</span>
+
+    <span class="n">s1f</span> <span class="o">=</span> <span class="n">isfisher</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)[</span><span class="s1">&#39;H0&#39;</span><span class="p">]</span>
+    <span class="n">s2f</span> <span class="o">=</span> <span class="n">isfisher</span><span class="p">(</span><span class="n">samplecart2</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)[</span><span class="s1">&#39;H0&#39;</span><span class="p">]</span>
+
+    <span class="n">fisherflag</span> <span class="o">=</span> <span class="n">s1f</span> <span class="ow">and</span> <span class="n">s2f</span>
+
+    <span class="k">if</span> <span class="n">fisherflag</span><span class="p">:</span>
+        <span class="n">cval1</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+        <span class="n">cval2</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+        <span class="n">cval3</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+        <span class="n">cval4</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cval1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">rhoia</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">cval2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">rhoia</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">cval3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">rhoia</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">cval4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">rhoia</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">htype</span> <span class="o">==</span> <span class="s1">&#39;=&#39;</span><span class="p">:</span>
+        <span class="n">testresult</span> <span class="o">=</span> <span class="p">(</span><span class="n">cval1</span> <span class="o">&lt;</span> <span class="n">rhovhat</span> <span class="o">&lt;</span> <span class="n">cval2</span><span class="p">)</span>
+        <span class="n">cval</span> <span class="o">=</span> <span class="p">(</span><span class="n">cval1</span><span class="p">,</span> <span class="n">cval2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">htype</span> <span class="o">==</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span>
+        <span class="n">testresult</span> <span class="o">=</span> <span class="p">(</span><span class="n">rhovhat</span> <span class="o">&lt;</span> <span class="n">cval3</span><span class="p">)</span>
+        <span class="n">cval</span> <span class="o">=</span> <span class="p">(</span><span class="n">cval3</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">testresult</span> <span class="o">=</span> <span class="p">(</span><span class="n">rhovhat</span> <span class="o">&gt;</span> <span class="n">cval4</span><span class="p">)</span>
+        <span class="n">cval</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">cval4</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">jackknife_corrci</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rhohat&#39;</span><span class="p">:</span> <span class="n">rhovhat</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="n">st</span><span class="p">,</span> <span class="s1">&#39;cval&#39;</span><span class="p">:</span> <span class="n">cval</span><span class="p">,</span> <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="n">ci</span><span class="p">,</span> <span class="s1">&#39;testresult&#39;</span><span class="p">:</span> <span class="n">testresult</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="samplecorrelation"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.samplecorrelation">[docs]</a><span class="k">def</span> <span class="nf">samplecorrelation</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">indlist</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Correlation of two samples</span>
+
+<span class="sd">    :param samplecart1: Sample 1 to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart1: dict</span>
+<span class="sd">    :param samplecart2: Sample 2 to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart2: dict</span>
+<span class="sd">    :param indlist: Indices to use for the second sample (use only for the permutation test)</span>
+<span class="sd">    :return: Sample cross correlation</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+        <span class="k">assert</span> <span class="n">samplecart2</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Type of both samples should be cart&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">samplecart2</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Samples should have the same size!&#39;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">indlist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">indlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+    <span class="n">Cxxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">Cxx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">Cxsxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">Xi</span> <span class="o">=</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">Xistar</span> <span class="o">=</span> <span class="n">samplecart2</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">indlist</span><span class="p">[</span><span class="n">ind</span><span class="p">]]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">Cxxs</span> <span class="o">+=</span> <span class="n">Xi</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Xistar</span>
+        <span class="n">Cxx</span> <span class="o">+=</span> <span class="n">Xi</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Xi</span>
+        <span class="n">Cxsxs</span> <span class="o">+=</span> <span class="n">Xistar</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Xistar</span>
+
+    <span class="n">Sxx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Cxx</span><span class="p">)</span>
+    <span class="n">Sxxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Cxxs</span><span class="p">)</span>
+    <span class="n">Sxsxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Cxsxs</span><span class="p">)</span>
+    <span class="n">rhov</span> <span class="o">=</span> <span class="n">Sxxs</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sxx</span> <span class="o">*</span> <span class="n">Sxsxs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rhov</span></div>
+
+
+<div class="viewcode-block" id="jackknife_corrci"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.jackknife_corrci">[docs]</a><span class="k">def</span> <span class="nf">jackknife_corrci</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jackknife method for calculating an approximate confidence interval for correlation coefficient</span>
+
+<span class="sd">    :param samplecart1: Sample 1 to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart1: dict</span>
+<span class="sd">    :param samplecart2: Sample 2 to be used in the computations  in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart2: dict</span>
+<span class="sd">    :param alpha: (1-alpha)% CI is calculated</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - psijhat: Unbiased estimate using the jackknife method (float)</span>
+<span class="sd">        - ci: (1-alpha)% confidence interval (tuple)</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">psilist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">psihat</span> <span class="o">=</span> <span class="n">samplecorrelation</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">samplecart2</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">samplered1</span> <span class="o">=</span> <span class="n">excludesample</span><span class="p">(</span><span class="n">samplecart1</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+        <span class="n">samplered2</span> <span class="o">=</span> <span class="n">excludesample</span><span class="p">(</span><span class="n">samplecart2</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+        <span class="n">psii</span> <span class="o">=</span> <span class="n">samplecorrelation</span><span class="p">(</span><span class="n">samplered1</span><span class="p">,</span> <span class="n">samplered2</span><span class="p">)</span>
+
+        <span class="n">psiihat</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">psihat</span> <span class="o">-</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">psii</span>
+        <span class="n">psilist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psiihat</span><span class="p">)</span>
+    <span class="n">psiihata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psilist</span><span class="p">)</span>
+
+    <span class="n">psijhat</span> <span class="o">=</span> <span class="n">psihat</span>
+    <span class="n">sj2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">psijhat</span> <span class="o">-</span> <span class="n">psiihata</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">za2</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="p">(</span><span class="n">psijhat</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sj2</span><span class="p">)</span> <span class="o">*</span> <span class="n">za2</span><span class="p">,</span> <span class="n">psijhat</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sj2</span><span class="p">)</span> <span class="o">*</span> <span class="n">za2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">psijhat</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sj2</span><span class="p">),</span> <span class="n">ci</span></div>
+
+
+<div class="viewcode-block" id="xcorrsamplevariable"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.xcorrsamplevariable">[docs]</a><span class="k">def</span> <span class="nf">xcorrsamplevariable</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Correlation between a random unit vector or axis and another random variable</span>
+<span class="sd">    Tests the null hypothesis (H0) that the spherical sample and the variable are</span>
+<span class="sd">    uncorrelated [1]_</span>
+
+<span class="sd">    :param samplecart: Sample to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :param variable: List of floats or 1-D numpy arrays representing a variable associated with the points in the sample</span>
+<span class="sd">    :type variable: list</span>
+<span class="sd">    :param alpha: Type-I error level to be used in the test</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :return: Dictionary containing...</span>
+<span class="sd">        - rhohatg: Correlation coefficient (float)</span>
+<span class="sd">        - teststat: Test statistics (float)</span>
+<span class="sd">        - cval: Critical value used in the test (float)</span>
+<span class="sd">        - testresult: Result of the hypothesis test (bool)</span>
+
+<span class="sd">    [1] Jupp, P. E. &amp; Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The sample size and the variable size should match!&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">25</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The sample size should be at least 25!&#39;</span><span class="p">)</span>
+
+    <span class="n">arrayflag</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">variable</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">variable</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="n">typ</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">==</span> <span class="n">typ</span>
+            <span class="k">if</span> <span class="n">typ</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="o">==</span> <span class="n">shp</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">arrayflag</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">arrayflag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The type and dimensions of each value in the variable should be the same&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arrayflag</span><span class="p">:</span>
+        <span class="n">Xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">Ybar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">Xbar</span> <span class="o">+=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">Ybar</span> <span class="o">+=</span> <span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">Xbar</span> <span class="o">/=</span> <span class="n">n</span>
+        <span class="n">Ybar</span> <span class="o">/=</span> <span class="n">n</span>
+
+        <span class="n">sigma11</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">sigma12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+        <span class="n">sigma22</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">Yi</span> <span class="o">=</span> <span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">sigma11</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">sigma12</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">sigma22</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">sigmahat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">sigma11</span><span class="p">)</span> <span class="o">@</span> <span class="n">sigma12</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">sigma22</span><span class="p">)</span> <span class="o">@</span> <span class="n">sigma12</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">rhohatg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigmahat</span><span class="p">))</span> <span class="o">/</span> <span class="n">q</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">Ybar</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">Xbar</span> <span class="o">+=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">Ybar</span> <span class="o">+=</span> <span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+        <span class="n">Xbar</span> <span class="o">/=</span> <span class="n">n</span>
+        <span class="n">Ybar</span> <span class="o">/=</span> <span class="n">n</span>
+
+        <span class="n">sigma11</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">sigma12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">sigma22</span> <span class="o">=</span> <span class="mf">0.</span>
+
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">Yi</span> <span class="o">=</span> <span class="n">variable</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">sigma11</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">sigma12</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Xi</span> <span class="o">-</span> <span class="n">Xbar</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span>
+            <span class="n">sigma22</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Yi</span> <span class="o">-</span> <span class="n">Ybar</span><span class="p">)</span>
+
+        <span class="n">sigmahat</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">sigma11</span><span class="p">)</span> <span class="o">@</span> <span class="n">sigma12</span> <span class="o">@</span> <span class="n">sigma12</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sigma22</span>
+        <span class="n">rhohatg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigmahat</span><span class="p">))</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="n">cval</span> <span class="o">=</span> <span class="n">chi2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">teststat</span> <span class="o">=</span> <span class="n">q</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">rhohatg</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">teststat</span> <span class="o">&lt;</span> <span class="n">cval</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rhohatg&#39;</span><span class="p">:</span> <span class="n">rhohatg</span><span class="p">,</span> <span class="s1">&#39;teststat&#39;</span><span class="p">:</span> <span class="n">teststat</span><span class="p">,</span> <span class="s1">&#39;cval&#39;</span><span class="p">:</span> <span class="n">cval</span><span class="p">,</span> <span class="s1">&#39;testresult&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="regresscircular"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.regresscircular">[docs]</a><span class="k">def</span> <span class="nf">regresscircular</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">thetas</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Regression of a random unit vector on a circular variable [1]_</span>
+
+<span class="sd">    :param samplecart: Sample to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :param thetas: List containing a circular variable</span>
+<span class="sd">    :type thetas: list</span>
+<span class="sd">    :param alpha0: Initial angle for the iterations</span>
+<span class="sd">    :type alpha0: float</span>
+<span class="sd">    :param thr: Stopping condition for the iterations (Defaults to 1e-15)</span>
+<span class="sd">    :type thr: float</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - Uhat: Regression matrix (np.array)</span>
+<span class="sd">        - w: np.array([0, 0, 1])</span>
+<span class="sd">        - alphahat: The angle to be used in the regression model</span>
+<span class="sd">        - fitmodel: Function to predict a value for a given variable [Callable]</span>
+<span class="sd">    :rtype: tuple</span>
+
+<span class="sd">    [1] Jupp, P. E. &amp; Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">resultants</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;The circular parameters have to be the same length as the sample size!&#39;</span><span class="p">)</span>
+
+    <span class="n">Xbar</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;Resultant Vector&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">Xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xbar</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">Swx</span> <span class="o">=</span> <span class="n">w</span> <span class="o">@</span> <span class="n">Xbar</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">vilist</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">Svx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">vi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cos</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">ind</span><span class="p">]),</span> <span class="n">sin</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">ind</span><span class="p">]),</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">vilist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vi</span><span class="p">)</span>
+        <span class="n">Svx</span> <span class="o">+=</span> <span class="n">vi</span> <span class="o">@</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">Svx</span> <span class="o">/=</span> <span class="n">n</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">Inf</span>
+    <span class="n">U1</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">while</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="n">thr</span><span class="p">:</span>
+        <span class="n">B1</span> <span class="o">=</span> <span class="n">Svx</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">alpha0</span><span class="p">)</span> <span class="o">+</span> <span class="n">Swx</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">alpha0</span><span class="p">)</span>
+        <span class="n">U1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">B1</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">B1</span><span class="p">))</span> <span class="o">@</span> <span class="n">B1</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">alpha1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Svx</span> <span class="o">@</span> <span class="n">U1</span><span class="o">.</span><span class="n">T</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">Xbar</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">U1</span> <span class="o">@</span> <span class="n">w</span><span class="p">))</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">alpha1</span> <span class="o">-</span> <span class="n">alpha0</span><span class="p">)</span>
+        <span class="n">alpha0</span> <span class="o">=</span> <span class="n">alpha1</span>
+
+    <span class="n">Uhat</span><span class="p">,</span> <span class="n">alphahat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">U1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">alpha0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fitmodel</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">xhat</span> <span class="o">=</span> <span class="n">Uhat</span> <span class="o">@</span> <span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">alphahat</span><span class="p">)</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">alphahat</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">xhat</span>
+
+    <span class="k">return</span> <span class="n">Uhat</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">alphahat</span><span class="p">,</span> <span class="n">fitmodel</span></div>
+
+
+<div class="viewcode-block" id="isnotseriallyassociated"><a class="viewcode-back" href="../../sphstat.modelling.html#sphstat.modelling.isnotseriallyassociated">[docs]</a><span class="k">def</span> <span class="nf">isnotseriallyassociated</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test the null hypothesis that the observations are independent as opposed to having serial association [1]_</span>
+
+<span class="sd">    :param samplecart: Sample to be used in the computations in &#39;cart&#39; form</span>
+<span class="sd">    :type samplecart: dict</span>
+<span class="sd">    :param alpha: Type-I error level to be used in the test</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :return: Dictionary containing the keys:</span>
+<span class="sd">        - Sstar: The test statistic (float)</span>
+<span class="sd">        - cval: Critical value (float)</span>
+<span class="sd">        - testresult: Test result (bool), False if the observations are serially associated</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    [1] Watson, G. S. &amp; Beran, R. J. (1967). Testing a sequence of unit vectors for randomness. J. Geophys. Res. 72, 5655-5659.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">25</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Sample size has to be at least 25!&quot;</span><span class="p">)</span>
+
+    <span class="n">S</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">S</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span> <span class="o">*</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">resultants</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;Resultant Vector&#39;</span><span class="p">]</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;Resultant Length&#39;</span><span class="p">]</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="n">ptt</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">T</span> <span class="o">+=</span> <span class="n">ptt</span> <span class="o">@</span> <span class="n">ptt</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">S1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">T</span> <span class="o">@</span> <span class="n">T</span><span class="p">))</span>
+    <span class="n">S2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">T</span> <span class="o">@</span> <span class="n">X</span>
+
+    <span class="n">SE</span> <span class="o">=</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">SV</span> <span class="o">=</span> <span class="n">S1</span> <span class="o">/</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">S2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">R</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">SE</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">Sstar</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">SE</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">SV</span><span class="p">)</span>
+    <span class="n">cval</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Sstar</span> <span class="o">&lt;</span> <span class="n">cval</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Sstar&#39;</span><span class="p">:</span> <span class="n">Sstar</span><span class="p">,</span> <span class="s1">&#39;cval&#39;</span><span class="p">:</span> <span class="n">cval</span><span class="p">,</span> <span class="s1">&#39;testresult&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

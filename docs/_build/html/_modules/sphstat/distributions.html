@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.distributions &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sphstat package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sphstat.distributions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sphstat.distributions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of sphstat.</span>
+<span class="c1">#</span>
+<span class="c1"># sphstat is licensed under the MIT License.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2022 Huseyin Hacihabiboglu</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">==================================================================</span>
+<span class="sd">Functions to generate random data from different spherical distributions</span>
+<span class="sd">==================================================================</span>
+
+<span class="sd">- :func:`uniform` generates samples from uniform spherical distribution</span>
+<span class="sd">- :func:`bingham` generates samples from uniform Bingham distribution</span>
+<span class="sd">- :func:`fisherbingham` generates samples from Fisher/Bingham distribution</span>
+<span class="sd">- :func:`kent` generates samples from Kent distribution</span>
+<span class="sd">- :func:`fisher` generates samples from Fisher distribution</span>
+<span class="sd">- :func:`watson` generates samples from Watson distribution</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">polartocart</span><span class="p">,</span> <span class="n">cart2sph</span><span class="p">,</span> <span class="n">sph2cart</span><span class="p">,</span> <span class="n">negatesample</span><span class="p">,</span> <span class="n">poolsamples</span>
+<span class="kn">from</span> <span class="nn">.descriptives</span> <span class="kn">import</span> <span class="n">rotatesample</span><span class="p">,</span> <span class="n">rotationmatrix_withaxis</span>
+
+
+<div class="viewcode-block" id="uniform"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.uniform">[docs]</a><span class="k">def</span> <span class="nf">uniform</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate uniformly sampled data on the unit sphere</span>
+
+<span class="sd">    :param numsamp: Number of samples to generate</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp uniformly distributed data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">numsamp</span><span class="p">)</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">numsamp</span><span class="p">)</span>
+    <span class="n">n3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">numsamp</span><span class="p">)</span>
+    <span class="n">rd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">n2</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">n3</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">/</span> <span class="n">rd</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">n2</span> <span class="o">/</span> <span class="n">rd</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">n3</span> <span class="o">/</span> <span class="n">rd</span>
+    <span class="n">samplecart</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numsamp</span><span class="p">):</span>
+        <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">ind</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">samplecart</span></div>
+
+
+<div class="viewcode-block" id="bingham"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.bingham">[docs]</a><span class="k">def</span> <span class="nf">bingham</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lamb</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate Bingham distributed data on the unit sphere</span>
+
+<span class="sd">    :param numsamp: Number of samples</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :param lamb: Eigenvalyes of the diagpnal symmetric matrix of the Bingham distribution in decreasing order</span>
+<span class="sd">    :type lamb: np.array</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp Bingham distributed data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">lamb</span>
+    <span class="c1"># lam = np.flip( np.sort(lamb) )</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">samplecart</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lamfull</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">lam</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">qa</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamfull</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">qa</span><span class="p">)</span>
+    <span class="n">sigacginv</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">lamfull</span>
+    <span class="n">sigacg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">sigacginv</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">numsamp</span><span class="p">:</span>
+        <span class="n">xsamp</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">xsamp</span><span class="p">:</span>
+            <span class="n">yp</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigacg</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">qa</span><span class="p">))</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">yp</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">yp</span><span class="p">)</span>
+            <span class="n">lratio</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">lamfull</span><span class="p">)</span> <span class="o">-</span> <span class="n">qa</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">qa</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">qa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">qa</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigacginv</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">lratio</span><span class="p">:</span>
+                <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">xsamp</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">samplecart</span></div>
+
+
+<div class="viewcode-block" id="fisherbingham"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.fisherbingham">[docs]</a><span class="k">def</span> <span class="nf">fisherbingham</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate Fisher-Bingham distributed data on the unit sphere [1]_, [2]_</span>
+
+<span class="sd">    :param numsamp: number of samples</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :param alpha: Inclination angle of the mean (0 &lt;= alpha &lt; pi)</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :param beta: Azimuth angle of the mean (0 &lt;= beta &lt; 2 * pi)</span>
+<span class="sd">    :type beta: float</span>
+<span class="sd">    :param kappa: Concentration parameter</span>
+<span class="sd">    :type kappa: float</span>
+<span class="sd">    :param A: Symmetric matrix for the Bingham part</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp FB distributed data</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    [1] Kent J.T., Ganeiber A.M. and Mardia K.V. (2013). A new method to simulate the Bingham and related distributions in directional data analysis with applications.</span>
+
+<span class="sd">    [2] https://rdrr.io/cran/Directional/man/rfb.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">samplecart</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">sph2cart</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+    <span class="n">mu0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">rotationmatrix_withaxis</span><span class="p">(</span><span class="n">mu0</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span>
+    <span class="n">A1</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">kappa</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">mu0</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="n">lam</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A1</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">lam</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">lam</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+    <span class="n">lam</span> <span class="o">-=</span> <span class="n">lam</span><span class="p">[</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">lam</span><span class="p">[:</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">sbingham</span> <span class="o">=</span> <span class="n">bingham</span><span class="p">(</span><span class="n">numsamp</span><span class="p">,</span> <span class="n">lam</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">sbingham</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ptsnew</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">xn</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numsamp</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">:</span>
+        <span class="n">ptn</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">@</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">ptsnew</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ptn</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">xn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ptn</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">xn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xn</span><span class="p">)</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ptsnew</span><span class="p">)</span>
+    <span class="n">ffb</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">xn</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pt</span> <span class="o">@</span> <span class="n">A</span> <span class="o">@</span> <span class="n">pt</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fb</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pt</span> <span class="o">@</span> <span class="n">A1</span> <span class="o">@</span> <span class="n">pt</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">ffb</span> <span class="o">-</span> <span class="n">fb</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">n1</span> <span class="o">&lt;</span> <span class="n">numsamp</span><span class="p">:</span>
+        <span class="n">sbingham</span> <span class="o">=</span> <span class="n">bingham</span><span class="p">(</span><span class="n">numsamp</span> <span class="o">-</span> <span class="n">n1</span><span class="p">,</span> <span class="n">lam</span><span class="p">)</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">sbingham</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">ptsnew</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">xn</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numsamp</span> <span class="o">-</span> <span class="n">n1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">:</span>
+            <span class="n">ptn</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">@</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">ptsnew</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ptn</span><span class="p">)</span>
+            <span class="n">xn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ptn</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">xn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xn</span><span class="p">)</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ptsnew</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">numsamp</span> <span class="o">-</span> <span class="n">n1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">ffb</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">xn</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pt</span> <span class="o">@</span> <span class="n">A</span> <span class="o">@</span> <span class="n">pt</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">fb</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pt</span> <span class="o">@</span> <span class="n">A1</span> <span class="o">@</span> <span class="n">pt</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x1</span><span class="p">,</span> <span class="n">pt</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">u</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">ffb</span> <span class="o">-</span> <span class="n">fb</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">n1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">@</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">for</span> <span class="n">rw</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">rw</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">samplecart</span></div>
+
+
+<div class="viewcode-block" id="kent"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.kent">[docs]</a><span class="k">def</span> <span class="nf">kent</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">mu0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate Kent (5-parameter Fisher-Bingham - FB5) distributed data on the unit sphere</span>
+
+<span class="sd">    :param numsamp: Number of samples to generate</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :param kappa: Concentration parameter</span>
+<span class="sd">    :param beta: Ovalness parameter</span>
+<span class="sd">    :param mu: Mean vector of Kent distribution</span>
+<span class="sd">    :type mu: np.array</span>
+<span class="sd">    :param mu0: Mean vector of the Fisher part</span>
+<span class="sd">    :type mu0: np.array</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp Kent distributed data</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mu0</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span>
+    <span class="n">alph</span><span class="p">,</span> <span class="n">bet</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">rotationmatrix_withaxis</span><span class="p">(</span><span class="n">mu0</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="o">-</span><span class="n">beta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="p">])</span>
+    <span class="n">samplerbf</span> <span class="o">=</span> <span class="n">fisherbingham</span><span class="p">(</span><span class="n">numsamp</span><span class="p">,</span> <span class="n">alph</span><span class="p">,</span> <span class="n">bet</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">samplerbf</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">samplekent</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplekent</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">samplekent</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cart&#39;</span>
+    <span class="n">samplekent</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">:</span>
+        <span class="n">ptn</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">@</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">samplekent</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ptn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ptn</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">samplekent</span></div>
+
+
+<div class="viewcode-block" id="fisher"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.fisher">[docs]</a><span class="k">def</span> <span class="nf">fisher</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate von Mises-Fisher distributed data on the unit sphere [1]_</span>
+
+<span class="sd">    :param numsamp: Number of samples to generate</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :param alpha: Inclination angle centroid (0&lt;= alpha &lt;=pi)</span>
+<span class="sd">    :type alpha: float</span>
+<span class="sd">    :param beta: Azimuth angle centroid (0 &lt;= beta &lt; 2 * pi)</span>
+<span class="sd">    :type beta: float</span>
+<span class="sd">    :param kappa: Concentration parameter</span>
+<span class="sd">    :type kappa: float</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp Fisher distributed data</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    [1] Fisher, N. I., Lewis, T. &amp; Willcox, M. E. (1981). Tests of discordancy for samples from Fisher&#39;s distribution on the sphere. Appl. Statist. 30, 230-237.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numsamp</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numsamp</span><span class="p">)</span>
+    <span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">kappa</span><span class="p">)</span>
+    <span class="n">the</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">r1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lamb</span><span class="p">)</span> <span class="o">+</span> <span class="n">lamb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">kappa</span><span class="p">)))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r2</span>
+    <span class="n">samplerad_fisher</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">samplerad_fisher</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">the</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">samplerad_fisher</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">samplerad_fisher</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">samplerad_fisher</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="n">samplecart_fisher</span> <span class="o">=</span> <span class="n">polartocart</span><span class="p">(</span><span class="n">samplerad_fisher</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">samplecart_fisher</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sample</span></div>
+
+
+<div class="viewcode-block" id="watson"><a class="viewcode-back" href="../../sphstat.distributions.html#sphstat.distributions.watson">[docs]</a><span class="k">def</span> <span class="nf">watson</span><span class="p">(</span><span class="n">numsamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lamb</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate Watson distributed data on the unit sphere [1]_</span>
+
+<span class="sd">    :param numsamp: Number of samples to generate</span>
+<span class="sd">    :type numsamp: int</span>
+<span class="sd">    :param lamb: Direction of cosines in the x-axis</span>
+<span class="sd">    :type lamb: float</span>
+<span class="sd">    :param mu: Direction of cosines in the y-axis</span>
+<span class="sd">    :type mu: float</span>
+<span class="sd">    :param nu: Direction of cosines in the z-axis</span>
+<span class="sd">    :type nu: float</span>
+<span class="sd">    :param kappa:</span>
+<span class="sd">    :return: Data dictionary of type &#39;cart&#39; containing numsamp Watson distributed data</span>
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    [1] Best, D. J. &amp; Fisher, N. I. (1986). Goodness-of-fit and discordancy tests for samples from the Watson distribution on the sphere. Austral. J. Statist. 28, 13-31.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numsamp</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rad&#39;</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">sampleall</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">kappa</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;kappa cannot be zero!&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">kappa</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numsamp</span><span class="p">):</span>
+            <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">kappa</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">U</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">U</span> <span class="o">/</span> <span class="n">C</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">V</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">kappa</span> <span class="o">*</span> <span class="n">S</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">S</span><span class="p">):</span>
+                <span class="n">U</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">V</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">S</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">U</span> <span class="o">/</span> <span class="n">C</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">the</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">the</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">samplecart</span> <span class="o">=</span> <span class="n">polartocart</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lamb</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]))</span>
+        <span class="n">samprot</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="n">samprot</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">samprot</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="n">sampleneg</span> <span class="o">=</span> <span class="n">negatesample</span><span class="p">(</span><span class="n">samprot</span><span class="p">)</span>
+        <span class="n">sampleall</span> <span class="o">=</span> <span class="n">poolsamples</span><span class="p">([</span><span class="n">samprot</span><span class="p">,</span> <span class="n">sampleneg</span><span class="p">],</span> <span class="s1">&#39;cart&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numsamp</span><span class="p">):</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">kappa</span><span class="p">))</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+            <span class="n">U</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">c2</span> <span class="o">*</span> <span class="n">U</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">V</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">S</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">kappa</span> <span class="o">*</span> <span class="n">S</span> <span class="o">**</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">U</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">V</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">S</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">c2</span> <span class="o">*</span> <span class="n">U</span><span class="p">)</span>
+            <span class="n">the</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;tetas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">the</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;phis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">samplecart</span> <span class="o">=</span> <span class="n">polartocart</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lamb</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]))</span>
+        <span class="n">samprot</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">samprot</span> <span class="o">=</span> <span class="n">rotatesample</span><span class="p">(</span><span class="n">samplecart</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="n">sampleneg</span> <span class="o">=</span> <span class="n">negatesample</span><span class="p">(</span><span class="n">samprot</span><span class="p">)</span>
+        <span class="n">sampleall</span> <span class="o">=</span> <span class="n">poolsamples</span><span class="p">([</span><span class="n">samprot</span><span class="p">,</span> <span class="n">sampleneg</span><span class="p">],</span> <span class="s1">&#39;cart&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sampleall</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

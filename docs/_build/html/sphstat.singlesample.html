@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.singlesample module &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sphstat.twosample module" href="sphstat.twosample.html" />
+    <link rel="prev" title="sphstat.plotting module" href="sphstat.plotting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sphstat package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.distributions.html">sphstat.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.plotting.html">sphstat.plotting module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sphstat.singlesample module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#functions-for-inferential-statistics-on-a-single-sample">Functions for inferential statistics on a single sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.bimodalparams"><code class="docutils literal notranslate"><span class="pre">bimodalparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.fisherparams"><code class="docutils literal notranslate"><span class="pre">fisherparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.isaxisymmetric"><code class="docutils literal notranslate"><span class="pre">isaxisymmetric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.isfisher"><code class="docutils literal notranslate"><span class="pre">isfisher()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.isfishervskent"><code class="docutils literal notranslate"><span class="pre">isfishervskent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.isuniform"><code class="docutils literal notranslate"><span class="pre">isuniform()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.kappatest"><code class="docutils literal notranslate"><span class="pre">kappatest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.kentmeanccone"><code class="docutils literal notranslate"><span class="pre">kentmeanccone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.kentparams"><code class="docutils literal notranslate"><span class="pre">kentparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.meanifsymmetric"><code class="docutils literal notranslate"><span class="pre">meanifsymmetric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.meantest"><code class="docutils literal notranslate"><span class="pre">meantest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.outliertest"><code class="docutils literal notranslate"><span class="pre">outliertest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.rotationalsymmetry"><code class="docutils literal notranslate"><span class="pre">rotationalsymmetry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.testagainstmean"><code class="docutils literal notranslate"><span class="pre">testagainstmean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.singlesample.testagainstmedian"><code class="docutils literal notranslate"><span class="pre">testagainstmedian()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sphstat package</a></li>
+      <li class="breadcrumb-item active">sphstat.singlesample module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sphstat.singlesample.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sphstat.singlesample">
+<span id="sphstat-singlesample-module"></span><h1>sphstat.singlesample module<a class="headerlink" href="#module-sphstat.singlesample" title="Permalink to this heading"></a></h1>
+<section id="functions-for-inferential-statistics-on-a-single-sample">
+<h2>Functions for inferential statistics on a single sample<a class="headerlink" href="#functions-for-inferential-statistics-on-a-single-sample" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sphstat.singlesample.isuniform" title="sphstat.singlesample.isuniform"><code class="xref py py-func docutils literal notranslate"><span class="pre">isuniform()</span></code></a> tests the null-hypothesis that the sample is drawn from a uniform spherical distribution</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.testagainstmedian" title="sphstat.singlesample.testagainstmedian"><code class="xref py py-func docutils literal notranslate"><span class="pre">testagainstmedian()</span></code></a> tests the null-hypothesis that the sample has a given median direction</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.rotationalsymmetry" title="sphstat.singlesample.rotationalsymmetry"><code class="xref py py-func docutils literal notranslate"><span class="pre">rotationalsymmetry()</span></code></a> tests rotational symmetry around the known true mean</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.meanifsymmetric" title="sphstat.singlesample.meanifsymmetric"><code class="xref py py-func docutils literal notranslate"><span class="pre">meanifsymmetric()</span></code></a> calculates the mean direction under the assumption tha the sample comes from a symmetric distribution</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.testagainstmean" title="sphstat.singlesample.testagainstmean"><code class="xref py py-func docutils literal notranslate"><span class="pre">testagainstmean()</span></code></a> tests the null-hypothesis that the sample has a given mean direction</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.isaxisymmetric" title="sphstat.singlesample.isaxisymmetric"><code class="xref py py-func docutils literal notranslate"><span class="pre">isaxisymmetric()</span></code></a> tests the null hypothesis that the sample comes from a rotationally symmetric distribution</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.isfisher" title="sphstat.singlesample.isfisher"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfisher()</span></code></a> tests the null hypothesis that the sample comes from a Fisher distribution</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.outliertest" title="sphstat.singlesample.outliertest"><code class="xref py py-func docutils literal notranslate"><span class="pre">outliertest()</span></code></a> identifies outliers in the sample</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.fisherparams" title="sphstat.singlesample.fisherparams"><code class="xref py py-func docutils literal notranslate"><span class="pre">fisherparams()</span></code></a> calculates the parameters of the Fisher distribution that the sample is drawn from</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.meantest" title="sphstat.singlesample.meantest"><code class="xref py py-func docutils literal notranslate"><span class="pre">meantest()</span></code></a> tests against a mean value</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.kappatest" title="sphstat.singlesample.kappatest"><code class="xref py py-func docutils literal notranslate"><span class="pre">kappatest()</span></code></a> tests against a concentration parameter</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.kentparams" title="sphstat.singlesample.kentparams"><code class="xref py py-func docutils literal notranslate"><span class="pre">kentparams()</span></code></a> calculates the parameters of the Kent distribution that the sample is drawn from</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.kentmeanccone" title="sphstat.singlesample.kentmeanccone"><code class="xref py py-func docutils literal notranslate"><span class="pre">kentmeanccone()</span></code></a> calculates the confidence interval for the mean direction for a Kent distributed sample</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.isfishervskent" title="sphstat.singlesample.isfishervskent"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfishervskent()</span></code></a> tests the null hypothesis that the sample is drawn from a Fisher distribution as opposed to a Kent distribution</p></li>
+<li><p><a class="reference internal" href="#sphstat.singlesample.bimodalparams" title="sphstat.singlesample.bimodalparams"><code class="xref py py-func docutils literal notranslate"><span class="pre">bimodalparams()</span></code></a> calculate the parameters of a bimodal (e.g. Wood) distribution</p></li>
+</ul>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.bimodalparams">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">bimodalparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modesfar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#bimodalparams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.bimodalparams" title="Permalink to this definition"></a></dt>
+<dd><p>Model parameter estimation for a bimodal distribution <a href="#id11"><span class="problematic" id="id1">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>modesfar</strong> – Flag for indicating whether the two modes of the data are far.</p></li>
+<li><p><strong>modesfar</strong> – bool</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Model parameters for the Wood distribution</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Wood, A. (1982). A bimodal distribution on the sphere. Appl. Statist. 31, 52-58.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.fisherparams">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">fisherparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#fisherparams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.fisherparams" title="Permalink to this definition"></a></dt>
+<dd><p>Parameter estimation for the Fisher distribution <a href="#id12"><span class="problematic" id="id2">[1]_</span></a>
+:param samplecart: Sample to be tested in ‘cart’ format
+:type samplecart: dict
+:param alpha: Calculate (1-alpha)% CI for kappa
+:type alpha: float
+:return: Dictionary with the keys…</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>mdir: Mean direction (theta, phi) (tuple)</p></li>
+<li><p>kappa: Concentration parameter (float)</p></li>
+<li><p>thetaalpha: Semivertical angle (float)</p></li>
+<li><p>cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
+[2] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.isaxisymmetric">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">isaxisymmetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#isaxisymmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.isaxisymmetric" title="Permalink to this definition"></a></dt>
+<dd><p>Test for rotational symmetry about the mean direction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the keys:
+- Pn: Test statistic (float)
+- cval: Critical value to test against (float)
+- pval: Actual p-value (float)
+- testresult: Test result (bool)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.isfisher">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">isfisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#isfisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.isfisher" title="Permalink to this definition"></a></dt>
+<dd><p>Goodness-of-fit of the data with the Fisher model <a href="#id13"><span class="problematic" id="id3">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+<li><p><strong>plotflag</strong> (<em>bool</em>) – Flag to plot the Q-Q plots</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Dictionary containing the results of three tests:
+- ‘colatitute’: Results of the colatitude test as a nested dictionary</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>’stat’: Test statistic (float)</p></li>
+<li><p>’crange’: Critical range (float)</p></li>
+<li><p>’H0’: Test result (bool)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>’longitude’: Results of the longitude test as a nested dictionary</dt><dd><ul>
+<li><p>’stat’: Test statistic (float)</p></li>
+<li><p>’crange’: Critical range (float)</p></li>
+<li><p>’H0’: Test result (bool)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>’twovariable’: Results of the two-variable test as a nested dictionary</dt><dd><ul>
+<li><p>’stat’: Test statistic (float)</p></li>
+<li><p>’crange’: Critical range (float)</p></li>
+<li><p>’H0’: Test result (bool)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>’H0’: All three tests retain H0 then True, otherwise false</p></li>
+<li><p>’alpha’: Type-I error level</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I. &amp; Best, D. J. (1984). Goodness-of-fit tests for Fisher’s distribution on the sphere. Austral. J. Statist. 26, 142-150.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.isfishervskent">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">isfishervskent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#isfishervskent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.isfishervskent" title="Permalink to this definition"></a></dt>
+<dd><p>Test of whether a sample comes from a Fisher distribution, against the alternative that it comes from a Kent distribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in cart format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the keys:
+- K: Test statistic (float)
+- cval: Critical value (float)
+- p: p-value (float)
+- testresult: Test result (bool)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.isuniform">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">isuniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#isuniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.isuniform" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the sample comes from a uniform distribution as opposed to a unimodal distribution <a href="#id14"><span class="problematic" id="id4">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample</strong> – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> – Type-I error level  (e.g. 0.05)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the keys
+- teststat - Test statistic (float)
+- crange - Critical range (float)
+- testresult - Test result (bool)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Diggle, P. J., Fisher, N. I. &amp; Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.kappatest">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">kappatest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'!='</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/singlesample.html#kappatest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.kappatest" title="Permalink to this definition"></a></dt>
+<dd><p>Test for specified concentration parameter with unknown population mean</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>kappa0</strong> (<em>float</em>) – Concentration parameter to test against (H0: kappa=kappa0)</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+<li><p><strong>testtype</strong> – Either on of !=, &gt; or &lt; indicating the sidedness of the test</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with the keys:
+- ‘R’: Test statistics
+- ‘cvaltup’: Critical value for the test
+- ‘testresult’: Test result</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.kentmeanccone">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">kentmeanccone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#kentmeanccone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.kentmeanccone" title="Permalink to this definition"></a></dt>
+<dd><p>Elliptical confidence cone for the mean direction <a href="#id15"><span class="problematic" id="id5">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – (1-alpha)% CI is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>cconept: 360 points on the (1-alpha)% cone of confidence (list)</p></li>
+<li><p>ths1: Major semi-axis (in radians)</p></li>
+<li><p>ths2: Minor semi-axis (in radians)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.kentparams">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">kentparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/singlesample.html#kentparams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.kentparams" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the parameters of the Kent distribution <a href="#id16"><span class="problematic" id="id6">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>‘axes’: Axes of the distribution (axes[0] is the mean direction)</p></li>
+<li><p>’kappahat’: Concentration parameter of the distribution (float)</p></li>
+<li><p>’betahat’: Ovalness parameter (float)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p>:rtype:tuple</p>
+<p>[1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.meanifsymmetric">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">meanifsymmetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#meanifsymmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.meanifsymmetric" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the mean direction of a symmetric unimodal distribution <a href="#id17"><span class="problematic" id="id7">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the following fields
+- Spherical mean direction (theta: float, phi: float)
+- Spherical standard deviation (float)
+- Semi-vertical angle (float)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I. &amp; Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.meantest">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">meantest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdir0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#meantest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.meantest" title="Permalink to this definition"></a></dt>
+<dd><p>Test for a specified mean direction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>mdir0</strong> (<em>tuple</em><em> | </em><em>list</em>) – Mean direction to test against (H0: mdir = mdir0)</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary including..
+- R: Test statistic (float)
+- Ralpha: Critical value (float)
+- testresult: Test result (bool)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.outliertest">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">outliertest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#outliertest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.outliertest" title="Permalink to this definition"></a></dt>
+<dd><p>Outlier test for discordancy <a href="#id18"><span class="problematic" id="id8">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>A new sample with outliers eliminated</p></li>
+<li><p>Index of the outliers in the original sample</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I., Lewis, T. &amp; Willcox, M. E. (1981). Tests of discordancy for samples from Fisher’s distribution on the sphere. Appl. Statist. 30, 230-237.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.rotationalsymmetry">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">rotationalsymmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#rotationalsymmetry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.rotationalsymmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Kuiper test for rotational symmetry around the known true mean</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>mdir</strong> (<em>list</em>) – Mean direction in polar coordinates (theta, phi)</p></li>
+<li><p><strong>alpha</strong> – Type-I error level (e.g. 0.05)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary containing the following fields
+- Test measure (‘Vnstar’, float),
+- Critical value (‘cval’, float),
+- Test result (‘res’, bool)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.testagainstmean">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">testagainstmean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#testagainstmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.testagainstmean" title="Permalink to this definition"></a></dt>
+<dd><p>Test for a specified mean direction of a symmetric distribution <a href="#id19"><span class="problematic" id="id9">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>tmean</strong> (<em>np.array</em>) – Mean to be tested against (theta, phi)</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the following fields
+- Test measure (‘hn’, float)
+- Critical value to test against (‘cval’, float)
+- Test result (‘testresult’, bool)</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.singlesample.testagainstmedian">
+<span class="sig-prename descclassname"><span class="pre">sphstat.singlesample.</span></span><span class="sig-name descname"><span class="pre">testagainstmedian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmedi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/singlesample.html#testagainstmedian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.singlesample.testagainstmedian" title="Permalink to this definition"></a></dt>
+<dd><p>Test the null hypothesis that the population has the specified median direction <a href="#id20"><span class="problematic" id="id10">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample</strong> (<em>dict</em>) – Sample to be tested in ‘cart’ format</p></li>
+<li><p><strong>tmedi</strong> (<em>array-like</em>) – List containing the polar angles for the specified median</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level (e.g. 0.05)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Test measure (X2, float), critical value (cval, float), test result (bool), and significance (p-value, float)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sphstat.plotting.html" class="btn btn-neutral float-left" title="sphstat.plotting module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sphstat.twosample.html" class="btn btn-neutral float-right" title="sphstat.twosample module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

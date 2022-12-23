@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sphstat.twosample module &mdash; sphstat 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sphstat.utils module" href="sphstat.utils.html" />
+    <link rel="prev" title="sphstat.singlesample module" href="sphstat.singlesample.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> sphstat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sphstat package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.distributions.html">sphstat.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.plotting.html">sphstat.plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sphstat.twosample module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#functions-for-inferential-statistics-on-two-or-more-samples">Functions for inferential statistics on two or more samples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Functions for inferential statistics on two or more samples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utility-functions">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.a20"><code class="docutils literal notranslate"><span class="pre">a20()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.a21"><code class="docutils literal notranslate"><span class="pre">a21()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.a23"><code class="docutils literal notranslate"><span class="pre">a23()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.bilinearinterp"><code class="docutils literal notranslate"><span class="pre">bilinearinterp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.errors"><code class="docutils literal notranslate"><span class="pre">errors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.fishercommonkappa"><code class="docutils literal notranslate"><span class="pre">fishercommonkappa()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.fishercommonmean"><code class="docutils literal notranslate"><span class="pre">fishercommonmean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.iscommonmean"><code class="docutils literal notranslate"><span class="pre">iscommonmean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.iscommonmedian"><code class="docutils literal notranslate"><span class="pre">iscommonmedian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.isfishercommonkappa"><code class="docutils literal notranslate"><span class="pre">isfishercommonkappa()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.isfishercommonmean"><code class="docutils literal notranslate"><span class="pre">isfishercommonmean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.linearinterp"><code class="docutils literal notranslate"><span class="pre">linearinterp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.pooledmean"><code class="docutils literal notranslate"><span class="pre">pooledmean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphstat.twosample.pooledmedian"><code class="docutils literal notranslate"><span class="pre">pooledmedian()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sphstat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sphstat package</a></li>
+      <li class="breadcrumb-item active">sphstat.twosample module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sphstat.twosample.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sphstat.twosample">
+<span id="sphstat-twosample-module"></span><h1>sphstat.twosample module<a class="headerlink" href="#module-sphstat.twosample" title="Permalink to this heading"></a></h1>
+<section id="functions-for-inferential-statistics-on-two-or-more-samples">
+<h2>Functions for inferential statistics on two or more samples<a class="headerlink" href="#functions-for-inferential-statistics-on-two-or-more-samples" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>Functions for inferential statistics on two or more samples<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sphstat.twosample.iscommonmedian" title="sphstat.twosample.iscommonmedian"><code class="xref py py-func docutils literal notranslate"><span class="pre">iscommonmedian()</span></code></a> tests the null hypothesis that two samples have a common median</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.pooledmedian" title="sphstat.twosample.pooledmedian"><code class="xref py py-func docutils literal notranslate"><span class="pre">pooledmedian()</span></code></a> calculates the pooled median</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.iscommonmean" title="sphstat.twosample.iscommonmean"><code class="xref py py-func docutils literal notranslate"><span class="pre">iscommonmean()</span></code></a> tests the null hypothesis that two samples have a common population mean</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.pooledmean" title="sphstat.twosample.pooledmean"><code class="xref py py-func docutils literal notranslate"><span class="pre">pooledmean()</span></code></a> calculates the pooled mean</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.isfishercommonmean" title="sphstat.twosample.isfishercommonmean"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfishercommonmean()</span></code></a> tests the null hypothesis that two Fisherian samples have a common population mean</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.fishercommonmean" title="sphstat.twosample.fishercommonmean"><code class="xref py py-func docutils literal notranslate"><span class="pre">fishercommonmean()</span></code></a> calculates the common population mean for two Fisherian samples</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.isfishercommonkappa" title="sphstat.twosample.isfishercommonkappa"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfishercommonkappa()</span></code></a> tests the null hypothesis that two Fisherian samples have the same population concentration parameter</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.fishercommonkappa" title="sphstat.twosample.fishercommonkappa"><code class="xref py py-func docutils literal notranslate"><span class="pre">fishercommonkappa()</span></code></a> calculates the common population concentration parameter for two Fisherian samples</p></li>
+</ul>
+</section>
+<section id="utility-functions">
+<h3>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sphstat.twosample.a20" title="sphstat.twosample.a20"><code class="xref py py-func docutils literal notranslate"><span class="pre">a20()</span></code></a>, <a class="reference internal" href="#sphstat.twosample.a21" title="sphstat.twosample.a21"><code class="xref py py-func docutils literal notranslate"><span class="pre">a21()</span></code></a>, <a class="reference internal" href="#sphstat.twosample.a23" title="sphstat.twosample.a23"><code class="xref py py-func docutils literal notranslate"><span class="pre">a23()</span></code></a>, <a class="reference internal" href="#sphstat.twosample.bilinearinterp" title="sphstat.twosample.bilinearinterp"><code class="xref py py-func docutils literal notranslate"><span class="pre">bilinearinterp()</span></code></a>, <a class="reference internal" href="#sphstat.twosample.linearinterp" title="sphstat.twosample.linearinterp"><code class="xref py py-func docutils literal notranslate"><span class="pre">linearinterp()</span></code></a> are used to read and interpolate critical values</p></li>
+<li><p><a class="reference internal" href="#sphstat.twosample.errors" title="sphstat.twosample.errors"><code class="xref py py-func docutils literal notranslate"><span class="pre">errors()</span></code></a> calculates the non-negative angular error between two vectors</p></li>
+</ul>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.a20">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">a20</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/twosample.html#a20"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.a20" title="Permalink to this definition"></a></dt>
+<dd><p>Utility function used by isfishercommonmean() to extract tabulated critical values</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.a21">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">a21</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/twosample.html#a21"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.a21" title="Permalink to this definition"></a></dt>
+<dd><p>Utility function used by isfishercommonmean() to extract tabulated critical values</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.a23">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">a23</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/twosample.html#a23"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.a23" title="Permalink to this definition"></a></dt>
+<dd><p>Utility function used by isfishercommonkappa() to extract tabulated critical values</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.bilinearinterp">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">bilinearinterp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z00</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z01</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z10</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z11</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/twosample.html#bilinearinterp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.bilinearinterp" title="Permalink to this definition"></a></dt>
+<dd><p>Bilinear interpolation between 4 values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z00</strong> (<em>float</em>) – Value 1</p></li>
+<li><p><strong>z01</strong> (<em>float</em>) – Value 2</p></li>
+<li><p><strong>z10</strong> (<em>float</em>) – Value 3</p></li>
+<li><p><strong>z11</strong> (<em>float</em>) – Value 4</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Interpolation coefficient along axis 1 (0&lt;=alpha&lt;=1)</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – Interpolation coefficient along axis 2 (0&lt;=beta&lt;=1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Interpolated value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.errors">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.errors" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate angular error from a given direction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecart</strong> (<em>dict</em>) – Sample in cart format</p></li>
+<li><p><strong>srcpos</strong> – Direction (th, ph) with respect to which the error will be calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Errors in radians</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.fishercommonkappa">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">fishercommonkappa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/twosample.html#fishercommonkappa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.fishercommonkappa" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the common concentration parameter of two or more Fisher distributions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Semi-vertical angle for (1-alpha)% confidence cone is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>kappahat: Pooled concentration parameter [float]</p></li>
+<li><p>ku, kl: Upper and lower critical values for the (1-alpha)% CI</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.fishercommonmean">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">fishercommonmean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#fishercommonmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.fishercommonmean" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the common mean direction of two or more Fisher distributions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Semi-vertical angle for (1-alpha)% confidence cone is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>mdir: Tuple containing the common mean direction [th, ph]</p></li>
+<li><p>qw: Semi-vertical angle [float]</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>[1] Fisher, N. I. &amp; Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.</p>
+<p>[2] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.iscommonmean">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">iscommonmean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#iscommonmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.iscommonmean" title="Permalink to this definition"></a></dt>
+<dd><p>Test of whether two or more axisymmetric distributions have a common mean <a href="#id9"><span class="problematic" id="id2">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing:
+- Gr: Test statistic [float]
+- cval: Critical value to test against [float]
+- testresult: Test result [bool]</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. (1983a). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.iscommonmedian">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">iscommonmedian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#iscommonmedian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.iscommonmedian" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Test for a common median direction of two or more distributions <a href="#id10"><span class="problematic" id="id3">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">param samplecartlist</dt>
+<dd class="field-odd"><p>List containing individual samples top be tested in ‘cart’ format</p>
+</dd>
+<dt class="field-even">type samplecartlist</dt>
+<dd class="field-even"><p>list[dict]</p>
+</dd>
+<dt class="field-odd">param similarflag</dt>
+<dd class="field-odd"><p>Flag indicating similar distributions for all samples</p>
+</dd>
+<dt class="field-even">type similarflag</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">param alpha</dt>
+<dd class="field-odd"><p>Type-I error level</p>
+</dd>
+<dt class="field-even">type alpha</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>Dictionary containing…
+- Z2: Test statistic [float]
+- cval: Critical value to test against [float]
+- result: Test result [bool]</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>[1] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.isfishercommonkappa">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">isfishercommonkappa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#isfishercommonkappa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.isfishercommonkappa" title="Permalink to this definition"></a></dt>
+<dd><p>Test of whether two or more Fisher distributions (with unknown means) have a common concentration parameter at 0.05 level <a href="#id11"><span class="problematic" id="id4">[1]_</span></a>, <a href="#id12"><span class="problematic" id="id5">[2]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing test results…
+- Z: Test statistics [float]
+- cval: Critical value [float]
+- df: Degrees of freedom [int, tuple(int, int)]
+- testresult: Test result [bool]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. &amp; Irving, E. (1957). Statistical methods in rock magnetism. Mon. Not. R. astr. Soc. geophys. Suppl. 7, 289-300. (66, 136, 224)</p>
+<p>[2] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352. (14, 133, 211, 224)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.isfishercommonmean">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">isfishercommonmean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#isfishercommonmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.isfishercommonmean" title="Permalink to this definition"></a></dt>
+<dd><p>Test of whether two or more Fisher distributions have a common mean direction <a href="#id13"><span class="problematic" id="id6">[1]_</span></a>, <a href="#id14"><span class="problematic" id="id7">[2]_</span></a>, <a href="#id15"><span class="problematic" id="id8">[3]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Type-I error level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with the fields…
+- gr: Test statistic [float]
+- cval: Critical value to test against [float]
+- testresult: Test result [bool]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>[1] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.</p>
+<p>[2] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.</p>
+<p>[3] Watson, G. S. (1983). Large sample theory of the Langevin distributions. Journal of Statistical Planning and Inference 8, 245-256.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.linearinterp">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">linearinterp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z00</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z01</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#linearinterp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.linearinterp" title="Permalink to this definition"></a></dt>
+<dd><p>Linear interpolation between 4 values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z00</strong> (<em>float</em>) – Value 1</p></li>
+<li><p><strong>z01</strong> (<em>float</em>) – Value 2</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Interpolation coefficient (0&lt;=alpha&lt;=1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Interpolated value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.pooledmean">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">pooledmean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#pooledmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.pooledmean" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the common mean direction of two or more rotationally symmetric distributions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – (1-alpha)% confidence cone is calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>mdirpooled: Estimated pooled mean direction in radians [np.array]</p></li>
+<li><p>sigmaw: Spherical standard error [float]</p></li>
+<li><p>qw: Semi-vertical angle in radians [float]</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sphstat.twosample.pooledmedian">
+<span class="sig-prename descclassname"><span class="pre">sphstat.twosample.</span></span><span class="sig-name descname"><span class="pre">pooledmedian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplecartlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/sphstat/twosample.html#pooledmedian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.twosample.pooledmedian" title="Permalink to this definition"></a></dt>
+<dd><p>Estimation of the common median direction of two or more unimodal distributions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplecartlist</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List containing individual samples top be tested in ‘cart’ format</p></li>
+<li><p><strong>similarflag</strong> (<em>bool</em>) – Flag indicating similar distributions for all samples</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>pooledmedi: Pooled median in polar coordinates [th, ph]</p></li>
+<li><p>V: Matrix to be used for calculating the confidence cone [np.array]</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sphstat.singlesample.html" class="btn btn-neutral float-left" title="sphstat.singlesample module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sphstat.utils.html" class="btn btn-neutral float-right" title="sphstat.utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Huseyin Hacihabiboglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
