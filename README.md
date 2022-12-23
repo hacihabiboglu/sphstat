@@ -63,9 +63,9 @@ includes several modules whose names are pretty self-explanatory. These are:
 * ```utils```: Utility functions used by other modules
 
 It is important to note that the default coordinate system used by ```sphstat``` is the 
-polar coordinates. The colatitude angle ($$theta$$) is defined from the axis, $$0$$ (north 
-pole) to $$\pi/2$$ (south pole) and the latitude angle is defined from $$0$$ (front direction) 
-to $$2\pi$$. Figure shows the employed polar coordinate system.
+polar coordinates. The colatitude angle ($theta$) is defined from the axis, $0$ (north 
+pole) to $\pi/2$ (south pole) and the latitude angle is defined from $0$ (front direction) 
+to $2\pi$. Figure shows the employed polar coordinate system.
 
 ![](images/coord.png)
 
