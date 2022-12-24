@@ -40,12 +40,12 @@ from .descriptives import mediandir, rotationmatrix, pointsonanellipse
 from .utils import polartocart, carttopolar, cart2sph
 
 
-def plotmapping(input: list | float):
+def plotmapping(input: list):
     """
     Utility function to map an angle in [0, 2 * pi] to [-pi, pi]
 
     :param input: Input angle in [0, 2 * pi] in radians to map to [-pi, pi]
-    :type input: list | float
+    :type input: list
     :return: Mapped angle in radians
     :rtype: float
     """

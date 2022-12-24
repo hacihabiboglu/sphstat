@@ -554,14 +554,14 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     return res
 
 
-def meantest(samplecart: dict, mdir0: tuple | list, alpha: float =0.05) -> dict:
+def meantest(samplecart: dict, mdir0: tuple, alpha: float =0.05) -> dict:
     """
     Test for a specified mean direction
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
     :param mdir0: Mean direction to test against (H0: mdir = mdir0)
-    :type mdir0: tuple | list
+    :type mdir0: tuple
     :param alpha: Type-I error level
     :type alpha: float
     :return: Dictionary including..

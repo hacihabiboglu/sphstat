@@ -320,7 +320,7 @@ def cot(x):
     Cotangent of the argument
 
     :param x: Angle in radians
-    :type x: float | np.array
+    :type x: float
     :return: Cotangent of the input
     :rtype: float
     """
