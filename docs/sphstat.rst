@@ -1,8 +1,25 @@
 sphstat package
 ===============
 
-Submodules
-----------
+Package contents
+----------------
+
+.. automodule:: sphstat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   sphstat.descriptives
+   sphstat.distributions
+   sphstat.modelling
+   sphstat.plotting
+   sphstat.singlesample
+   sphstat.twosample
+   sphstat.utils
 
 sphstat.descriptives module
 ---------------------------
@@ -56,14 +73,6 @@ sphstat.utils module
 --------------------
 
 .. automodule:: sphstat.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: sphstat
    :members:
    :undoc-members:
    :show-inheritance:

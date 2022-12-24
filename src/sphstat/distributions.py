@@ -110,7 +110,7 @@ def bingham(numsamp: int, lamb: float) -> dict:
 
 def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.ndarray) -> dict:
     """
-    Generate Fisher-Bingham distributed data on the unit sphere [1]_, [2]_
+    Generate Fisher-Bingham distributed data on the unit sphere [#]_, [#]_
 
     :param numsamp: number of samples
     :type numsamp: int
@@ -124,9 +124,9 @@ def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.n
     :return: Data dictionary of type 'cart' containing numsamp FB distributed data
     :rtype: dict
 
-    [1] Kent J.T., Ganeiber A.M. and Mardia K.V. (2013). A new method to simulate the Bingham and related distributions in directional data analysis with applications.
+    .. [#] Kent J.T., Ganeiber A.M. and Mardia K.V. (2013). A new method to simulate the Bingham and related distributions in directional data analysis with applications.
 
-    [2] https://rdrr.io/cran/Directional/man/rfb.html
+    .. [#] https://rdrr.io/cran/Directional/man/rfb.html
     """
     rng = default_rng()
     samplecart = dict()
@@ -217,7 +217,7 @@ def kent(numsamp: int, kappa: float, beta: float, mu: np.array, mu0: np.array) -
 
 def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
     """
-    Generate von Mises-Fisher distributed data on the unit sphere [1]_
+    Generate von Mises-Fisher distributed data on the unit sphere [#]_
 
     :param numsamp: Number of samples to generate
     :type numsamp: int
@@ -230,7 +230,7 @@ def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
     :return: Data dictionary of type 'cart' containing numsamp Fisher distributed data
     :rtype: dict
 
-    [1] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
+    .. [#] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
     """
     rng = default_rng()
     r1 = rng.uniform(0, 1, numsamp)
@@ -251,7 +251,7 @@ def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
 
 def watson(numsamp: int, lamb: float, mu: float, nu: float, kappa: float) -> dict:
     """
-    Generate Watson distributed data on the unit sphere [1]_
+    Generate Watson distributed data on the unit sphere [#]_
 
     :param numsamp: Number of samples to generate
     :type numsamp: int
@@ -265,7 +265,7 @@ def watson(numsamp: int, lamb: float, mu: float, nu: float, kappa: float) -> dic
     :return: Data dictionary of type 'cart' containing numsamp Watson distributed data
     :rtype: dict
 
-    [1] Best, D. J. & Fisher, N. I. (1986). Goodness-of-fit and discordancy tests for samples from the Watson distribution on the sphere. Austral. J. Statist. 28, 13-31.
+    .. [#] Best, D. J. & Fisher, N. I. (1986). Goodness-of-fit and discordancy tests for samples from the Watson distribution on the sphere. Austral. J. Statist. 28, 13-31.
     """
     sample = dict()
     sample['n'] = numsamp

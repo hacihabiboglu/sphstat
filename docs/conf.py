@@ -53,3 +53,5 @@ html_static_path = ['_static']
 html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'] }
 
 strip_signature_backslash = True
+napoleon_strip_signature_backslash = True
+autodoc_strip_signature_backslash = True

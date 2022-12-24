@@ -43,20 +43,27 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sphstat package</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.distributions.html">sphstat.distributions module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">sphstat.plotting module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#functions-for-plotting-data">Functions for plotting data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.plotting.plotdata"><code class="docutils literal notranslate"><span class="pre">plotdata()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.plotting.plotdatalist"><code class="docutils literal notranslate"><span class="pre">plotdatalist()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.plotting.plotmapping"><code class="docutils literal notranslate"><span class="pre">plotmapping()</span></code></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="sphstat.html">sphstat package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sphstat.html#module-sphstat">Package contents</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.distributions.html">sphstat.distributions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">sphstat.plotting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functions-for-plotting-data">Functions for plotting data</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.descriptives">sphstat.descriptives module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.distributions">sphstat.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.modelling">sphstat.modelling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.plotting">sphstat.plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.singlesample">sphstat.singlesample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.twosample">sphstat.twosample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.utils">sphstat.utils module</a></li>
 </ul>
 </li>
 </ul>
@@ -75,7 +82,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">sphstat package</a></li>
+          <li class="breadcrumb-item"><a href="sphstat.html">sphstat package</a></li>
       <li class="breadcrumb-item active">sphstat.plotting module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/sphstat.plotting.rst.txt" rel="nofollow"> View page source</a>
@@ -86,19 +93,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sphstat.plotting">
-<span id="sphstat-plotting-module"></span><h1>sphstat.plotting module<a class="headerlink" href="#module-sphstat.plotting" title="Permalink to this heading"></a></h1>
+  <section id="sphstat-plotting-module">
+<h1>sphstat.plotting module<a class="headerlink" href="#sphstat-plotting-module" title="Permalink to this heading"></a></h1>
 <section id="functions-for-plotting-data">
 <h2>Functions for plotting data<a class="headerlink" href="#functions-for-plotting-data" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#sphstat.plotting.plotmapping" title="sphstat.plotting.plotmapping"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotmapping()</span></code></a> maps the azimuth from [-pi,pi) to [0, 2 * pi]</p></li>
-<li><p><a class="reference internal" href="#sphstat.plotting.plotdata" title="sphstat.plotting.plotdata"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotdata()</span></code></a> plots the data in a given projection</p></li>
-<li><p><a class="reference internal" href="#sphstat.plotting.plotdatalist" title="sphstat.plotting.plotdatalist"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotdatalist()</span></code></a> plots a number of samples</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.plotting.plotmapping" title="sphstat.plotting.plotmapping"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotmapping()</span></code></a> maps the azimuth from [-pi,pi) to [0, 2 * pi]</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.plotting.plotdata" title="sphstat.plotting.plotdata"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotdata()</span></code></a> plots the data in a given projection</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.plotting.plotdatalist" title="sphstat.plotting.plotdatalist"><code class="xref py py-func docutils literal notranslate"><span class="pre">plotdatalist()</span></code></a> plots a number of samples</p></li>
 </ul>
 </section>
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.plotting.plotdata">
-<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mollweide'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/sphstat/plotting.html#plotdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.plotting.plotdata" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mollweide'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/sphstat/plotting.html#plotdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Plot a sample represented in polar (colat, long) format in Mollweide projection</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -115,8 +122,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.plotting.plotdatalist">
-<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotdatalist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mollweide'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/sphstat/plotting.html#plotdatalist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.plotting.plotdatalist" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotdatalist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mollweide'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/sphstat/plotting.html#plotdatalist"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Superimposed plot of a list of samples</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -137,8 +144,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.plotting.plotmapping">
-<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotmapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/plotting.html#plotmapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.plotting.plotmapping" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.plotting.</span></span><span class="sig-name descname"><span class="pre">plotmapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphstat/plotting.html#plotmapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Utility function to map an angle in [0, 2 * pi] to [-pi, pi]</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

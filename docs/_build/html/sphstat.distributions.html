@@ -43,23 +43,27 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sphstat package</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">sphstat.distributions module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#functions-to-generate-random-data-from-different-spherical-distributions">Functions to generate random data from different spherical distributions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.bingham"><code class="docutils literal notranslate"><span class="pre">bingham()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.fisher"><code class="docutils literal notranslate"><span class="pre">fisher()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.fisherbingham"><code class="docutils literal notranslate"><span class="pre">fisherbingham()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.kent"><code class="docutils literal notranslate"><span class="pre">kent()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.uniform"><code class="docutils literal notranslate"><span class="pre">uniform()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sphstat.distributions.watson"><code class="docutils literal notranslate"><span class="pre">watson()</span></code></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="sphstat.html">sphstat package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sphstat.html#module-sphstat">Package contents</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">sphstat.distributions module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functions-to-generate-random-data-from-different-spherical-distributions">Functions to generate random data from different spherical distributions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.plotting.html">sphstat.plotting module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.modelling.html">sphstat.modelling module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.plotting.html">sphstat.plotting module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.singlesample.html">sphstat.singlesample module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.twosample.html">sphstat.twosample module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphstat.utils.html">sphstat.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.descriptives">sphstat.descriptives module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.distributions">sphstat.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.modelling">sphstat.modelling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.plotting">sphstat.plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.singlesample">sphstat.singlesample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.twosample">sphstat.twosample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphstat.html#module-sphstat.utils">sphstat.utils module</a></li>
 </ul>
 </li>
 </ul>
@@ -78,7 +82,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">sphstat package</a></li>
+          <li class="breadcrumb-item"><a href="sphstat.html">sphstat package</a></li>
       <li class="breadcrumb-item active">sphstat.distributions module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/sphstat.distributions.rst.txt" rel="nofollow"> View page source</a>
@@ -89,22 +93,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sphstat.distributions">
-<span id="sphstat-distributions-module"></span><h1>sphstat.distributions module<a class="headerlink" href="#module-sphstat.distributions" title="Permalink to this heading"></a></h1>
+  <section id="sphstat-distributions-module">
+<h1>sphstat.distributions module<a class="headerlink" href="#sphstat-distributions-module" title="Permalink to this heading"></a></h1>
 <section id="functions-to-generate-random-data-from-different-spherical-distributions">
 <h2>Functions to generate random data from different spherical distributions<a class="headerlink" href="#functions-to-generate-random-data-from-different-spherical-distributions" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#sphstat.distributions.uniform" title="sphstat.distributions.uniform"><code class="xref py py-func docutils literal notranslate"><span class="pre">uniform()</span></code></a> generates samples from uniform spherical distribution</p></li>
-<li><p><a class="reference internal" href="#sphstat.distributions.bingham" title="sphstat.distributions.bingham"><code class="xref py py-func docutils literal notranslate"><span class="pre">bingham()</span></code></a> generates samples from uniform Bingham distribution</p></li>
-<li><p><a class="reference internal" href="#sphstat.distributions.fisherbingham" title="sphstat.distributions.fisherbingham"><code class="xref py py-func docutils literal notranslate"><span class="pre">fisherbingham()</span></code></a> generates samples from Fisher/Bingham distribution</p></li>
-<li><p><a class="reference internal" href="#sphstat.distributions.kent" title="sphstat.distributions.kent"><code class="xref py py-func docutils literal notranslate"><span class="pre">kent()</span></code></a> generates samples from Kent distribution</p></li>
-<li><p><a class="reference internal" href="#sphstat.distributions.fisher" title="sphstat.distributions.fisher"><code class="xref py py-func docutils literal notranslate"><span class="pre">fisher()</span></code></a> generates samples from Fisher distribution</p></li>
-<li><p><a class="reference internal" href="#sphstat.distributions.watson" title="sphstat.distributions.watson"><code class="xref py py-func docutils literal notranslate"><span class="pre">watson()</span></code></a> generates samples from Watson distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.uniform" title="sphstat.distributions.uniform"><code class="xref py py-func docutils literal notranslate"><span class="pre">uniform()</span></code></a> generates samples from uniform spherical distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.bingham" title="sphstat.distributions.bingham"><code class="xref py py-func docutils literal notranslate"><span class="pre">bingham()</span></code></a> generates samples from uniform Bingham distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.fisherbingham" title="sphstat.distributions.fisherbingham"><code class="xref py py-func docutils literal notranslate"><span class="pre">fisherbingham()</span></code></a> generates samples from Fisher/Bingham distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.kent" title="sphstat.distributions.kent"><code class="xref py py-func docutils literal notranslate"><span class="pre">kent()</span></code></a> generates samples from Kent distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.fisher" title="sphstat.distributions.fisher"><code class="xref py py-func docutils literal notranslate"><span class="pre">fisher()</span></code></a> generates samples from Fisher distribution</p></li>
+<li><p><a class="reference internal" href="sphstat.html#sphstat.distributions.watson" title="sphstat.distributions.watson"><code class="xref py py-func docutils literal notranslate"><span class="pre">watson()</span></code></a> generates samples from Watson distribution</p></li>
 </ul>
 </section>
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.bingham">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">bingham</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lamb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#bingham"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.bingham" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">bingham</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lamb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#bingham"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Generate Bingham distributed data on the unit sphere</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -123,9 +127,9 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.fisher">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">fisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#fisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.fisher" title="Permalink to this definition"></a></dt>
-<dd><p>Generate von Mises-Fisher distributed data on the unit sphere <a href="#id5"><span class="problematic" id="id1">[1]_</span></a></p>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">fisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#fisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Generate von Mises-Fisher distributed data on the unit sphere <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -142,13 +146,17 @@
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
-<p>[1] Fisher, N. I., Lewis, T. &amp; Willcox, M. E. (1981). Tests of discordancy for samples from Fisher’s distribution on the sphere. Appl. Statist. 30, 230-237.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Fisher, N. I., Lewis, T. &amp; Willcox, M. E. (1981). Tests of discordancy for samples from Fisher’s distribution on the sphere. Appl. Statist. 30, 230-237.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.fisherbingham">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">fisherbingham</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#fisherbingham"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.fisherbingham" title="Permalink to this definition"></a></dt>
-<dd><p>Generate Fisher-Bingham distributed data on the unit sphere <a href="#id6"><span class="problematic" id="id2">[1]_</span></a>, <a href="#id7"><span class="problematic" id="id3">[2]_</span></a></p>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">fisherbingham</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#fisherbingham"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Generate Fisher-Bingham distributed data on the unit sphere <a class="footnote-reference brackets" href="#id5" id="id3">2</a>, <a class="footnote-reference brackets" href="#id6" id="id4">3</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -166,13 +174,19 @@
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
-<p>[1] Kent J.T., Ganeiber A.M. and Mardia K.V. (2013). A new method to simulate the Bingham and related distributions in directional data analysis with applications.</p>
-<p>[2] <a class="reference external" href="https://rdrr.io/cran/Directional/man/rfb.html">https://rdrr.io/cran/Directional/man/rfb.html</a></p>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Kent J.T., Ganeiber A.M. and Mardia K.V. (2013). A new method to simulate the Bingham and related distributions in directional data analysis with applications.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p><a class="reference external" href="https://rdrr.io/cran/Directional/man/rfb.html">https://rdrr.io/cran/Directional/man/rfb.html</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.kent">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">kent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#kent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.kent" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">kent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#kent"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Generate Kent (5-parameter Fisher-Bingham - FB5) distributed data on the unit sphere</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -194,8 +208,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.uniform">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.uniform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Generate uniformly sampled data on the unit sphere</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -211,9 +225,9 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sphstat.distributions.watson">
-<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">watson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lamb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#watson"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sphstat.distributions.watson" title="Permalink to this definition"></a></dt>
-<dd><p>Generate Watson distributed data on the unit sphere <a href="#id8"><span class="problematic" id="id4">[1]_</span></a></p>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">sphstat.distributions.</span></span><span class="sig-name descname"><span class="pre">watson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numsamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lamb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sphstat/distributions.html#watson"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Generate Watson distributed data on the unit sphere <a class="footnote-reference brackets" href="#id8" id="id7">4</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -231,7 +245,11 @@
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
-<p>[1] Best, D. J. &amp; Fisher, N. I. (1986). Goodness-of-fit and discordancy tests for samples from the Watson distribution on the sphere. Austral. J. Statist. 28, 13-31.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
+<dd><p>Best, D. J. &amp; Fisher, N. I. (1986). Goodness-of-fit and discordancy tests for samples from the Watson distribution on the sphere. Austral. J. Statist. 28, 13-31.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

@@ -47,7 +47,7 @@ from .singlesample import isfisher
 
 def xcorrrandomsamples(samplecart1: dict, samplecart2: dict, numperms: int, htype: str = '=', alpha: float = 0.05) -> dict:
     """
-    Correlation coefficient of two random unit vectors and hypothesis test given two samples [1]_
+    Correlation coefficient of two random unit vectors and hypothesis test given two samples [#]_
 
     :param samplecart1: Sample 1 to be used in the computations in 'cart' form
     :type samplecart1: dict
@@ -67,7 +67,7 @@ def xcorrrandomsamples(samplecart1: dict, samplecart2: dict, numperms: int, htyp
         - testresult: Hypothesis test result (bool)
     :rtype: dict
 
-    [1] Fisher, N. I. & Lee, A. J. (1986). Correlation coefficients for random variables on a unit sphere or hypersphere.
+    .. [#] Fisher, N. I. & Lee, A. J. (1986). Correlation coefficients for random variables on a unit sphere or hypersphere.
     """
     try:
         assert samplecart1['type'] == 'cart'
@@ -212,7 +212,7 @@ def xcorrsamplevariable(samplecart: dict, variable: list, alpha: float = 0.05):
     """
     Correlation between a random unit vector or axis and another random variable
     Tests the null hypothesis (H0) that the spherical sample and the variable are
-    uncorrelated [1]_
+    uncorrelated [#]_
 
     :param samplecart: Sample to be used in the computations in 'cart' form
     :type samplecart: dict
@@ -226,7 +226,7 @@ def xcorrsamplevariable(samplecart: dict, variable: list, alpha: float = 0.05):
         - cval: Critical value used in the test (float)
         - testresult: Result of the hypothesis test (bool)
 
-    [1] Jupp, P. E. & Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.
+    .. [#] Jupp, P. E. & Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.
     """
     try:
         n = samplecart['n']
@@ -312,7 +312,7 @@ def xcorrsamplevariable(samplecart: dict, variable: list, alpha: float = 0.05):
 
 def regresscircular(samplecart: dict, thetas: list, alpha0: float = 1.5707963267948966, thr: float = 1e-2) -> tuple: #
     """
-    Regression of a random unit vector on a circular variable [1]_
+    Regression of a random unit vector on a circular variable [#]_
 
     :param samplecart: Sample to be used in the computations in 'cart' form
     :type samplecart: dict
@@ -329,7 +329,7 @@ def regresscircular(samplecart: dict, thetas: list, alpha0: float = 1.5707963267
         - fitmodel: Function to predict a value for a given variable [Callable]
     :rtype: tuple
 
-    [1] Jupp, P. E. & Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.
+    .. [#] Jupp, P. E. & Mardia, K. V. (1980). A general correlation coefficient for directional data and related regression problems. Biometrika 67, 163-173.
     """
     r = resultants(samplecart)
 
@@ -374,7 +374,7 @@ def regresscircular(samplecart: dict, thetas: list, alpha0: float = 1.5707963267
 
 def isnotseriallyassociated(samplecart: dict, alpha: float = 0.05):
     """
-    Test the null hypothesis that the observations are independent as opposed to having serial association [1]_
+    Test the null hypothesis that the observations are independent as opposed to having serial association [#]_
 
     :param samplecart: Sample to be used in the computations in 'cart' form
     :type samplecart: dict
@@ -386,7 +386,7 @@ def isnotseriallyassociated(samplecart: dict, alpha: float = 0.05):
         - testresult: Test result (bool), False if the observations are serially associated
     :rtype: dict
 
-    [1] Watson, G. S. & Beran, R. J. (1967). Testing a sequence of unit vectors for randomness. J. Geophys. Res. 72, 5655-5659.
+    .. [#] Watson, G. S. & Beran, R. J. (1967). Testing a sequence of unit vectors for randomness. J. Geophys. Res. 72, 5655-5659.
     """
 
     try:

@@ -40,7 +40,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sphstat package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.html">sphstat package</a></li>
 </ul>
 
         </div>
@@ -131,7 +131,7 @@
 
 <div class="viewcode-block" id="iscommonmedian"><a class="viewcode-back" href="../../sphstat.twosample.html#sphstat.twosample.iscommonmedian">[docs]</a><span class="k">def</span> <span class="nf">iscommonmedian</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">similarflag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test for a common median direction of two or more distributions [1]_</span>
+<span class="sd">    Test for a common median direction of two or more distributions [#]_</span>
 
 <span class="sd">    :param samplecartlist: List containing individual samples top be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecartlist: list[dict]</span>
@@ -144,7 +144,7 @@
 <span class="sd">        - cval: Critical value to test against [float]</span>
 <span class="sd">        - result: Test result [bool]</span>
 
-<span class="sd">   [1] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.</span>
+<span class="sd">    .. [#] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">similarflag</span><span class="p">:</span>
@@ -278,7 +278,7 @@
 
 <div class="viewcode-block" id="iscommonmean"><a class="viewcode-back" href="../../sphstat.twosample.html#sphstat.twosample.iscommonmean">[docs]</a><span class="k">def</span> <span class="nf">iscommonmean</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test of whether two or more axisymmetric distributions have a common mean [1]_</span>
+<span class="sd">    Test of whether two or more axisymmetric distributions have a common mean [#]_</span>
 
 <span class="sd">    :param samplecartlist: List containing individual samples top be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecartlist: list[dict]</span>
@@ -289,7 +289,7 @@
 <span class="sd">        - cval: Critical value to test against [float]</span>
 <span class="sd">        - testresult: Test result [bool]</span>
 
-<span class="sd">    [1] Watson, G. S. (1983a). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</span>
+<span class="sd">    .. [#] Watson, G. S. (1983a). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">sigmas</span> <span class="o">=</span> <span class="p">[]</span>
@@ -389,7 +389,7 @@
 
 <div class="viewcode-block" id="isfishercommonmean"><a class="viewcode-back" href="../../sphstat.twosample.html#sphstat.twosample.isfishercommonmean">[docs]</a><span class="k">def</span> <span class="nf">isfishercommonmean</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test of whether two or more Fisher distributions have a common mean direction [1]_, [2]_, [3]_</span>
+<span class="sd">    Test of whether two or more Fisher distributions have a common mean direction [#]_, [#]_, [#]_</span>
 
 <span class="sd">    :param samplecartlist: List containing individual samples top be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecartlist: list[dict]</span>
@@ -401,11 +401,11 @@
 <span class="sd">        - testresult: Test result [bool]</span>
 <span class="sd">    :rtype: dict</span>
 
-<span class="sd">    [1] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.</span>
+<span class="sd">    .. [#] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.</span>
 
-<span class="sd">    [2] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.</span>
+<span class="sd">    .. [#] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.</span>
 
-<span class="sd">    [3] Watson, G. S. (1983). Large sample theory of the Langevin distributions. Journal of Statistical Planning and Inference 8, 245-256.</span>
+<span class="sd">    .. [#] Watson, G. S. (1983). Large sample theory of the Langevin distributions. Journal of Statistical Planning and Inference 8, 245-256.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
@@ -793,7 +793,7 @@
 
 <div class="viewcode-block" id="fishercommonmean"><a class="viewcode-back" href="../../sphstat.twosample.html#sphstat.twosample.fishercommonmean">[docs]</a><span class="k">def</span> <span class="nf">fishercommonmean</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Estimation of the common mean direction of two or more Fisher distributions</span>
+<span class="sd">    Estimation of the common mean direction of two or more Fisher distributions [#]_, [#]_</span>
 
 <span class="sd">    :param samplecartlist: List containing individual samples top be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecartlist: list[dict]</span>
@@ -804,9 +804,9 @@
 <span class="sd">        - qw: Semi-vertical angle [float]</span>
 <span class="sd">    :rtype: tuple</span>
 
-<span class="sd">    [1] Fisher, N. I. &amp; Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.</span>
+<span class="sd">    .. [#] Fisher, N. I. &amp; Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.</span>
 
-<span class="sd">    [2] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</span>
+<span class="sd">    .. [#] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">isfishercommonkappa</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">)</span>
     <span class="n">mdirlist</span><span class="p">,</span> <span class="n">kappalist</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -859,7 +859,7 @@
 
 <div class="viewcode-block" id="isfishercommonkappa"><a class="viewcode-back" href="../../sphstat.twosample.html#sphstat.twosample.isfishercommonkappa">[docs]</a><span class="k">def</span> <span class="nf">isfishercommonkappa</span><span class="p">(</span><span class="n">samplecartlist</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test of whether two or more Fisher distributions (with unknown means) have a common concentration parameter at 0.05 level [1]_, [2]_</span>
+<span class="sd">    Test of whether two or more Fisher distributions (with unknown means) have a common concentration parameter at 0.05 level [#]_, [#]_</span>
 
 <span class="sd">    :param samplecartlist: List containing individual samples top be tested in &#39;cart&#39; format</span>
 <span class="sd">    :type samplecartlist: list[dict]</span>
@@ -870,9 +870,9 @@
 <span class="sd">        - testresult: Test result [bool]</span>
 <span class="sd">    :rtype: dict</span>
 
-<span class="sd">    [1] Watson, G. S. &amp; Irving, E. (1957). Statistical methods in rock magnetism. Mon. Not. R. astr. Soc. geophys. Suppl. 7, 289-300. (66, 136, 224)</span>
+<span class="sd">    .. [#] Watson, G. S. &amp; Irving, E. (1957). Statistical methods in rock magnetism. Mon. Not. R. astr. Soc. geophys. Suppl. 7, 289-300. (66, 136, 224)</span>
 
-<span class="sd">    [2] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352. (14, 133, 211, 224)</span>
+<span class="sd">    .. [#] Watson, G. S. &amp; Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352. (14, 133, 211, 224)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>

@@ -310,7 +310,7 @@ indicating that the observations are not serially associated at :math:`\alpha=0.
 \ level.
 
 Limitations
------------
+~~~~~~~~~~~
 
 In its present version ``sphstat``\ …
 
@@ -328,7 +328,7 @@ In its present version ``sphstat``\ …
    incorporated into a future version.
 
 References
-----------
+~~~~~~~~~~
 
 [1] Fisher, N. I., Lewis, T., & Embleton, B. J. (1993). Statistical
 analysis of spherical data. Cambridge University Press.
