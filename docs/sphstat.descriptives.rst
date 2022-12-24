@@ -5,4 +5,3 @@ sphstat.descriptives module
    :members: resultants
    :undoc-members:
    :show-inheritance:
-   :noindex:
