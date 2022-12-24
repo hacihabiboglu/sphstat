@@ -1,13 +1,15 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sphstat',
-    version='1.0',
-    description='A Python package for inferential statistics on vectorial data on the unit sphere',
+    name = 'sphstat',
+    version = '1.0',
+    description = 'A Python 3 package for inferential statistics on vectorial data on the unit sphere',
     url='https://github.com/hacihabiboglu/sphstat',
+    download_url = 'https://github.com/hacihabiboglu/sphstat/archive/refs/tags/sphstat-1.0.tar.gz',
     author='Huseyin Hacihabiboglu',
     author_email='mailto:hhuseyin@metu.edu.tr',
-    license='MIT License',
+    license='MIT',
+    keywords=['spherical statistics', 'vector statistics', 'hypothesis testing', 'spherical regression', 'inferential statistics'],
     packages=find_packages(where='src'),
     package_dir={"": "src"},
     py_modules=['sphstat.utils', 'sphstat.distributions', 'sphstat.descriptives', 'sphstat.singlesample', 'sphstat.twosample', 'sphstat.modelling', 'sphstat.plotting'],
@@ -24,7 +26,7 @@ setup(
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Operating System :: MacOS :: MacOS X',
-        'Operating System :: POSIX :: Linux'
+        'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
