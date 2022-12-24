@@ -594,7 +594,7 @@ def meantest(samplecart: dict, mdir0: tuple, alpha: float =0.05) -> dict:
     return res  # i.e. reject H0 that the mean of the data is mdir0 if R > Ralpha
 
 
-def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
+def kappatest(samplecart: dict, kappa0: float, alpha: float =0.05, testtype: str ='!=') -> dict:
     """
     Test for specified concentration parameter with unknown population mean
 
@@ -641,7 +641,7 @@ def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
     return rs
 
 
-def kentparams(samplecart):
+def kentparams(samplecart: dict):
     """
     Estimation of the parameters of the Kent distribution [#]_
 
@@ -651,8 +651,7 @@ def kentparams(samplecart):
         - 'axes': Axes of the distribution (axes[0] is the mean direction)
         - 'kappahat': Concentration parameter of the distribution (float)
         - 'betahat': Ovalness parameter (float)
-
-    :rtype:tuple
+    :rtype: tuple
 
     .. [#] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
     """

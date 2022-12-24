@@ -817,7 +817,7 @@ def isfishercommonkappa(samplecartlist: list) -> dict:
 
     r = len(samplecartlist)
     sampleflag = all([nia[ind] == nia[0] for ind in range(r)])
-    rflag = all([Ra[ind] > 0.65 for ind in range(r)])
+    rflag = all([Rbara[ind] > 0.65 for ind in range(r)])
 
     if r == 2:
         try:
@@ -825,8 +825,8 @@ def isfishercommonkappa(samplecartlist: list) -> dict:
         except AssertionError:
             raise AssertionError(
                 'Mean resultant lengths of samples must be greater than 0.65. See Mardia (1972, §9.4.2) for approximate tests')
-        Z0 = ((nia[1] - 1) * (nia[0] - Rbara[0])) / ((nia[0] - 1) * (nia[1] - Rbara[1]))
-        if Z0 < 0:
+        Z0 = ((nia[1] - 1) * (nia[0] - Ra[0])) / ((nia[0] - 1) * (nia[1] - Ra[1]))
+        if Z0 < 1:
             Z0 = 1 / Z0
         cval = fish.ppf(1 - alpha / 2, 2 * nia[0] - 1, 2 * nia[1] - 1)
         testresult = Z0 < cval
