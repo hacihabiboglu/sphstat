@@ -39,6 +39,13 @@ The source code is available on Github: https://www.github.com/hacihabiboglu/sph
    installation
    examples
    sphstat.descriptives
+   sphstat.distributions
+   sphstat.modelling
+   sphstat.plotting
+   sphstat.singlesample
+   sphstat.twosample
+   sphstat.utils
+
 
 Indices and tables
 ==================

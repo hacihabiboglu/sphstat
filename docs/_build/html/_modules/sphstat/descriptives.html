@@ -40,7 +40,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../sphstat.html">sphstat package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.descriptives.html">sphstat.descriptives module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.distributions.html">sphstat.distributions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.modelling.html">sphstat.modelling module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.plotting.html">sphstat.plotting module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.singlesample.html">sphstat.singlesample module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.twosample.html">sphstat.twosample module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphstat.utils.html">sphstat.utils module</a></li>
 </ul>
 
         </div>
@@ -145,7 +151,7 @@
     <span class="k">return</span> <span class="n">resstat</span></div>
 
 
-<div class="viewcode-block" id="rotationmatrix"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.rotationmatrix">[docs]</a><span class="k">def</span> <span class="nf">rotationmatrix</span><span class="p">(</span><span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">rotationmatrix</span><span class="p">(</span><span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rotation matrix to rotate data in a given direction (th0, ph0)</span>
 
@@ -168,10 +174,10 @@
     <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ph0</span><span class="p">)</span>
     <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th0</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">A</span></div>
+    <span class="k">return</span> <span class="n">A</span>
 
 
-<div class="viewcode-block" id="rotationmatrix_withaxis"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.rotationmatrix_withaxis">[docs]</a><span class="k">def</span> <span class="nf">rotationmatrix_withaxis</span><span class="p">(</span><span class="n">ua</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ub</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">rotationmatrix_withaxis</span><span class="p">(</span><span class="n">ua</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ub</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate a rotation matrix around an axis</span>
 
@@ -200,8 +206,8 @@
     <span class="n">B</span> <span class="o">-=</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
     <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">ub</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">ub</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span> <span class="o">+</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<div class="viewcode-block" id="rotate"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.rotate">[docs]</a>                                                         <span class="o">@</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">A</span></div>
+                                                         <span class="o">@</span> <span class="n">ca</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">A</span>
 
 
 <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">pt</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -226,10 +232,10 @@
         <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Input point is not of the correct type/shape.&#39;</span><span class="p">)</span>
 
     <span class="n">A</span> <span class="o">=</span> <span class="n">rotationmatrix</span><span class="p">(</span><span class="n">th0</span><span class="p">,</span> <span class="n">ph0</span><span class="p">,</span> <span class="n">psi0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">pt</span></div>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">pt</span>
 
 
-<div class="viewcode-block" id="rotatesample"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.rotatesample">[docs]</a><span class="k">def</span> <span class="nf">rotatesample</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">rotatesample</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">th0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ph0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rotate all observations in a sample by (th0, ph0, psi0)</span>
 
@@ -256,10 +262,10 @@
     <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]):</span>
         <span class="n">pt</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="n">ind</span><span class="p">]</span>
         <span class="n">samplerot</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotate</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,)),</span> <span class="n">th0</span><span class="p">,</span> <span class="n">ph0</span><span class="p">,</span> <span class="n">psi0</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">samplerot</span></div>
+    <span class="k">return</span> <span class="n">samplerot</span>
 
 
-<div class="viewcode-block" id="movematrix"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.movematrix">[docs]</a><span class="k">def</span> <span class="nf">movematrix</span><span class="p">(</span><span class="n">pt1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pt2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">movematrix</span><span class="p">(</span><span class="n">pt1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pt2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Move a vector pt1 to pt2</span>
 
@@ -281,10 +287,10 @@
         <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Points should have 3 components.&#39;</span><span class="p">)</span>
 
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">pt1</span> <span class="o">+</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">pt1</span> <span class="o">+</span> <span class="n">pt2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pt1</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">pt2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">H</span></div>
+    <span class="k">return</span> <span class="n">H</span>
 
 
-<div class="viewcode-block" id="orientationmatrix"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.orientationmatrix">[docs]</a><span class="k">def</span> <span class="nf">orientationmatrix</span><span class="p">(</span><span class="n">samplecart</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">orientationmatrix</span><span class="p">(</span><span class="n">samplecart</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the orientation matrix and its eigenvectors / eigenvalues for a given sample</span>
 
@@ -311,10 +317,10 @@
     <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
     <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;tauhat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tauhat</span>
     <span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">taubar</span>
-    <span class="k">return</span> <span class="n">Tmat</span></div>
+    <span class="k">return</span> <span class="n">Tmat</span>
 
 
-<div class="viewcode-block" id="momentofinertia"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.momentofinertia">[docs]</a><span class="k">def</span> <span class="nf">momentofinertia</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">pt0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">momentofinertia</span><span class="p">(</span><span class="n">samplecart</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">pt0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the moment of inertia for a point given a sample</span>
 
@@ -332,10 +338,10 @@
 
     <span class="n">Tmat</span> <span class="o">=</span> <span class="n">orientationmatrix</span><span class="p">(</span><span class="n">samplecart</span><span class="p">)</span>
     <span class="n">inertia</span> <span class="o">=</span> <span class="n">samplecart</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pt0</span><span class="p">,</span> <span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span> <span class="o">@</span> <span class="n">pt0</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">inertia</span></div>
+    <span class="k">return</span> <span class="n">inertia</span>
 
 
-<div class="viewcode-block" id="pointsonanellipse"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.pointsonanellipse">[docs]</a><span class="k">def</span> <span class="nf">pointsonanellipse</span><span class="p">(</span><span class="n">h1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h3</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ellipsecoeffs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">psinum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">360</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">pointsonanellipse</span><span class="p">(</span><span class="n">h1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h3</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ellipsecoeffs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">psinum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">360</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate a number of points on an ellipse on the sphere</span>
 
@@ -394,10 +400,10 @@
         <span class="n">pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">ind</span><span class="p">]])</span>
         <span class="n">ptsonellipse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Hmat</span> <span class="o">@</span> <span class="n">pt</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">ptsonellipse</span></div>
+    <span class="k">return</span> <span class="n">ptsonellipse</span>
 
 
-<div class="viewcode-block" id="shapestrength"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.shapestrength">[docs]</a><span class="k">def</span> <span class="nf">shapestrength</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">shapestrength</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exploratory summary metrics for assessing properties of the underlying distribution</span>
 
@@ -416,10 +422,10 @@
     <span class="n">Tmat</span> <span class="o">=</span> <span class="n">orientationmatrix</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
     <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">strength</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">Tmat</span><span class="p">[</span><span class="s1">&#39;taubar&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">shape</span><span class="p">,</span> <span class="n">strength</span></div>
+    <span class="k">return</span> <span class="n">shape</span><span class="p">,</span> <span class="n">strength</span>
 
 
-<div class="viewcode-block" id="mediandir"><a class="viewcode-back" href="../../sphstat.html#sphstat.descriptives.mediandir">[docs]</a><span class="k">def</span> <span class="nf">mediandir</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ciflag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">mediandir</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ciflag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the median direction and the confidence cone of the sample.</span>
 <span class="sd">    Before this, make sure that the sample comes from a unimodal distribution</span>
@@ -495,7 +501,7 @@
         <span class="n">ccone</span><span class="p">[</span><span class="s1">&#39;eigv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
         <span class="n">ccone</span><span class="p">[</span><span class="s1">&#39;eigu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
 
-    <span class="k">return</span> <span class="n">medi</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">ccone</span><span class="p">,</span> <span class="n">W</span></div>
+    <span class="k">return</span> <span class="n">medi</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">ccone</span><span class="p">,</span> <span class="n">W</span>
 </pre></div>
 
            </div>

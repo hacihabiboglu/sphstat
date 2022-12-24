@@ -5,4 +5,3 @@ sphstat.distributions module
    :members:
    :undoc-members:
    :show-inheritance:
-   :noindex:
