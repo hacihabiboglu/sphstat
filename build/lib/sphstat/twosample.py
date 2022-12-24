@@ -61,7 +61,7 @@ import pkg_resources as pkg
 
 def iscommonmedian(samplecartlist: list, similarflag: bool = True, alpha: float = 0.05) -> dict:
     """
-    Test for a common median direction of two or more distributions [1]_
+    Test for a common median direction of two or more distributions [#]_
 
     :param samplecartlist: List containing individual samples top be tested in 'cart' format
     :type samplecartlist: list[dict]
@@ -74,7 +74,7 @@ def iscommonmedian(samplecartlist: list, similarflag: bool = True, alpha: float 
         - cval: Critical value to test against [float]
         - result: Test result [bool]
 
-   [1] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.
+    .. [#] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.
     """
     r = len(samplecartlist)
     if similarflag:
@@ -208,7 +208,7 @@ def pooledmedian(samplecartlist: list, similarflag: bool = False) -> tuple:
 
 def iscommonmean(samplecartlist: list, alpha: float = 0.05) -> dict:
     """
-    Test of whether two or more axisymmetric distributions have a common mean [1]_
+    Test of whether two or more axisymmetric distributions have a common mean [#]_
 
     :param samplecartlist: List containing individual samples top be tested in 'cart' format
     :type samplecartlist: list[dict]
@@ -219,7 +219,7 @@ def iscommonmean(samplecartlist: list, alpha: float = 0.05) -> dict:
         - cval: Critical value to test against [float]
         - testresult: Test result [bool]
 
-    [1] Watson, G. S. (1983a). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
+    .. [#] Watson, G. S. (1983a). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
     """
 
     sigmas = []
@@ -319,7 +319,7 @@ def pooledmean(samplecartlist: list, alpha: float = 0.05) -> tuple:
 
 def isfishercommonmean(samplecartlist: list, alpha: float = 0.05) -> dict:
     """
-    Test of whether two or more Fisher distributions have a common mean direction [1]_, [2]_, [3]_
+    Test of whether two or more Fisher distributions have a common mean direction [#]_, [#]_, [#]_
 
     :param samplecartlist: List containing individual samples top be tested in 'cart' format
     :type samplecartlist: list[dict]
@@ -331,11 +331,11 @@ def isfishercommonmean(samplecartlist: list, alpha: float = 0.05) -> dict:
         - testresult: Test result [bool]
     :rtype: dict
 
-    [1] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.
+    .. [#] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.
 
-    [2] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
+    .. [#] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
 
-    [3] Watson, G. S. (1983). Large sample theory of the Langevin distributions. Journal of Statistical Planning and Inference 8, 245-256.
+    .. [#] Watson, G. S. (1983). Large sample theory of the Langevin distributions. Journal of Statistical Planning and Inference 8, 245-256.
     """
     try:
         assert len(samplecartlist) >= 2
@@ -723,7 +723,7 @@ def a23(nu=2, r=2):
 
 def fishercommonmean(samplecartlist: list, alpha: float = 0.05) -> tuple:
     """
-    Estimation of the common mean direction of two or more Fisher distributions
+    Estimation of the common mean direction of two or more Fisher distributions [#]_, [#]_
 
     :param samplecartlist: List containing individual samples top be tested in 'cart' format
     :type samplecartlist: list[dict]
@@ -734,9 +734,9 @@ def fishercommonmean(samplecartlist: list, alpha: float = 0.05) -> tuple:
         - qw: Semi-vertical angle [float]
     :rtype: tuple
 
-    [1] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
+    .. [#] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
 
-    [2] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
+    .. [#] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
     """
     res = isfishercommonkappa(samplecartlist)
     mdirlist, kappalist = [], []
@@ -789,7 +789,7 @@ def fishercommonmean(samplecartlist: list, alpha: float = 0.05) -> tuple:
 
 def isfishercommonkappa(samplecartlist: list) -> dict:
     """
-    Test of whether two or more Fisher distributions (with unknown means) have a common concentration parameter at 0.05 level [1]_, [2]_
+    Test of whether two or more Fisher distributions (with unknown means) have a common concentration parameter at 0.05 level [#]_, [#]_
 
     :param samplecartlist: List containing individual samples top be tested in 'cart' format
     :type samplecartlist: list[dict]
@@ -800,9 +800,9 @@ def isfishercommonkappa(samplecartlist: list) -> dict:
         - testresult: Test result [bool]
     :rtype: dict
 
-    [1] Watson, G. S. & Irving, E. (1957). Statistical methods in rock magnetism. Mon. Not. R. astr. Soc. geophys. Suppl. 7, 289-300. (66, 136, 224)
+    .. [#] Watson, G. S. & Irving, E. (1957). Statistical methods in rock magnetism. Mon. Not. R. astr. Soc. geophys. Suppl. 7, 289-300. (66, 136, 224)
 
-    [2] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352. (14, 133, 211, 224)
+    .. [#] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352. (14, 133, 211, 224)
     """
 
     alpha = 0.05

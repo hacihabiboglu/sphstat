@@ -33,12 +33,12 @@ The source code is available on Github: https://www.github.com/hacihabiboglu/sph
 .. [1] Fisher, N.I., Lewis, T. and Embleton, B.J., 1993. Statistical analysis of spherical data. Cambridge University Press.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    installation
    examples
-   sphstat
+   sphstat.descriptives
 
 Indices and tables
 ==================

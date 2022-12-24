@@ -58,17 +58,18 @@ from .utils import carttopolar, sph2cart, cart2sph, excludesample, deepcopy, map
 
 def isuniform(sample: dict, alpha: float = 0.05) -> dict:
     """
-    Test if the sample comes from a uniform distribution as opposed to a unimodal distribution [1]_
+    Test if the sample comes from a uniform distribution as opposed to a unimodal distribution [#]_
 
     :param sample: Sample to be tested in 'cart' format
     :param alpha: Type-I error level  (e.g. 0.05)
     :returns: Dictionary containing the keys
-        - teststat - Test statistic (float)
-        - crange - Critical range (float)
-        - testresult - Test result (bool)
+        - teststat: Test statistic (float)
+        - crange: Critical range (float)
+        - testresult: Test result (bool)
+
     :rtype: dict
 
-    [1] Diggle, P. J., Fisher, N. I. & Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.
+    .. [#] Diggle, P. J., Fisher, N. I. & Lee, A. J. (1985). A comparison of tests of uniformity for spherical data. Austral. J. Statist. 27, 53-59.
     """
 
     samplesize = sample['n']
@@ -110,7 +111,7 @@ def isuniform(sample: dict, alpha: float = 0.05) -> dict:
 
 def testagainstmedian(sample: dict, tmedi: list, alpha: float = 0.05) -> dict:
     """
-    Test the null hypothesis that the population has the specified median direction [1]_
+    Test the null hypothesis that the population has the specified median direction [#]_
 
     :param sample: Sample to be tested in 'cart' format
     :type sample: dict
@@ -121,7 +122,7 @@ def testagainstmedian(sample: dict, tmedi: list, alpha: float = 0.05) -> dict:
     :return: Test measure (X2, float), critical value (cval, float), test result (bool), and significance (p-value, float)
     :rtype: dict
 
-    [1] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.
+    .. [#] Fisher, N. I. (1985). Spherical medians. J.R. Statist. Soc. B47, 342-348.
     """
     # Cross-checked with Appendix_B1 data
     try:
@@ -168,10 +169,11 @@ def rotationalsymmetry(samplecart: dict, mdir: list, alpha: float = 0.05) -> dic
     :type mdir: list
     :param alpha: Type-I error level (e.g. 0.05)
     :type: float
-    :return: Dictionary containing the following fields
-        - Test measure ('Vnstar', float),
-        - Critical value ('cval', float),
-        - Test result ('res', bool)
+    :return: Dictionary containing the following fields...
+        - Test measure: ('Vnstar', float)
+        - Critical value: ('cval', float)
+        - Test result: ('res', bool)
+
     :rtype: dict
     """
     n = samplecart['n']
@@ -208,7 +210,7 @@ def rotationalsymmetry(samplecart: dict, mdir: list, alpha: float = 0.05) -> dic
 
 def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
     """
-    Estimation of the mean direction of a symmetric unimodal distribution [1]_
+    Estimation of the mean direction of a symmetric unimodal distribution [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -218,9 +220,10 @@ def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
         - Spherical mean direction (theta: float, phi: float)
         - Spherical standard deviation (float)
         - Semi-vertical angle (float)
+
     :rtype: tuple
 
-    [1] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
+    .. [#] Fisher, N. I. & Lewis, T. (1983). Estimating the common mean direction of several circular or spherical distributions with differing dispersions. Biometrika 70, 333-341.
     """
     # Cross-checked with Appendix_B2 data
     rs = resultants(samplecart)
@@ -239,7 +242,7 @@ def meanifsymmetric(samplecart: dict, alpha: float = 0.05) -> tuple:
 
 def testagainstmean(samplecart: dict, tmean: list, alpha: float = 0.05) -> dict:
     """
-    Test for a specified mean direction of a symmetric distribution [1]_
+    Test for a specified mean direction of a symmetric distribution [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -252,7 +255,7 @@ def testagainstmean(samplecart: dict, tmean: list, alpha: float = 0.05) -> dict:
         - Critical value to test against ('cval', float)
         - Test result ('testresult', bool)
 
-    [1] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
+    .. [#] Watson, G. S. (1983). Statistics on Spheres. University of Arkansas Lecture Notes in the Mathematical Sciences, Volume 6. New York: John Wiley.
     """
     _, sigmahat, _ = meanifsymmetric(samplecart, alpha)
     r = resultants(samplecart)
@@ -278,6 +281,7 @@ def isaxisymmetric(samplecart: dict, alpha: float = 0.05) -> dict:
         - cval: Critical value to test against (float)
         - pval: Actual p-value (float)
         - testresult: Test result (bool)
+
     :rtype: dict
     """
     assert samplecart['type'] == 'cart'
@@ -306,7 +310,7 @@ def isaxisymmetric(samplecart: dict, alpha: float = 0.05) -> dict:
 
 def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> dict:
     """
-    Goodness-of-fit of the data with the Fisher model [1]_
+    Goodness-of-fit of the data with the Fisher model [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -316,21 +320,26 @@ def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> d
     :type plotflag: bool
     :return: Dictionary containing the results of three tests:
         - 'colatitute': Results of the colatitude test as a nested dictionary
+
             - 'stat': Test statistic (float)
             - 'crange': Critical range (float)
             - 'H0': Test result (bool)
+
         - 'longitude': Results of the longitude test as a nested dictionary
+
             - 'stat': Test statistic (float)
             - 'crange': Critical range (float)
             - 'H0': Test result (bool)
         - 'twovariable': Results of the two-variable test as a nested dictionary
+
             - 'stat': Test statistic (float)
             - 'crange': Critical range (float)
             - 'H0': Test result (bool)
+
         - 'H0': All three tests retain H0 then True, otherwise false
         - 'alpha': Type-I error level
 
-    [1] Fisher, N. I. & Best, D. J. (1984). Goodness-of-fit tests for Fisher's distribution on the sphere. Austral. J. Statist. 26, 142-150.
+    .. [#] Fisher, N. I. & Best, D. J. (1984). Goodness-of-fit tests for Fisher's distribution on the sphere. Austral. J. Statist. 26, 142-150.
     """
 
     res = dict()
@@ -458,7 +467,7 @@ def isfisher(samplecart: dict, alpha: float = 0.05, plotflag: bool = False) -> d
 
 def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
     """
-    Outlier test for discordancy [1]_
+    Outlier test for discordancy [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -467,9 +476,10 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
     :return:
         - A new sample with outliers eliminated
         - Index of the outliers in the original sample
+
     :rtype: tuple
 
-    [1] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
+    .. [#] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
     """
     rs = resultants(samplecart)
     n = samplecart['n']
@@ -503,7 +513,8 @@ def outliertest(samplecart: dict, alpha: float = 0.05) -> tuple:
 
 def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     """
-    Parameter estimation for the Fisher distribution [1]_
+    Parameter estimation for the Fisher distribution [#]_, [#]_
+
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
     :param alpha: Calculate (1-alpha)% CI for kappa
@@ -513,10 +524,11 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
         - kappa: Concentration parameter (float)
         - thetaalpha: Semivertical angle (float)
         - cikappa: (kappalow, kappahigh) is the (1-alpha)% CI for kappa (tuple)
+
     :rtype: dict
 
-    [1] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
-    [2] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.
+    .. [#] Watson, G. S. & Williams, E. J. (1956). On the construction of significance tests on the circle and the sphere. Biometrika 43, 344-352.
+    .. [#] Watson, G. S. (1956). Analysis of dispersion on a sphere. Mon. Not. R. Astr. Soc. Geophys. Suppl. 7, 153-159.
     """
     rs = resultants(samplecart)
     R = rs['Resultant Length']
@@ -556,6 +568,7 @@ def meantest(samplecart: dict, mdir0: tuple | list, alpha: float =0.05) -> dict:
         - R: Test statistic (float)
         - Ralpha: Critical value (float)
         - testresult: Test result (bool)
+
     :rtype: dict
     """
     ''' Test the null hypothesis that mu_Sample = mu_0'''
@@ -596,6 +609,7 @@ def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
         - 'R': Test statistics
         - 'cvaltup': Critical value for the test
         - 'testresult': Test result
+
     """
 
     try:
@@ -629,7 +643,7 @@ def kappatest(samplecart, kappa0, alpha=0.05, testtype='!='):
 
 def kentparams(samplecart):
     """
-    Estimation of the parameters of the Kent distribution [1]_
+    Estimation of the parameters of the Kent distribution [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -637,9 +651,10 @@ def kentparams(samplecart):
         - 'axes': Axes of the distribution (axes[0] is the mean direction)
         - 'kappahat': Concentration parameter of the distribution (float)
         - 'betahat': Ovalness parameter (float)
+
     :rtype:tuple
 
-    [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
+    .. [#] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
     """
     '''Calculate the parameters of a Kent distribution modelling the sample'''
     # Step 1
@@ -696,7 +711,7 @@ def kentparams(samplecart):
 
 def kentmeanccone(samplecart: dict, alpha: float = 0.05) -> tuple:
     """
-    Elliptical confidence cone for the mean direction [1]_
+    Elliptical confidence cone for the mean direction [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -706,9 +721,10 @@ def kentmeanccone(samplecart: dict, alpha: float = 0.05) -> tuple:
         - cconept: 360 points on the (1-alpha)% cone of confidence (list)
         - ths1: Major semi-axis (in radians)
         - ths2: Minor semi-axis (in radians)
+
     :rtype: tuple
 
-    [1] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
+    .. [#] Kent, J. T. (1982). The Fisher-Bingham distribution on the sphere. J.R. Statist. Soc. B 44, 71-80.
 
     """
     '''Calculate the parameters of a Kent distribution modelling the sample'''
@@ -789,6 +805,7 @@ def isfishervskent(samplecart: dict, alpha: float = 0.05) -> dict:
         - cval: Critical value (float)
         - p: p-value (float)
         - testresult: Test result (bool)
+
     :rtype: dict
     """
     '''Calculate the parameters of a Kent distribution modelling the sample'''
@@ -850,7 +867,7 @@ def isfishervskent(samplecart: dict, alpha: float = 0.05) -> dict:
 
 def bimodalparams(samplecart: dict, modesfar: bool = False) -> dict:
     """
-    Model parameter estimation for a bimodal distribution [1]_
+    Model parameter estimation for a bimodal distribution [#]_
 
     :param samplecart: Sample to be tested in 'cart' format
     :type samplecart: dict
@@ -859,7 +876,7 @@ def bimodalparams(samplecart: dict, modesfar: bool = False) -> dict:
     :return: Model parameters for the Wood distribution
     :rtype: tuple
 
-    [1] Wood, A. (1982). A bimodal distribution on the sphere. Appl. Statist. 31, 52-58.
+    .. [#] Wood, A. (1982). A bimodal distribution on the sphere. Appl. Statist. 31, 52-58.
     """
     # Checked with data and results in the original paper by Wood (1982) Data in the book has a minus typo for latitude
     def s2fun(gamdel, samplecarti):
