@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: sphstat
-Version: 1.0.3
+Version: 1.0.4
 Summary: A Python 3 package for inferential statistics on vectorial data on the unit sphere
 Home-page: https://github.com/hacihabiboglu/sphstat
 Author: Huseyin Hacihabiboglu
