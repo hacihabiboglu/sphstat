@@ -662,7 +662,7 @@ def a23(nu=2, r=2):
     rarr = list(range(2, 13))
     interpRflag, interpNflag = False, False
 
-    rarro = []s
+    rarro = []
     if r not in rarr:
         interpRflag = True
         rarro += [r]
@@ -697,7 +697,7 @@ def a23(nu=2, r=2):
     def selectval_a23(dfi, nui, ri):
         dfnu = dfi[dfi['nu'] == nui]
         dfnur = dfnu[dfnu['r'] == ri]
-        z0i = dfnur.values[0]
+        z0i = dfnur.values[0][2]
         return z0i
 
     if interpNflag and interpRflag:
