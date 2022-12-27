@@ -656,18 +656,18 @@ def a23(nu=2, r=2):
     """
     Utility function used by isfishercommonkappa() to extract tabulated critical values
     """
-    nuarr = [2, 4, 6, 8, 10, 12, 20, 30, 60, 1e10]
+    nuarro = [2, 4, 6, 8, 10, 12, 20, 30, 60, 1e10]
     nu1, nu2, r1, r2 = 0, 0, 0, 0
     betar, betanu = 0, 0
     rarr = list(range(2, 13))
     interpRflag, interpNflag = False, False
 
-    rarro = []
+    rarro = []s
     if r not in rarr:
         interpRflag = True
         rarro += [r]
         rao = np.sort(np.array(rarro))
-        rind = np.where(rao == r)
+        rind = np.where(rao == r)[0][0]
         if rind == 0:
             raise ValueError('The number of samples cannot be 1!')
         elif rind == len(rarr):
@@ -677,15 +677,14 @@ def a23(nu=2, r=2):
             r2 = rao[rind + 1]
             betar = (r - r1) / (r2 - r1)
 
-    nuarro = []
-    if nu not in nuarr:
+    if nu not in nuarro:
         interpNflag = True
-        nuarro += [r]
-        nuo = np.sort(np.array(nuarro))
-        nuind = np.where(nuo == r)
+        nuarro += [nu]
+        nuo = np.sort(np.array(nuarro, dtype=int))
+        nuind = np.where(nuo == nu)[0][0]
         if nuind == 0:
             raise ValueError('nu cannot be less than 2!')
-        elif nuind == len(nuarr):
+        elif nuind == len(nuarro):
             raise ValueError('The number of samples cannot be more than 12!')
         else:
             nu1 = nuo[nuind - 1]
