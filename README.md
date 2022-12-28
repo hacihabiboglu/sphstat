@@ -1,5 +1,5 @@
 ![](https://img.shields.io/static/v1?label=version&message=1.0&color=orange) [![Documentation Status](https://readthedocs.org/projects/sphstat/badge/?version=latest)](https://sphstat.readthedocs.io/en/latest/?badge=latest) 
-[![Known Vulnerabilities](https://snyk.io/test/github/hacihabiboglu/sphstat/badge.svg)](https://snyk.io/test/github/hacihabiboglu/sphstat)
+
 # **sphstat:** A Python 3 package for spherical statistics
 ![](images/sphstatlogo.png)
 
