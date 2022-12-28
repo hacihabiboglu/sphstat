@@ -19,7 +19,7 @@ setup(
                       'openpyxl',
                       'sympy',
                       'pandas',
-                      'setuptools'
+                      'setuptools>=65.5.1'
                       ],
     classifiers=[
         'Development Status :: 3 - Alpha',
