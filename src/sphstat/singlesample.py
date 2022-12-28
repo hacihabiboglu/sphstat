@@ -51,6 +51,7 @@ from scipy.optimize import minimize
 from scipy.special import iv
 from scipy.stats import chi2, norm, probplot, expon, uniform
 from sympy import Symbol, nsolve, coth
+from math import acos
 
 from .descriptives import resultants, rotatesample, orientationmatrix, rotationmatrix, mediandir
 from .utils import carttopolar, sph2cart, cart2sph, excludesample, deepcopy, maptofundamental
@@ -540,9 +541,9 @@ def fisherparams(samplecart: dict, alpha: float=0.05) -> dict:
     mdir = maptofundamental(res[0])
     thetaalpha = None
     if kappa >= 5:
-        thetaalpha = np.arccos(1 - ((n - R) / R) * ((1 / alpha)**(1 / (n - 1)) - 1))
+        thetaalpha = acos(1 - ((n - R) / R) * ((1 / alpha)**(1 / (n - 1)) - 1))
     elif n >= 30:
-        thetaalpha = np.arccos(1 + np.log(alpha) / (kappa * R))
+        thetaalpha = acos(1 + np.log(alpha) / (kappa * R))
     else:
         Warning('The library currently supports appoximate CIs only for sample sizes of n>=30 or a concentration parameters kappa>=5')
         thetaalpha = None
