@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'sphstat',
-    version = '1.0.5',
+    version = '1.0.6',
     description = 'A Python 3 package for inferential statistics on vectorial data on the unit sphere',
     url='https://github.com/hacihabiboglu/sphstat',
     download_url = 'https://github.com/hacihabiboglu/sphstat/archive/refs/tags/sphstat-1.0.tar.gz',
