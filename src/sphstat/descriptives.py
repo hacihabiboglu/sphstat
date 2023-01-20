@@ -128,7 +128,7 @@ def rotationmatrix_withaxis(ua: np.array, ub: np.array) -> np.ndarray:
     ca /= np.linalg.norm(ca)
     B = ub.reshape((3, 1)) @ ca.reshape((1, 3))
     B -= B.T
-    th = np.arccos(ab)
+    th = np.arccos(np.clip(ab, -1.0, 1.0))
     A = np.eye(3) + np.sin(th) * B + (np.cos(th) - 1) * ((ub.reshape((3, 1)) @ ub.reshape((1, 3))) + ca.reshape((3, 1))
                                                          @ ca.reshape((1, 3)))
     return A
@@ -381,7 +381,7 @@ def mediandir(sample: dict, ciflag: bool = True, alpha: float = 0.05) -> tuple:
         pts = sample['points']
         err = 0
         for pt in pts:
-            err += np.arccos(np.dot(pt, x))
+            err += np.arccos(np.clip(np.dot(pt, x), -1.0, 1.0))
         return err
     # We will use Nelder-Mead to minimise the arc lengths
     res = minimize(errmin, np.array([ms[0], ms[1]]), args = (sample), method='Nelder-Mead', tol=1e-6)
