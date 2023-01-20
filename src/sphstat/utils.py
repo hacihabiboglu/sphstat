@@ -270,12 +270,12 @@ def cart2sph(pt: np.array) -> tuple:
     :rtype: tuple
     """
     assert np.isclose(np.linalg.norm(pt), 1)
-    th = np.arccos(pt[2])
+    th = np.arccos(np.clip(pt[2], -1.0, 1.0))
     if pt[1] == 0:
-        ph = 0
+        ph = np.pi * (pt[0] < 0)
         return th, ph
     if pt[0] == 0:
-        ph = np.pi / 2
+        ph = np.pi/2 * np.sign(pt[1])
         return th, ph
     ph = np.arctan2(pt[1], pt[0])
     return th, ph
