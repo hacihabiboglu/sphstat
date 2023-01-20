@@ -324,7 +324,10 @@ def cot(x):
     :return: Cotangent of the input
     :rtype: float
     """
-    return 1/np.tan(x)
+
+    # By subtracting the smallest positive representable number (eps) from x,
+    # the expression ensures that x is not exactly a multiple of pi/2 and thus the tangent of x is defined.
+    return 1/np.tan(x - np.finfo(float).eps)
 
 
 def poltoll(th: float, ph: float) -> tuple:
