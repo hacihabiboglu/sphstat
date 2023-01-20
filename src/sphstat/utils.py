@@ -258,7 +258,7 @@ def angle(pt1: np.ndarray, pt2: np.ndarray) -> float:
     assert type(pt2) == np.ndarray
     assert np.isclose(np.linalg.norm(pt1), 1)
     assert np.isclose(np.linalg.norm(pt2), 1)
-    return np.arccos(np.dot(pt1, pt2))
+    return np.arccos(np.clip(np.dot(pt1, pt2), -1.0, 1.0))
 
 
 def cart2sph(pt: np.array) -> tuple:
@@ -270,7 +270,7 @@ def cart2sph(pt: np.array) -> tuple:
     :rtype: tuple
     """
     assert np.isclose(np.linalg.norm(pt), 1)
-    th = np.arccos(pt[2])
+    th = np.arccos(np.clip(pt[2], -1.0, 1.0))
     if pt[1] == 0:
         ph = 0
         return th, ph

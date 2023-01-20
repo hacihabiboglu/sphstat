@@ -898,5 +898,5 @@ def errors(samplecart: dict, srcpos: tuple) -> list:
     errs = []
     srcvec = sph2cart(srcpos[0], srcpos[1])
     for pt in samplecart['points']:
-        errs.append(np.arccos(np.dot(pt, srcvec)))
+        errs.append(np.arccos(np.clip(np.dot(pt, srcvec), -1.0, 1.0)))
     return errs
