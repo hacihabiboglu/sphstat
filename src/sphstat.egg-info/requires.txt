@@ -5,3 +5,4 @@ openpyxl
 sympy
 pandas
 setuptools>=65.5.1
+pillow>=10.2.0 # not directly required, pinned by Snyk to avoid a vulnerability
