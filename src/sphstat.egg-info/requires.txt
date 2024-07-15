@@ -4,4 +4,4 @@ matplotlib
 openpyxl
 sympy
 pandas
-setuptools>=65.5.1
+setuptools>=70.0.0
