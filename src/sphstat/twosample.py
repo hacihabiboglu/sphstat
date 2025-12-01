@@ -52,11 +52,21 @@ from scipy.stats import chi2
 from scipy.stats import f as fish
 import pandas as pd
 from math import sqrt
+import importlib.resources as resources
 
 from .descriptives import resultants, mediandir, rotatesample
 from .singlesample import meanifsymmetric, fisherparams
 from .utils import cart2sph, sph2cart, poolsamples, carttopolar, maptofundamental
-import pkg_resources as pkg
+
+
+def _read_excel_resource(resource_name: str) -> pd.DataFrame:
+    """Load packaged Excel data."""
+    if hasattr(resources, "files"):
+        data_path = resources.files("sphstat").joinpath("data", resource_name)
+        with resources.as_file(data_path) as resolved_path:
+            return pd.read_excel(resolved_path)
+    with resources.path("sphstat", f"data/{resource_name}") as resolved_path:
+        return pd.read_excel(resolved_path)
 
 
 def iscommonmedian(samplecartlist: list, similarflag: bool = True, alpha: float = 0.05) -> dict:
@@ -472,8 +482,7 @@ def a20(N=12, alpha: float = 0.05, Rbar: float = 0.7):
     except AssertionError:
         raise AssertionError('Test level, alpha, should be either 0.1, 0.05, 0.025, or 0.01.')
 
-    filepath = pkg.resource_filename(__name__, 'data/A20.xlsx')
-    df = pd.read_excel(filepath)
+    df = _read_excel_resource("A20.xlsx")
     Narr = list(set(df['N'].tolist()))
     interpNflag = False
     interpRflag = False
@@ -603,8 +612,7 @@ def a21(gamma=2, N=20, alpha=0.05, Rbar=0.1):
         z0i = z0gamma['z0'].values[0]
         return z0i
 
-    filepath = pkg.resource_filename(__name__, 'data/A21.xlsx')
-    df = pd.read_excel(filepath)
+    df = _read_excel_resource("A21.xlsx")
 
     if Rbar not in Rlist:
         interpRflag = True
@@ -691,8 +699,7 @@ def a23(nu=2, r=2):
             nu2 = nuo[nuind + 1]
             betanu = (nu - nu1) / (nu2 - nu1)
 
-    filepath = pkg.resource_filename(__name__, 'data/A23.xlsx')
-    df = pd.read_excel(filepath)
+    df = _read_excel_resource("A23.xlsx")
 
     def selectval_a23(dfi, nui, ri):
         dfnu = dfi[dfi['nu'] == nui]
