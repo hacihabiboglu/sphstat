@@ -37,13 +37,13 @@ Functions to generate random data from different spherical distributions
 """
 
 import numpy as np
-from numpy.random import default_rng
+from numpy.random import default_rng, Generator
 
 from .utils import polartocart, cart2sph, sph2cart, negatesample, poolsamples
 from .descriptives import rotatesample, rotationmatrix_withaxis
 
 
-def uniform(numsamp: int) -> dict:
+def uniform(numsamp: int, rng: Generator = None) -> dict:
     """
     Generate uniformly sampled data on the unit sphere
 
@@ -52,7 +52,8 @@ def uniform(numsamp: int) -> dict:
     :return: Data dictionary of type 'cart' containing numsamp uniformly distributed data
     :rtype: dict
     """
-    rng = default_rng()
+    if rng == None:
+        rng = default_rng()
     n1 = rng.standard_normal(numsamp)
     n2 = rng.standard_normal(numsamp)
     n3 = rng.standard_normal(numsamp)
@@ -69,7 +70,7 @@ def uniform(numsamp: int) -> dict:
     return samplecart
 
 
-def bingham(numsamp: int, lamb: float) -> dict:
+def bingham(numsamp: int, lamb: float, rng: Generator = None) -> dict:
     """
     Generate Bingham distributed data on the unit sphere
 
@@ -80,7 +81,8 @@ def bingham(numsamp: int, lamb: float) -> dict:
     :return: Data dictionary of type 'cart' containing numsamp Bingham distributed data
     :rtype: dict
     """
-    rng = default_rng()
+    if rng == None:
+        rng = default_rng()
     lam = lamb
     # lam = np.flip( np.sort(lamb) )
     n = 0
@@ -108,7 +110,7 @@ def bingham(numsamp: int, lamb: float) -> dict:
     return samplecart
 
 
-def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.ndarray) -> dict:
+def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.ndarray, rng: Generator = None) -> dict:
     """
     Generate Fisher-Bingham distributed data on the unit sphere [#]_, [#]_
 
@@ -128,7 +130,8 @@ def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.n
 
     .. [#] https://rdrr.io/cran/Directional/man/rfb.html
     """
-    rng = default_rng()
+    if rng == None:
+        rng = default_rng()
     samplecart = dict()
     samplecart['n'] = numsamp
     samplecart['type'] = 'cart'
@@ -182,7 +185,7 @@ def fisherbingham(numsamp: int, alpha: float, beta: float, kappa: float, A: np.n
     return samplecart
 
 
-def kent(numsamp: int, kappa: float, beta: float, mu: np.array, mu0: np.array) -> dict:
+def kent(numsamp: int, kappa: float, beta: float, mu: np.array, mu0: np.array, rng: Generator = None) -> dict:
     """
     Generate Kent (5-parameter Fisher-Bingham - FB5) distributed data on the unit sphere
 
@@ -203,7 +206,7 @@ def kent(numsamp: int, kappa: float, beta: float, mu: np.array, mu0: np.array) -
     mu /= np.linalg.norm(mu)
     a = rotationmatrix_withaxis(mu0, mu)
     A = np.diag([-beta, 0, beta])
-    samplerbf = fisherbingham(numsamp, alph, bet, kappa, A)
+    samplerbf = fisherbingham(numsamp, alph, bet, kappa, A, rng)
     pts = samplerbf['points'].copy()
     samplekent = dict()
     samplekent['n'] = numsamp
@@ -215,7 +218,7 @@ def kent(numsamp: int, kappa: float, beta: float, mu: np.array, mu0: np.array) -
     return samplekent
 
 
-def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
+def fisher(numsamp: int, alpha: float, beta: float, kappa: float, rng: Generator = None) -> dict:
     """
     Generate von Mises-Fisher distributed data on the unit sphere [#]_
 
@@ -232,7 +235,8 @@ def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
 
     .. [#] Fisher, N. I., Lewis, T. & Willcox, M. E. (1981). Tests of discordancy for samples from Fisher's distribution on the sphere. Appl. Statist. 30, 230-237.
     """
-    rng = default_rng()
+    if rng == None:
+        rng = default_rng()
     r1 = rng.uniform(0, 1, numsamp)
     r2 = rng.uniform(0, 1, numsamp)
     lamb = np.exp(-2 * kappa)
@@ -249,7 +253,7 @@ def fisher(numsamp: int, alpha: float, beta: float, kappa: float) -> dict:
     return sample
 
 
-def watson(numsamp: int, lamb: float, mu: float, nu: float, kappa: float) -> dict:
+def watson(numsamp: int, lamb: float, mu: float, nu: float, kappa: float, rng: Generator = None) -> dict:
     """
     Generate Watson distributed data on the unit sphere [#]_
 
@@ -272,7 +276,9 @@ def watson(numsamp: int, lamb: float, mu: float, nu: float, kappa: float) -> dic
     sample['type'] = 'rad'
     sample['tetas'] = []
     sample['phis'] = []
-    rng = default_rng()
+
+    if rng == None:
+        rng = default_rng()
     sampleall = dict()
     try:
         assert kappa != 0
